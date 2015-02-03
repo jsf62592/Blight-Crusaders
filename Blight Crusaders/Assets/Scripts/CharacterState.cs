@@ -18,7 +18,7 @@ public class CharacterState : MonoBehaviour {
 			if (cooldown > 0){
 			cooldown--;
 			}
-			print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
+			#print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 	}
 
