@@ -22,11 +22,11 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
-	void cooldown_start(){
+	public void cooldown_start(){
 		this.cooldown = this.max_cooldown;
 	}
 
-	bool on_cooldown_huh(){
+	public bool on_cooldown_huh(){
 		return this.cooldown > 0;
 	}
 }
