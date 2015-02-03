@@ -6,11 +6,12 @@ public class CharacterState : MonoBehaviour {
 	private int cooldown = 20;
 	private int max_cooldown = 20;
 
-	private int health = 100;
+	private int health;
+	public int health_max = 100;
 
 	// Use this for initialization
 	void Start () {
-	
+		this.health = this.health_max;
 	}
 	
 	// Update is called once per frame
