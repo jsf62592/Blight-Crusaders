@@ -6,6 +6,8 @@ public class CharacterState : MonoBehaviour {
 	private int cooldown = 20;
 	private int max_cooldown = 20;
 
+	private int health = 100;
+
 	// Use this for initialization
 	void Start () {
 	
