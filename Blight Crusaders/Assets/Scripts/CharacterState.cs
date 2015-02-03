@@ -32,4 +32,8 @@ public class CharacterState : MonoBehaviour {
 	public bool on_cooldown_huh(){
 		return this.cooldown > 0;
 	}
+
+	public void take_damage(int given_damage){
+
+		}
 }
