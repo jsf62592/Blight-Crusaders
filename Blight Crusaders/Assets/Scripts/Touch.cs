@@ -29,4 +29,5 @@ public class Touch : MonoBehaviour {
 			cooldown = 3.0;
 		}
 	}
+
 }
