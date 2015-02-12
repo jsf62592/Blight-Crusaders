@@ -2,25 +2,30 @@
 using System.Collections;
 
 public class CharacterState : MonoBehaviour {
-
-	//the total length of the screen.  It gets this from outside this scrip.
-	private float screen_length;
-
-	private float time_next_tick;
-	private int cooldown;
-
+	//the max health of a character, also its starting health
 	public int health_max;
-	public int health_current;
-	public float health_percent;
-
-	//how far it should be from the edge of the screen
-	public float distance;
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
+
+
+	//the total length of the screen.  It gets this from outside this scrip.
+	private float screen_length;
+	//used for keeping time
+	private float time_next_second;
+	//the amount of time left before this character can act.  In seconds.
+	private int cooldown;
+	//current health.  use get_health() to access and take_damage(...) to modify.
+	private int health_current;
+	//current health as a percentage of the max health
+	private float health_percent;
+	//how far it should be from the closest edge of the screen
+	private float distance;
+
+
 	// Use this for initialization
 	void Start () {
-		this.time_next_tick = 0;
+		this.time_next_second = 0;
 		this.cooldown = 0;
 
 		this.health_current = this.health_max;
@@ -49,8 +54,8 @@ public class CharacterState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time >= this.time_next_tick) { 
-			time_next_tick = Time.time + 1;
+		if (Time.time >= this.time_next_second) { 
+			time_next_second = Time.time + 1;
 			if (cooldown > 0){
 			cooldown--;
 			}
@@ -63,14 +68,23 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
+	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(int given_cooldown){
 		this.cooldown = given_cooldown;
 	}
 
+	//is this currently on cooldown (not able to act)?  if yes, return true, else false.
 	public bool on_cooldown_huh(){
 		return this.cooldown > 0;
 	}
 
+	//what's this character's current health?
+	public int get_health(){
+		return health_current;
+	}
+
+	//make this character take 'given_damage' amount of damage
+	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
 		this.health_current = this.health_current - given_damage;
 		if(health_current <= 0){
@@ -81,6 +95,7 @@ public class CharacterState : MonoBehaviour {
 		move_according_to_health();
 	}
 
+	//no touchie
 	private void move_according_to_health(){
 		float new_x_position;
 		//if it's on the left side
