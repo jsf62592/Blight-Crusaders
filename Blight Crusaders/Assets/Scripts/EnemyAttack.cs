@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class EnemyAttack : MonoBehaviour {
 
-	double colddown = 0.0;
+	//double colddown = GenRand(0.0, 2.5);
+
+
+	//Enemies attack randomly so far, 
+	static System.Random rand = new System.Random();
+	double colddown= 0.0 + rand.NextDouble() * (2.5);
 
 	// Use this for initialization
 	void Start () {
@@ -39,4 +45,6 @@ public class EnemyAttack : MonoBehaviour {
 						gameObject.renderer.material.color = Color.white;
 				}
 		}
+
+
 }
