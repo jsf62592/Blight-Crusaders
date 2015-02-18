@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CharacterState.cs" />
+     <Compile Include="Assets\Scripts\Touch.cs" />
      <Compile Include="Assets\Scripts\View.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
