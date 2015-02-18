@@ -165,7 +165,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 44649784}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2ef8592b1e9194486483932d6abc7e, type: 3}
   m_Name: 
@@ -250,9 +250,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 577634381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8e49c67de92d24d9313a5c25e95e0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c2b38dbf49c5cd4b8c180b2fd866350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeColors: 0
 --- !u!114 &577634387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,9 +360,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035488672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f1319e584f9bc64eb322bafe90ead53, type: 3}
+  m_Script: {fileID: 11500000, guid: 56c135e6d00b28648b0f30684a79f178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: {fileID: 0}
+  targeted: {fileID: 0}
 --- !u!1 &1445290998
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,9 +445,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1445290998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8e49c67de92d24d9313a5c25e95e0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c2b38dbf49c5cd4b8c180b2fd866350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeColors: 0
 --- !u!114 &1445291004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,7 +553,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1695020722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2ef8592b1e9194486483932d6abc7e, type: 3}
   m_Name: 
@@ -708,7 +712,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1987590931}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2ef8592b1e9194486483932d6abc7e, type: 3}
   m_Name: 

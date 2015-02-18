@@ -5,9 +5,10 @@
 *.pidb
 *.unityproj
 .DS_Store
-/Library/FailedAssetImports.txt
-/Library/cache/
-/Library/previews/
-/Library/ScriptAssemblies
-/obj
-/Temp
+\Library\FailedAssetImports.txt
+\Library\cache\
+\Library\previews\
+\Library\ScriptAssemblies
+\Library\metadata
+\obj
+\Temp

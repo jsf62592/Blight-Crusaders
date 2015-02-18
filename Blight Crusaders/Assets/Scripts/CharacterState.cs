@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 	//the max health of a character, also its starting health
-	public int health_max;
+	public double health_max;
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
@@ -16,7 +16,7 @@ public class CharacterState : MonoBehaviour {
 	//the amount of time left before this character can act.  In seconds.
 	private int cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
-	private int health_current;
+	private double health_current;
 	//current health as a percentage of the max health
 	private float health_percent;
 	//how far it should be from the closest edge of the screen
@@ -28,11 +28,14 @@ public class CharacterState : MonoBehaviour {
 		this.time_next_second = 0;
 		this.cooldown = 0;
 
+		this.health_max = 5;
+
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 
-		this.screen_length = 20; print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY   (/0 ^0)/ ^ I_____I");
+		this.screen_length = 20; 
+		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY   (/0 ^0)/ ^ I_____I");
 
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
 
@@ -54,6 +57,7 @@ public class CharacterState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
 			if (cooldown > 0){
@@ -79,13 +83,13 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	//what's this character's current health?
-	public int get_health(){
+	public double get_health(){
 		return health_current;
 	}
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
-	public void take_damage(int given_damage){
+	public void take_damage(double given_damage){
 		this.health_current = this.health_current - given_damage;
 		if(health_current <= 0){
 			death();
