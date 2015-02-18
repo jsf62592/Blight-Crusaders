@@ -3,27 +3,28 @@ using System.Collections;
 
 public class Touch : MonoBehaviour {
 
-	double cooldown = 0.0; //temporary cooldown variable for initial touch story color change
+	double attack = 0.0; 
+	CharacterState state;
 
 	// Use this for initialization
 	void Start () {
-	
+		state = GetComponent<CharacterState> ();
 	}
 
 	void Update(){
-		if (cooldown > 0){ 
-			Debug.Log(name + "cooldown: " + cooldown); 
-			cooldown -= Time.deltaTime;
+		if (attack > 0.0){ 
+			attack -= Time.deltaTime;
 		}else{
 			gameObject.renderer.material.color = Color.white;
 		}
 	}
 
 	public void TouchResponse(){
-		Debug.Log(name);
-		if (tag == "Player" && cooldown <= 0) {
+		Debug.Log (state.on_cooldown_huh ());
+		if (tag == "Player" && !state.on_cooldown_huh()) {
 			gameObject.renderer.material.color = Color.blue;
-			cooldown = 3.0;
+			attack = 1.0;
+			state.cooldown_start(Random.Range(1,5));
 		}
 	}
 }
