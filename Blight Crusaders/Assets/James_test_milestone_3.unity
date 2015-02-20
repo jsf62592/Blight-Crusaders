@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 100
+  health_max: 150
   distance_initial_offset: -2
 --- !u!1 &1695020722
 GameObject:
