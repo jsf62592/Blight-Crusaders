@@ -16,8 +16,7 @@ public class CharacterState : MonoBehaviour {
 	//the amount of time left before this character can act.  In seconds.
 	private int cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
-	//private int health_current;
-	public int health_current;
+	private int health_current;
 
 	//current health as a percentage of the max health
 	private float health_percent;
