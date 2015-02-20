@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 	//the max health of a character, also its starting health
-	public double health_max;
+	public int health_max;
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
@@ -16,7 +16,9 @@ public class CharacterState : MonoBehaviour {
 	//the amount of time left before this character can act.  In seconds.
 	private int cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
-	private double health_current;
+	//private int health_current;
+	public int health_current;
+
 	//current health as a percentage of the max health
 	private float health_percent;
 	//how far it should be from the closest edge of the screen
@@ -27,8 +29,6 @@ public class CharacterState : MonoBehaviour {
 	void Start () {
 		this.time_next_second = 0;
 		this.cooldown = 0;
-
-		this.health_max = 5;
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
@@ -50,14 +50,12 @@ public class CharacterState : MonoBehaviour {
 
 		move_according_to_health ();
 
-
-
-		print ("CharacterState Debug button enabled");
+		print ("CharacterState | CharacterState Debug button enabled");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("SCREEN SIZE IS: "+ screen_length);
+		//Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
 			if (cooldown > 0){
@@ -67,8 +65,9 @@ public class CharacterState : MonoBehaviour {
 		}
 
 		if(Input.GetKeyDown("f")){
-			print ("CharacterState Debug button pressed");
-			this.take_damage(10);
+			int amount_o_dmg = 7;
+			print ("CharacterState | CharacterState Debug button pressed:  damage done");
+			this.take_damage(amount_o_dmg);
 		}
 	}
 
@@ -83,13 +82,13 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	//what's this character's current health?
-	public double get_health(){
+	public int get_health(){
 		return health_current;
 	}
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
-	public void take_damage(double given_damage){
+	public void take_damage(int given_damage){
 		this.health_current = this.health_current - given_damage;
 		if(health_current <= 0){
 			death();
@@ -110,7 +109,7 @@ public class CharacterState : MonoBehaviour {
 		else{
 			new_x_position = screen_length - distance;
 		}
-		print (new_x_position);
+		print ("CharacterState | " + this.name + "moved to new position: " + new_x_position);
 		this.transform.position = new Vector3 (new_x_position, this.transform.position.y, this.transform.position.z);
 	}
 

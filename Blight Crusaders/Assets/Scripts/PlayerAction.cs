@@ -25,7 +25,7 @@ public class PlayerAction : MonoBehaviour {
 	public void Attack(GameObject targeted){
 		target = targeted;
 		Debug.Log ("HEALTH: " + target.GetComponent<CharacterState> ().get_health ());
-		target.GetComponent<CharacterState> ().take_damage (.5);
+		target.GetComponent<CharacterState> ().take_damage (5);
 		Debug.Log (name + " Attacks " + target.name);
 		ChangeColors();
 		GetComponent<CharacterState> ().cooldown_start(Random.Range(1,5));
