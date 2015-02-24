@@ -11,7 +11,11 @@ public class Touch : MonoBehaviour {
 	}
 
 	void Update(){
+<<<<<<< HEAD
 		if (cooldown > 0.0){ 
+=======
+		if (cooldown > 0){ 
+>>>>>>> production
 			Debug.Log(name + "cooldown: " + cooldown); 
 			cooldown -= Time.deltaTime;
 		}else{
@@ -21,13 +25,20 @@ public class Touch : MonoBehaviour {
 
 	public void TouchResponse(){
 		Debug.Log(name);
+<<<<<<< HEAD
 		if (tag == "Player" && cooldown <= 0.0) {
 			
 			Debug.Log ("touch.cs touched");
 		//if(true){
+=======
+		if (tag == "Player" && cooldown <= 0) {
+>>>>>>> production
 			gameObject.renderer.material.color = Color.blue;
 			cooldown = 3.0;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> production
 }

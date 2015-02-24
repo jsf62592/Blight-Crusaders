@@ -6,9 +6,12 @@ public class CharacterState : MonoBehaviour {
 	private int cooldown = 20;
 	private int max_cooldown = 20;
 
+	private int health;
+	public int health_max = 100;
+
 	// Use this for initialization
 	void Start () {
-	
+		this.health = this.health_max;
 	}
 	
 	// Update is called once per frame
@@ -18,7 +21,7 @@ public class CharacterState : MonoBehaviour {
 			if (cooldown > 0){
 			cooldown--;
 			}
-			print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
+			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 	}
 
@@ -29,4 +32,8 @@ public class CharacterState : MonoBehaviour {
 	public bool on_cooldown_huh(){
 		return this.cooldown > 0;
 	}
+
+	public void take_damage(int given_damage){
+
+		}
 }
