@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+<<<<<<< HEAD
 using System;
 
 public class EnemyAttack : MonoBehaviour {
@@ -14,10 +15,23 @@ public class EnemyAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+=======
+
+public class EnemyAttack : MonoBehaviour {
+
+	CharacterState state;
+	double attack = 0.0;
+	
+	// Use this for initialization
+	void Start () {
+		state = GetComponent<CharacterState> ();
+		state.cooldown_start (Random.Range(1,5));
+>>>>>>> origin/James
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 				colddown += Time.deltaTime;
 				//bool cd = GameObject.GetComponent<CharacterState>().on_cooldown_huh;
 
@@ -47,4 +61,17 @@ public class EnemyAttack : MonoBehaviour {
 		}
 
 
+=======
+		if(!state.on_cooldown_huh()){
+			gameObject.renderer.material.color = Color.red;
+			attack += Time.deltaTime;
+		} 
+
+		if(attack > 1.0){
+			state.cooldown_start(Random.Range (1, 5));
+			gameObject.renderer.material.color = Color.white;
+			attack = 0.0;
+		}
+	}
+>>>>>>> origin/James
 }
