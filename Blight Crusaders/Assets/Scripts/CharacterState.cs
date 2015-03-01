@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterState : MonoBehaviour {
 	//the max health of a character, also its starting health
@@ -16,13 +17,14 @@ public class CharacterState : MonoBehaviour {
 	//the amount of time left before this character can act.  In seconds.
 	private int cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
-	private int health_current;
+	public int health_current;
 
 	//current health as a percentage of the max health
 	private float health_percent;
 	//how far it should be from the closest edge of the screen
 	private float distance;
 
+	private List<Status_Effect> status_effect_list = new List<Status_Effect>();
 
 	// Use this for initialization
 	void Start () {
@@ -60,6 +62,7 @@ public class CharacterState : MonoBehaviour {
 			if (cooldown > 0){
 			cooldown--;
 			}
+			apply_effects();
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 
@@ -69,6 +72,9 @@ public class CharacterState : MonoBehaviour {
 			this.take_damage(amount_o_dmg);
 		}
 	}
+
+
+
 
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(int given_cooldown){
@@ -114,5 +120,20 @@ public class CharacterState : MonoBehaviour {
 
 	private void death(){
 		Destroy(this.gameObject);
+	}
+
+	public void add_status_effect(Status_Effect given_status_effect){
+		this.status_effect_list.Add (given_status_effect);
+	}
+
+	private void apply_effects(){
+		if(Time.time > 5){
+			foreach(Status_Effect effect in status_effect_list){
+				effect.apply_effect();
+			}
+		}
+		else{
+			print ("holy shit it's late.  also get rid of this debug stuff");
+		}
 	}
 }
