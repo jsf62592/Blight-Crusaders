@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemyAttack : MonoBehaviour {
-
+	
 	CharacterState state;
 	double attack = 0.0;
 	
@@ -15,14 +15,11 @@ public class EnemyAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!state.on_cooldown_huh()){
-			gameObject.renderer.material.color = Color.red;
-			attack += Time.deltaTime;
+			EnemyFireball f = new EnemyFireball();
+			GameObject p1 = GameObject.Find ("P1");
+			Message m = new Message(this.gameObject, p1, f);
+			GameManager.instance.AddEnemyAction(m);
+			state.cooldown_start(Random.Range (3, 5));
 		} 
-
-		if(attack > 1.0){
-			state.cooldown_start(Random.Range (1, 5));
-			gameObject.renderer.material.color = Color.white;
-			attack = 0.0;
-		}
 	}
 }

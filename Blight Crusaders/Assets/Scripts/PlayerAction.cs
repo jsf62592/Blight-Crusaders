@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerAction : MonoBehaviour {
 	public double changeColors = 0.0;
@@ -27,8 +28,9 @@ public class PlayerAction : MonoBehaviour {
 		Debug.Log ("HEALTH: " + target.GetComponent<CharacterState> ().get_health ());
 		target.GetComponent<CharacterState> ().take_damage (.5);
 		Debug.Log (name + " Attacks " + target.name);
-		ChangeColors();
-		GetComponent<CharacterState> ().cooldown_start(Random.Range(1,5));
+		target.renderer.material.color = Color.red;
+		changeColors = 10;
+		GetComponent<CharacterState> ().cooldown_start(UnityEngine.Random.Range(1,5));
 
 	}
 	

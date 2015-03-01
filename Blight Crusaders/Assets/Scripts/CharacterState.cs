@@ -57,7 +57,7 @@ public class CharacterState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("SCREEN SIZE IS: "+ screen_length);
+		//Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
 			if (cooldown > 0){

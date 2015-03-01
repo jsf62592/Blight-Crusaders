@@ -46,10 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Ability.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
-     <Compile Include="Assets\Scripts\Touch.cs" />
-     <Compile Include="Assets\Scripts\View.cs" />
+     <Compile Include="Assets\Scripts\EnemyFireball.cs" />
+     <Compile Include="Assets\Scripts\Fireball.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Interface.cs" />
+     <Compile Include="Assets\Scripts\Message.cs" />
+     <Compile Include="Assets\Scripts\PlayerAction.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

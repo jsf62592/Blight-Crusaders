@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 //ATTACH THIS SCRIPT TO CAMERA
 //Other Assumptions
@@ -23,9 +24,8 @@ public class Interface : MonoBehaviour {
 	RuntimePlatform platform = Application.platform;
 	
 	void Update(){
-		
 		//If this is on mobile, detect touch input
-		if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer) {
+		if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.WindowsPlayer ) {
 			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
 				Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
 				RaycastHit hit;
@@ -91,9 +91,13 @@ public class Interface : MonoBehaviour {
 				
 				if (Physics.Raycast (ray2, out hit2)) {
 					targeted = hit2.collider.gameObject;
-					Debug.Log (hit2.collider.name + " targeted");
-					
-					if(targeted != selected){ selected.GetComponent<PlayerAction>().Attack (targeted); }
+					Debug.Log (hit2.collider.gameObject.name + " targeted");
+
+					if(targeted != selected){
+						Fireball f = new Fireball();
+						Message m = new Message(selected, targeted, f);
+						GameManager.instance.AddPlayerAction(m);
+             		}
 					
 					selected.GetComponent<PlayerAction>().DeSelect();
 					ResetInput();
