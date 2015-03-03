@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+<<<<<<< HEAD
 public abstract class Ability : MonoBehaviour {
 
 	//status effects that will be inflicted upon this ability's target
@@ -29,4 +30,9 @@ public abstract class Ability : MonoBehaviour {
 	public void add_to_queue(){
 		Ability_Message message = new Ability_Message();
 	}
+=======
+public interface Ability {
+
+	void UseAbility(GameObject selected, GameObject targeted);
+>>>>>>> production
 }

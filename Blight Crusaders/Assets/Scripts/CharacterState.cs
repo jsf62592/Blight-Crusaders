@@ -7,10 +7,10 @@ public class CharacterState : MonoBehaviour {
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
-
+	bool active;
 
 	//the total length of the screen.  It gets this from outside this scrip.
-	private float screen_length;
+	private int screen_length;
 	//used for keeping time
 	private float time_next_second;
 	//the amount of time left before this character can act.  In seconds.
@@ -26,6 +26,7 @@ public class CharacterState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		this.active = true;
 		this.time_next_second = 0;
 		this.cooldown = 0;
 
@@ -33,7 +34,7 @@ public class CharacterState : MonoBehaviour {
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 
-		this.screen_length = 20; 
+		this.screen_length = Screen.width; 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY   (/0 ^0)/ ^ I_____I");
 
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
@@ -57,7 +58,7 @@ public class CharacterState : MonoBehaviour {
 		//Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
-			if (cooldown > 0){
+			if (cooldown > 0 && getActive()){
 			cooldown--;
 			}
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
@@ -85,6 +86,18 @@ public class CharacterState : MonoBehaviour {
 		return health_current;
 	}
 
+	public void setInactive(){
+		this.active = false;
+	}
+
+	public void setActive(){
+		this.active = true;
+	}
+
+	public bool getActive(){
+		return this.active;
+	}
+
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
@@ -108,8 +121,13 @@ public class CharacterState : MonoBehaviour {
 		else{
 			new_x_position = screen_length - distance;
 		}
+<<<<<<< HEAD
 		print ("CharacterState | " + this.name + "moved to new position: " + new_x_position);
 		this.transform.position = new Vector3 (new_x_position, this.transform.position.y, this.transform.position.z);
+=======
+		print (new_x_position);
+		this.transform.position = Vector3.Scale(transform.localScale, new Vector3 (new_x_position, this.transform.position.y, this.transform.position.z));
+>>>>>>> production
 	}
 
 	private void death(){

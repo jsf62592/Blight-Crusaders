@@ -1,0 +1,27 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Message : MonoBehaviour {
+
+	GameObject selected;
+	GameObject targeted;
+	Ability ability;
+
+	public Message(GameObject selected, GameObject targeted, Ability ability){
+		this.selected = selected;
+		this.targeted = targeted;
+		this.ability = ability;
+	}
+
+	public GameObject ReturnSelected(){
+		return selected;
+	}
+
+	public GameObject ReturnTargeted(){
+		return targeted;
+	}
+
+	public void UseAbility(){
+		ability.UseAbility (selected, targeted);
+	}
+}
