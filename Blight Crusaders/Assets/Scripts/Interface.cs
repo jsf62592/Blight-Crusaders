@@ -17,7 +17,6 @@ public class Interface : MonoBehaviour {
 	void Start () {
 		selected = null;
 		targeted = null;
-		state = GetComponent<CharacterState> ();
 		
 	}
 	
@@ -27,15 +26,14 @@ public class Interface : MonoBehaviour {
 		//If this is on mobile, detect touch input
 		if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.WindowsPlayer ) {
 			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-				RaycastHit hit;
+				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 				
 				//If an object is touched? FOR THE FUTURE: do nothing if the master object says an enemy is attacking
-				if (Physics.Raycast (ray, out hit)) {
+				if (hit != null) {
 					Debug.Log (hit.collider.name + " touched");
-					
+					 state = hit.collider.GetComponent<CharacterState>();
 					//if that object is a player off cooldown, they are selected
-					if (hit.collider.tag == "Player" && !state.on_cooldown_huh ()) {
+					if (hit.collider.tag == "Player" && !state.on_cooldown_huh () && state.getActive()) {
 						selected = hit.collider.gameObject;
 						Debug.Log (selected + " is selected");
 						selected.GetComponent<PlayerAction> ().Select ();
@@ -44,12 +42,12 @@ public class Interface : MonoBehaviour {
 				}
 			}
 			//if touch on a player and is released over another character, attack
-			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-				RaycastHit hit;
+			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended && state.getActive()) {
+				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
+
 				
 				//If an object is touched? 
-				if (Physics.Raycast (ray, out hit)) {
+				if (hit != null) {
 					targeted = hit.collider.gameObject;
 					Debug.Log (hit.collider.name + " targeted");
 					
@@ -69,15 +67,14 @@ public class Interface : MonoBehaviour {
 			//if this is in Unity detect mouse instead of touch
 		}else if(platform == RuntimePlatform.WindowsEditor) {
 			if (Input.GetMouseButtonDown (0)) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
+				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
 				
 				//if an object is clicked FOR THE FUTURE: do nothing if the master object says an enemy is attacking
-				if (Physics.Raycast (ray, out hit)) {
+				if (hit.collider != null) {
 					Debug.Log (hit.collider.name + " touched");
-					
+					state = hit.collider.GetComponent<CharacterState>();
 					//if that object is a player off cooldown, they are selected
-					if (hit.collider.tag == "Player" && !hit.collider.gameObject.GetComponent<CharacterState>().on_cooldown_huh()) {
+					if (hit.collider.tag == "Player" && !state.on_cooldown_huh() && state.getActive()) {
 						selected = hit.collider.gameObject;
 						Debug.Log (selected + " is selected");
 						selected.GetComponent<PlayerAction>().Select();
@@ -86,14 +83,13 @@ public class Interface : MonoBehaviour {
 			}
 			//if mouse was clicked on a player and is released over another character, attack
 			if (Input.GetMouseButtonUp (0) && selected!= null) {
-				Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit2;
+					RaycastHit2D hit2 = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
 				
-				if (Physics.Raycast (ray2, out hit2)) {
+				if (hit2.collider != null) {
 					targeted = hit2.collider.gameObject;
-					Debug.Log (hit2.collider.gameObject.name + " targeted");
-
+					state = hit2.collider.GetComponent<CharacterState>();
 					if(targeted != selected){
+						Debug.Log("HGERE");
 						Fireball f = new Fireball();
 						Message m = new Message(selected, targeted, f);
 						GameManager.instance.AddPlayerAction(m);

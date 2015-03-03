@@ -14,7 +14,7 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!state.on_cooldown_huh()){
+		if(!state.on_cooldown_huh() && state.getActive()){
 			EnemyFireball f = new EnemyFireball();
 			GameObject p1 = GameObject.Find ("P1");
 			Message m = new Message(this.gameObject, p1, f);
