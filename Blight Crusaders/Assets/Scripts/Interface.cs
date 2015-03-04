@@ -19,21 +19,34 @@ public class Interface : MonoBehaviour {
 	public Vector2 target2; //bottom right
 	public Vector2 target3; //bottom left
 	public Vector2 target4; //top left
-	public float gestureTargetXOffset = 20; //distances to place the target to record gesture
-	public float gestureTargetYOffset = 20;
-	public float gestureTargetRadius = 10;
+	public float targetOffset;
+	public float gestureTargetRadius;
 	public int[] LastFourTargetHits; //which target was hit 1-4
 
 	public Boolean draw;
-	public Texture targetImage;
+	public Texture circleImage;
+	public Texture xImage;
 
 	public Vector2 mousePos;
+	public String gesture;
+	public Boolean drawImage;
+	public int drawTime;
+	public int drawTimer;
+
+
 	
 	// Use this for initialization
 	void Start () {
 		selected = null;
 		targeted = null;
-		targetImage = Resources.Load("target") as Texture;
+		circleImage = Resources.Load("circleImage") as Texture;
+		xImage = Resources.Load("xImage") as Texture;
+		targetOffset = 30; 
+		gestureTargetRadius = 20;
+		LastFourTargetHits = new int[4];
+		drawImage = false;
+		drawTime = 20;
+		drawTimer = drawTime;
 		
 	}
 	
@@ -58,28 +71,34 @@ public class Interface : MonoBehaviour {
 					
 				}
 			}
-			//if touch on a player and is released over another character, attack
-			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended && state.getActive()) {
+			//if attack input is is progress (a player was clicked)
+			if (selected!= null && targeted == null) {
 				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
 							
-				//If an object is touched? 
-				if (hit != null) {
+				if (hit.collider != null && hit.collider.gameObject != selected) {
 					targeted = hit.collider.gameObject;
-					Debug.Log (hit.collider.name + " targeted");
-					
-					if (targeted != selected) {
-						selected.GetComponent<PlayerAction> ().Attack (targeted);
-					}
-					
-					selected.GetComponent<PlayerAction> ().DeSelect ();
-					ResetInput();
-					
-				} else {
-					selected.GetComponent<PlayerAction> ().DeSelect ();
-					ResetInput();
+					state = hit.collider.GetComponent<CharacterState>();
 				}
 			}
 			
+			if(targeted != null){ //if we have a target
+				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);//the onscreen position of the target
+				//setTargets(); //set the values for the targets based on the screen position
+				//recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit
+			}
+
+			//reset input if mouse is up
+			if(Input.GetTouch (0).phase == TouchPhase.Ended){
+				//checkTargetHits(); //check if they form an X or O
+				
+				if(targeted != null){
+					if(Input.mousePosition.y > targetScreenPosition.y){ upInput(); }
+					if(Input.mousePosition.y < targetScreenPosition.y){ downInput(); }
+				}
+				selected.GetComponent<PlayerAction>().DeSelect ();
+				ResetInput();
+			}
+		
 			//if this is in Unity detect mouse instead of touch
 		}else if(platform == RuntimePlatform.WindowsEditor) {
 			if (Input.GetMouseButtonDown (0)) {
@@ -103,19 +122,26 @@ public class Interface : MonoBehaviour {
 
 				if (hit2.collider != null && hit2.collider.gameObject != selected) {
 					targeted = hit2.collider.gameObject;
-					setTargets(); //set the values for the targets based on the screen position
 					state = hit2.collider.GetComponent<CharacterState>();
 				}
 			}
 
 			if(targeted != null){ //if we have a target
 				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);//the onscreen position of the target
-				recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit 
-				checkTargetHits(); //check if they form an X or O
+				//setTargets(); //set the values for the targets based on the screen position
+				//recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit
 			}
+
+
 	
 			//reset input if mouse is up
 			if(Input.GetMouseButtonUp(0)){
+				//checkTargetHits(); //check if they form an X or O
+
+				if(targeted != null){
+					if(Input.mousePosition.y > targetScreenPosition.y){ upInput(); }
+					if(Input.mousePosition.y < targetScreenPosition.y){ downInput(); }
+				}
 				selected.GetComponent<PlayerAction>().DeSelect ();
 				ResetInput();
 			}
@@ -124,51 +150,119 @@ public class Interface : MonoBehaviour {
 		}
 	}
 
-	void OnGUI() {
-		if (draw) {
-			if (!targetImage) {
-					Debug.LogError ("Assign a Texture in the inspector.");
-					return;
+	public void OnGUI(){
+		if (drawImage) {
+			drawTimer--;
+			if(gesture == "o"){
+				//GUI.DrawTexture(new Rect(), circleImage);
+				//GUI.DrawTexture(new Rect(10,10,60,60),circleImage);
 			}
-			if(targeted != null){
-				GUI.DrawTexture (new Rect (target1.x - gestureTargetRadius, 
-			                           target1.y - gestureTargetRadius, 
-			                           target1.x + gestureTargetRadius,
-			                           target1.y - gestureTargetRadius), targetImage, ScaleMode.ScaleToFit, true, 10.0F);
-		
+			if(gesture == "x"){
+				//GUI.DrawTexture(new Rect(),xImage);
+				//GUI.DrawTexture(new Rect(10,10,60,60),xImage);
 			}
 		}
+
+		if(drawTimer == 0){
+			drawImage = false;
+			drawTimer = drawTime;
+		}
+
 	}
 
 
 	public void setTargets(){
-		target1 = new Vector2 (targetScreenPosition.x + gestureTargetXOffset, targetScreenPosition.y + gestureTargetYOffset);
-		target2 = new Vector2 (targetScreenPosition.x + gestureTargetXOffset, targetScreenPosition.y - gestureTargetYOffset);
-		target3 = new Vector2 (targetScreenPosition.x - gestureTargetXOffset, targetScreenPosition.y - gestureTargetYOffset);
-		target4 = new Vector2 (targetScreenPosition.x - gestureTargetXOffset, targetScreenPosition.y + gestureTargetYOffset);
+		target1 = new Vector2 (targetScreenPosition.x + targetOffset, targetScreenPosition.y + targetOffset);
+		target2 = new Vector2 (targetScreenPosition.x + targetOffset, targetScreenPosition.y - targetOffset);
+		target3 = new Vector2 (targetScreenPosition.x - targetOffset, targetScreenPosition.y - targetOffset);
+		target4 = new Vector2 (targetScreenPosition.x - targetOffset, targetScreenPosition.y + targetOffset);
 	}
 
 
 	//if the target
 	public void recordTargetHits(float X, float Y){
 		mousePos = new Vector2(X, Y);
-	
-		if (Math.Abs(Vector2.Distance(target1,mousePos)) <= gestureTargetRadius) { print ("TARGET1"); }
-		if (Math.Abs(Vector2.Distance(target2,mousePos)) <= gestureTargetRadius) { print ("TARGET2"); }
-		if (Math.Abs(Vector2.Distance(target3,mousePos)) <= gestureTargetRadius) { print ("TARGET3"); }
-		if (Math.Abs(Vector2.Distance(target4,mousePos)) <= gestureTargetRadius) { print ("TARGET4"); }
+		if(!(Math.Abs(Vector2.Distance(targetScreenPosition,mousePos)) <= 5)){
+			if (Math.Abs(Vector2.Distance(target1,mousePos)) <= gestureTargetRadius) { targetArrayAdd(1); }
+			if (Math.Abs(Vector2.Distance(target2,mousePos)) <= gestureTargetRadius) { targetArrayAdd(2); }
+			if (Math.Abs(Vector2.Distance(target3,mousePos)) <= gestureTargetRadius) { targetArrayAdd(3); }
+			if (Math.Abs(Vector2.Distance(target4,mousePos)) <= gestureTargetRadius) { targetArrayAdd(4); }
+		}
 	}
 
-
 	public void checkTargetHits(){
-		
+		if (LastFourTargetHits [0] == 1 && LastFourTargetHits [1] == 2 && LastFourTargetHits [2] == 3 && LastFourTargetHits [3] == 4 ||
+						LastFourTargetHits [0] == 1 && LastFourTargetHits [1] == 4 && LastFourTargetHits [2] == 3 && LastFourTargetHits [3] == 2 ||
+						LastFourTargetHits [0] == 2 && LastFourTargetHits [1] == 3 && LastFourTargetHits [2] == 4 && LastFourTargetHits [3] == 1 ||
+						LastFourTargetHits [0] == 2 && LastFourTargetHits [1] == 1 && LastFourTargetHits [2] == 4 && LastFourTargetHits [3] == 3 ||
+						LastFourTargetHits [0] == 3 && LastFourTargetHits [1] == 4 && LastFourTargetHits [2] == 1 && LastFourTargetHits [3] == 2 ||
+						LastFourTargetHits [0] == 3 && LastFourTargetHits [1] == 2 && LastFourTargetHits [2] == 1 && LastFourTargetHits [3] == 4 ||
+						LastFourTargetHits [0] == 4 && LastFourTargetHits [1] == 1 && LastFourTargetHits [2] == 2 && LastFourTargetHits [3] == 3 ||
+						LastFourTargetHits [0] == 4 && LastFourTargetHits [1] == 3 && LastFourTargetHits [2] == 2 && LastFourTargetHits [3] == 1) {
+			Debug.Log ("CIRCLE");
+			circleInput();
+		} else if (LastFourTargetHits [0] == 1 && LastFourTargetHits [1] == 3 && LastFourTargetHits [2] == 4 && LastFourTargetHits [3] == 2 ||
+		           LastFourTargetHits [0] == 1 && LastFourTargetHits [1] == 3 && LastFourTargetHits [2] == 2 && LastFourTargetHits [3] == 4 ||
+		           LastFourTargetHits [0] == 2 && LastFourTargetHits [1] == 4 && LastFourTargetHits [2] == 3 && LastFourTargetHits [3] == 1 ||
+		           LastFourTargetHits [0] == 2 && LastFourTargetHits [1] == 4 && LastFourTargetHits [2] == 1 && LastFourTargetHits [3] == 3 ||
+		           LastFourTargetHits [0] == 3 && LastFourTargetHits [1] == 1 && LastFourTargetHits [2] == 4 && LastFourTargetHits [3] == 2 ||
+		           LastFourTargetHits [0] == 3 && LastFourTargetHits [1] == 1 && LastFourTargetHits [2] == 2 && LastFourTargetHits [3] == 4 ||
+		           LastFourTargetHits [0] == 4 && LastFourTargetHits [1] == 2 && LastFourTargetHits [2] == 3 && LastFourTargetHits [3] == 1 ||
+		           LastFourTargetHits [0] == 4 && LastFourTargetHits [1] == 2 && LastFourTargetHits [2] == 1 && LastFourTargetHits [3] == 3) {
+			Debug.Log ("X (CROSS)");
+			xInput();
+		} else {
+					Debug.Log ("NO SHAPE");
+				}
+	}
+
+	public void targetArrayAdd(int i){
+		//Place the *new* int in the last empty bucket or move them all down
+		if (LastFourTargetHits [0] == null) { LastFourTargetHits[0] = i; }
+		else if (LastFourTargetHits [1] == null && LastFourTargetHits[0] != i) { LastFourTargetHits[1] = i; }
+		else if (LastFourTargetHits [2] == null && LastFourTargetHits[1] != i) { LastFourTargetHits[2] = i; }
+		else if (LastFourTargetHits [3] == null && LastFourTargetHits[2] != i) { LastFourTargetHits[3] = i; }
+		else if (LastFourTargetHits[3] != i){ 
+			LastFourTargetHits[0] = LastFourTargetHits[1];
+			LastFourTargetHits[1] = LastFourTargetHits[2];
+			LastFourTargetHits[2] = LastFourTargetHits[3];
+			LastFourTargetHits[3] = i; 
+		}
 	}
 	
 	
 	public void ResetInput(){
+		Debug.Log(LastFourTargetHits.ToString());
 		selected = null;
 		targeted = null;
+		LastFourTargetHits = new int[4];
 		Debug.Log("input reset");
+	}
+
+	public void circleInput(){
+		gesture = "o";
+		drawImage = true;
+
+	}
+
+	public void xInput(){
+		gesture = "x";
+		drawImage = true;
+
+	}
+
+	public void upInput(){
+		Debug.Log ("UP");
+		gesture = "o";
+		drawImage = true;
+		selected.GetComponent<PlayerAction> ().Attack (targeted);
+	}
+
+	public void downInput(){
+		Debug.Log ("DOWN");
+		gesture = "x";
+		drawImage = true;
+		selected.GetComponent<PlayerAction> ().Attack (targeted);
 	}
 }
 
