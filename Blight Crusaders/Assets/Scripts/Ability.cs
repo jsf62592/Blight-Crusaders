@@ -1,31 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Ability : MonoBehaviour {
 
-	//status effects that will be inflicted upon this ability's target
-	public ArrayList status_effects;
-
 	//this is the cooldown on the ability
-	public int max_cooldown = 1;
-
+	protected int max_cooldown;
+	
+	//this is the CharacterState of what this is attached to
 	protected CharacterState state;
 
-	// Use this for initialization
-	void Start () {
+	//call this in Start() and set the max_cooldown with it
+	//complains if this ability is on something that doesn't have a CharacterState
+	protected void setup(int given_max_cooldown){
+		max_cooldown = given_max_cooldown;
+
 		state = this.GetComponent<CharacterState> ();
 		if(state == null){
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
 		}
 	}
-	
-	//does what this ability does.  should only be called by a message on the ability queue
-	//it's late though and i currently cannot be bothered to figure out a good way to restrict access to this
-	//so expect this to be changed
-	public virtual void do_stuff(){}
+
+	public int get_max_cooldown(){
+		return max_cooldown;
+	}
+
+	//attaches various Status_Effects and tells the given_target to add_attached_status_effects()
+	//NOTE:  should only be called by a message on the ability queue
+	public virtual void do_stuff(GameObject given_target){}
 
 	//add a message onto the ability queue
 	public void add_to_queue(GameObject given_target){
-		Ability_Message message = new Ability_Message(this, ref given_target);
+		Ability_Message message = new Ability_Message(this, given_target);
 	}
 }

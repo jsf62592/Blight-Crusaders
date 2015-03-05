@@ -6,17 +6,16 @@ public class Ability_Message : MonoBehaviour {
 	private Ability creator;
 
 	//reference to target
-	private GameObject ref_to_target;
+	private GameObject target;
 	
 
-	//NOTE:  if you don't know what "ref" is, look at:
-	//http://answers.unity3d.com/questions/64105/c-unity-gameobject-pointers.html
-	public Ability_Message (Ability given_creator, ref GameObject given_target) {
+
+	public Ability_Message (Ability given_creator, GameObject given_target) {
 		creator = given_creator;
-		ref_to_target = given_target;
+		target = given_target;
 
 		//complain if it gets null
-		if ((creator == null) || (ref_to_target == null)){
+		if ((creator == null) || (target == null)){
 			throw new UnityException("Ability_Message given null");
 		}
 	}
@@ -28,7 +27,7 @@ public class Ability_Message : MonoBehaviour {
 	}
 
 	public GameObject get_target(){
-		return ref_to_target;
+		return target;
 	}
 	
 }

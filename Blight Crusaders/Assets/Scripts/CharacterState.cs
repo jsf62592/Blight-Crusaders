@@ -24,8 +24,6 @@ public class CharacterState : MonoBehaviour {
 	//how far it should be from the closest edge of the screen
 	private float distance;
 
-	private List<Status_Effect> status_effect_list = new List<Status_Effect>();
-
 	// Use this for initialization
 	void Start () {
 		this.time_next_second = 0;
@@ -73,9 +71,6 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
-
-
-
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(int given_cooldown){
 		this.cooldown = given_cooldown;
@@ -103,7 +98,7 @@ public class CharacterState : MonoBehaviour {
 		move_according_to_health();
 	}
 
-	//no touchie
+	//handles moving this character according to its health
 	private void move_according_to_health(){
 		float new_x_position;
 		//if it's on the left side
@@ -121,19 +116,10 @@ public class CharacterState : MonoBehaviour {
 	private void death(){
 		Destroy(this.gameObject);
 	}
-
-	public void add_status_effect(Status_Effect given_status_effect){
-		this.status_effect_list.Add (given_status_effect);
-	}
-
+	
 	private void apply_effects(){
-		if(Time.time > 5){
-			foreach(Status_Effect effect in status_effect_list){
-				effect.apply_effect();
-			}
-		}
-		else{
-			print ("holy shit it's late.  also get rid of this debug stuff");
+		foreach(Status_Effect effect in this.gameObject.GetComponents<Status_Effect>()){
+			effect.apply_effect();
 		}
 	}
 }

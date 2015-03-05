@@ -9,38 +9,46 @@ public abstract class Status_Effect : MonoBehaviour {
 
 	protected CharacterState state;
 	
-	void Start(){
-		CharacterState state = this.GetComponent<CharacterState> ();
-		if(state == null){
-			throw new UnityException("Status_Effect: " + this.name +" could not find a CharacterState component");
-		}
-	}
-
-
-
 	//does the stuff this should do.
-	//returns true iff the effect ends.  "ends" meaning !(applied_immediatehuh || duration)
-	//NOTE:  this can still be called after it ends, but it won't do anything other than return true.
-	public bool apply_effect(){
+	//the effect kills itself when it runs its course
+	public void apply_effect(){
+		//if the immediate effect has been applied and the duration isn't 0, apply the persistant_effect()
 		if((applied_immediatehuh) && (duration > 0)){
 			persistant_effect();
 			duration--;
 		}
 
+		//if the immediate_effect() hasn't been applied, apply it
 		if(! applied_immediatehuh){
 			applied_immediatehuh = true;
 			immediate_effect();
 		}
 
-		if((applied_immediatehuh) && (duration <= 0)){
-			return true;
+		//if the status effect is over, apply the final_effect() and commit suicide
+		if(duration <= 0){
+			final_effect();
+			Destroy(this);
 		}
-		return false;
+
+	}
+
+	//call this in Start() and set the duration with it
+	protected void setup(int given_duration){
+		duration = given_duration;
+
+		state = this.GetComponent<CharacterState> ();
+		if(state == null){
+			throw new UnityException("Status_Effect: " + this.name +" could not find a CharacterState component");
+		}
 	}
 
 	//gets done once immediately
 	protected virtual void immediate_effect(){}
 
-	//happens over time, the amount of seconds is this.persistance
+	//applied over time (every second).  Begins one second after immediate_effect()
+	//the amount of times this occurs is this.duration
 	protected virtual void persistant_effect(){}
+
+	//happens at the end of the effect's duration.  this should typically undo things (ex:  remove a blindness effect)
+	protected virtual void final_effect(){}
 }

@@ -49,11 +49,13 @@
      <Compile Include="Assets\Scripts\Ability.cs" />
      <Compile Include="Assets\Scripts\Ability_Alch_Bomb.cs" />
      <Compile Include="Assets\Scripts\Ability_Message.cs" />
+     <Compile Include="Assets\Scripts\Ability_debug.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
      <Compile Include="Assets\Scripts\PlayerAction.cs" />
      <Compile Include="Assets\Scripts\SE_Alch_Bomb.cs" />
+     <Compile Include="Assets\Scripts\SE_hellomynameisdebug.cs" />
      <Compile Include="Assets\Scripts\Status_Effect.cs" />
      <Compile Include="Assets\Scripts\Touch.cs" />
      <Compile Include="Assets\Scripts\View.cs" />
