@@ -14,7 +14,7 @@ public class Interface : MonoBehaviour {
 	CharacterState state;
 
 
-	public Vector2 targetScreenPosition; 
+	public Vector3 targetScreenPosition; 
 	public Vector2 target1; //top right
 	public Vector2 target2; //bottom right
 	public Vector2 target3; //bottom left
@@ -60,12 +60,10 @@ public class Interface : MonoBehaviour {
 				
 				//If an object is touched? FOR THE FUTURE: do nothing if the master object says an enemy is attacking
 				if (hit != null) {
-					Debug.Log (hit.collider.name + " touched");
 					 state = hit.collider.GetComponent<CharacterState>();
 					//if that object is a player off cooldown, they are selected
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh () && state.getActive()) {
 						selected = hit.collider.gameObject;
-						Debug.Log (selected + " is selected");
 						selected.GetComponent<PlayerAction> ().Select ();
 					}
 					
@@ -92,8 +90,9 @@ public class Interface : MonoBehaviour {
 				//checkTargetHits(); //check if they form an X or O
 				
 				if(targeted != null){
-					if(Input.mousePosition.y > targetScreenPosition.y){ upInput(); }
-					if(Input.mousePosition.y < targetScreenPosition.y){ downInput(); }
+					float delta = Input.mousePosition.y - targetScreenPosition.y;
+					if(delta >= 100){ upInput(); }
+					if(delta <= -100){ downInput(); }
 				}
 				selected.GetComponent<PlayerAction>().DeSelect ();
 				ResetInput();
@@ -106,12 +105,10 @@ public class Interface : MonoBehaviour {
 				
 				//if an object is clicked FOR THE FUTURE: do nothing if the master object says an enemy is attacking
 				if (hit.collider != null) {
-					Debug.Log (hit.collider.name + " touched");
 					state = hit.collider.GetComponent<CharacterState>();
 					//if that object is a player off cooldown, they are selected
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh() && state.getActive()) {
 						selected = hit.collider.gameObject;
-						Debug.Log (selected + " is selected");
 						selected.GetComponent<PlayerAction>().Select();
 					}
 				}
@@ -139,8 +136,9 @@ public class Interface : MonoBehaviour {
 				//checkTargetHits(); //check if they form an X or O
 
 				if(targeted != null){
-					if(Input.mousePosition.y > targetScreenPosition.y){ upInput(); }
-					if(Input.mousePosition.y < targetScreenPosition.y){ downInput(); }
+					float delta = Input.mousePosition.y - targetScreenPosition.y;
+					if(delta >= 100){ upInput(); }
+					if(delta <= -100){ downInput(); }
 				}
 				selected.GetComponent<PlayerAction>().DeSelect ();
 				ResetInput();

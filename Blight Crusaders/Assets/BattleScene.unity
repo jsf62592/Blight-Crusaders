@@ -187,11 +187,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.1955204
+      value: 4.35715675
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.07265663
+      value: 4.74938536
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -521,6 +521,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 0}
   targeted: {fileID: 0}
+  targetScreenPosition: {x: 0, y: 0, z: 0}
+  target1: {x: 0, y: 0}
+  target2: {x: 0, y: 0}
+  target3: {x: 0, y: 0}
+  target4: {x: 0, y: 0}
+  targetOffset: 0
+  gestureTargetRadius: 0
+  LastFourTargetHits: 
+  draw: 0
+  circleImage: {fileID: 0}
+  xImage: {fileID: 0}
+  mousePos: {x: 0, y: 0}
+  gesture: 
+  drawImage: 0
+  drawTime: 0
+  drawTimer: 0
 --- !u!1 &1340364547
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +791,7 @@ Transform:
   m_PrefabInternal: {fileID: 493141280}
   m_GameObject: {fileID: 1595471953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1955204, y: 5.07265663, z: 0}
+  m_LocalPosition: {x: 4.35715675, y: 4.74938536, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
