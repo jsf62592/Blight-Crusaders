@@ -22,6 +22,6 @@ public class Message : MonoBehaviour {
 	}
 
 	public void UseAbility(){
-		ability.UseAbility (selected, targeted);
+		ability.do_stuff (selected, targeted);
 	}
 }

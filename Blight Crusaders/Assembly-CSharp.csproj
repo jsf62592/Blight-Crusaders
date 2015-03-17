@@ -47,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Ability.cs" />
+     <Compile Include="Assets\Scripts\Ability_Alch_Bomb.cs" />
+     <Compile Include="Assets\Scripts\Ability_Message.cs" />
+     <Compile Include="Assets\Scripts\Ability_debug.cs" />
+     <Compile Include="Assets\Scripts\AttackAndHurt.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\EnemyFireball.cs" />
@@ -55,6 +59,9 @@
      <Compile Include="Assets\Scripts\Interface.cs" />
      <Compile Include="Assets\Scripts\Message.cs" />
      <Compile Include="Assets\Scripts\PlayerAction.cs" />
+     <Compile Include="Assets\Scripts\SE_Alch_Bomb.cs" />
+     <Compile Include="Assets\Scripts\SE_hellomynameisdebug.cs" />
+     <Compile Include="Assets\Scripts\Status_Effect.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

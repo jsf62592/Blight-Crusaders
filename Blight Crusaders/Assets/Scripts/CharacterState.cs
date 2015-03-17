@@ -35,7 +35,7 @@ public class CharacterState : MonoBehaviour {
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 
-		this.screen_length = Screen.width; 
+		this.screen_length = 3; 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY   (/0 ^0)/ ^ I_____I");
 
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
@@ -58,6 +58,9 @@ public class CharacterState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if ((transform.position.x < -13) || (transform.position.x > 14)) {
+			death ();
+		}
 		//Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
@@ -69,7 +72,9 @@ public class CharacterState : MonoBehaviour {
 
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
-			this.take_damage(10);
+			Vector3 pos = this.transform.position;
+			pos.x -= 1;
+			this.transform.position = pos;
 		}
 	}
 
@@ -100,6 +105,24 @@ public class CharacterState : MonoBehaviour {
 		return this.active;
 	}
 
+	public IEnumerator takeOtherDamage (GameObject attacked){
+		if (attacked.tag != "Player") {
+			attacked.GetComponent<Animator>().SetInteger("Direction",2);
+			Vector3 attackPos = attacked.transform.position;
+			attackPos.x += 3;
+			attacked.transform.position = attackPos;
+			yield return new WaitForSeconds(1);
+			attacked.GetComponent<Animator>().SetInteger("Direction", 0);
+		} else {
+			attacked.GetComponent<Animator>().SetInteger("Direction",2);
+			Vector3 attackPos = attacked.transform.position;
+			attackPos.x -= 1;
+			attacked.transform.position = attackPos;
+			yield return new WaitForSeconds(.5f);
+			attacked.GetComponent<Animator>().SetInteger("Direction", 0);
+		}
+	}
+
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(double given_damage){
@@ -111,6 +134,8 @@ public class CharacterState : MonoBehaviour {
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
 		move_according_to_health();
 	}
+
+
 
 	//no touchie
 	private void move_according_to_health(){
@@ -128,6 +153,11 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	private void death(){
-		Destroy(this.gameObject);
+		if (this.gameObject.name == "P1") {
+			Application.Quit ();
+		} else {
+			Destroy (this.gameObject);
+			GameManager.instance.PopCharacter (this.gameObject);
+		}
 	}
 }

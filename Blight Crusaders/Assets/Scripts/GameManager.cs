@@ -8,23 +8,32 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	Queue<Message> playerAction;
 	Queue<Message> enemyAction;
-	GameObject[] characters;
+	List<GameObject> characters;
 
 	// Use this for initialization
 	void Start () {
-		characters = new GameObject[5];
+		characters = new List<GameObject> ();
 		PopulateCharacters (characters);
 		instance = this;
 		playerAction = new Queue<Message> ();
 		enemyAction = new Queue<Message> ();
 	}
 
-	void PopulateCharacters(GameObject[] characters){
-		characters [0] = GameObject.Find ("P1");
-		characters [1] = GameObject.Find ("P2");
-		characters [2] = GameObject.Find ("E1");
-		characters [3] = GameObject.Find ("E2");
-		characters [4] = GameObject.Find ("E3");
+	void PopulateCharacters(List<GameObject> characters){
+		characters.Add(GameObject.Find ("P1"));
+		characters.Add(GameObject.Find ("P2"));
+		characters.Add(GameObject.Find ("E1"));
+		characters.Add(GameObject.Find ("E2"));
+		characters.Add(GameObject.Find ("E3"));
+	}
+
+	public void PopCharacter(GameObject character){
+		int i = 0;
+		while (i < characters.Count) {
+			if(characters[i] == character){
+				characters.Remove (characters[i]);
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -42,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
 	void FreezeOtherCharacters(GameObject characterAttacking){
 		int i = 0;
-		while (i < characters.Length) {
+		while (i < characters.Count) {
 			string name = characterAttacking.name;
 			if(characters[i].name != name){
 				characters[i].GetComponent<CharacterState>().setInactive();
@@ -53,7 +62,7 @@ public class GameManager : MonoBehaviour {
 
 	void UnFreezeCharacters(GameObject characterAttacking){
 		int i = 0;
-		while (i < characters.Length) {
+		while (i < characters.Count) {
 			string name = characterAttacking.gameObject.name;
 			if(characters[i].name != name){
 				characters[i].GetComponent<CharacterState>().setActive();
@@ -71,11 +80,11 @@ public class GameManager : MonoBehaviour {
 	}	
 
 	IEnumerator UseEnemyAction(Message action){
-		GameObject selected = action.ReturnSelected ();		
-		selected.renderer.material.color = Color.red;
+		GameObject selected = action.ReturnSelected ();
+		FreezeOtherCharacters (selected);
 		action.UseAbility ();
 		yield return new WaitForSeconds (1f);
-		selected.renderer.material.color = Color.white;
+		UnFreezeCharacters (selected);
 	}
 
 	public void AddPlayerAction(Message action){

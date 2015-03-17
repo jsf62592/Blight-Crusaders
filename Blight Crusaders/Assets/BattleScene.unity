@@ -121,6 +121,14 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: health_max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: distance_initial_offset
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
@@ -173,6 +181,14 @@ Prefab:
       propertyPath: m_Name
       value: E3
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
+      propertyPath: health_max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
+      propertyPath: distance_initial_offset
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
   m_RootGameObject: {fileID: 1496181435}
@@ -224,6 +240,14 @@ Prefab:
     - target: {fileID: 100000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_Name
       value: E1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
+      propertyPath: health_max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
+      propertyPath: distance_initial_offset
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
@@ -294,7 +318,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 775604579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -608,8 +632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 0
-  distance_initial_offset: 0
+  health_max: 100
+  distance_initial_offset: 1
 --- !u!61 &1496181438
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -720,6 +744,18 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
+      propertyPath: health_max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
+      propertyPath: distance_initial_offset
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
   m_RootGameObject: {fileID: 2086782842}
@@ -820,8 +856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 0
-  distance_initial_offset: 0
+  health_max: 100
+  distance_initial_offset: 1
 --- !u!61 &1595471959
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -930,8 +966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 0
-  distance_initial_offset: 0
+  health_max: 100
+  distance_initial_offset: -1
 --- !u!61 &1947263876
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,8 +1138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 0
-  distance_initial_offset: 0
+  health_max: 100
+  distance_initial_offset: 3
 --- !u!61 &2086782848
 BoxCollider2D:
   m_ObjectHideFlags: 0
