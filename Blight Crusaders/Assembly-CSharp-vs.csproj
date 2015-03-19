@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Status_Effect.cs" />
      <Compile Include="Assets\Scripts\Touch.cs" />
      <Compile Include="Assets\Scripts\View.cs" />
+     <Compile Include="Assets\Scripts\debug_force_abilities.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

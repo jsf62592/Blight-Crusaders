@@ -7,7 +7,7 @@ public class Ability_debug : Ability {
 		setup (5);
 	}
 	public override void do_stuff(GameObject given_target){
-		given_target.AddComponent<SE_Alch_Bomb> ();
+		given_target.AddComponent<SE_hellomynameisdebug> ();
 	}
 	void Update(){
 		if(Input.GetKeyDown("g")){
