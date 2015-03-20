@@ -252,6 +252,13 @@ public class Interface : MonoBehaviour {
 		Debug.Log ("UP");
 		gesture = "o";
 		drawImage = true;
+		Fireball f = selected.GetComponent<Fireball>();
+		if(f == null){
+			f = selected.gameObject.AddComponent<Fireball>();
+		}
+		f.add_to_queue(targeted);
+		state.setInactive();
+
 	}
 	
 	public void downInput(){

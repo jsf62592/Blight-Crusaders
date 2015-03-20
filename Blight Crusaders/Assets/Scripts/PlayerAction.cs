@@ -41,6 +41,7 @@ public class PlayerAction : MonoBehaviour {
 	}
 	
 	public void Select(){
+		GameManager.instance.FreezeOtherCharacters(this.gameObject);
 		gameObject.renderer.material.color = Color.blue;
 	}
 	

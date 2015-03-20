@@ -14,7 +14,6 @@ public class EnemyAttack : MonoBehaviour {
 	double p1HPprecentage;
 	double p2HPprecentage;
 	Animator animator;
-	EnemyFireball f;
 	
 	
 	//position of players
@@ -45,7 +44,6 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		f = GetComponent<EnemyFireball>();
 		animator = gameObject.GetComponent<Animator> ();
 		//get players' health and max health, in order to know the precentage.
 		p1 = GameObject.Find("P1");
@@ -82,14 +80,15 @@ public class EnemyAttack : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(!state.on_cooldown_huh() && state.getActive() && state.getCanQueue()){
-			Debug.Log("HEY ITS ME: " + gameObject.name);
+		if(!state.on_cooldown_huh() && state.getActive()){
+			EnemyFireball f = GetComponent<EnemyFireball>();
 			if(f == null){
 				f = this.gameObject.AddComponent<EnemyFireball>();
 			}
 			GameObject p1 = GameObject.Find ("P1");
 			f.add_to_queue(p1);
-			state.setCannotQueue();
+			GameManager.instance.FreezeOtherCharacters(this.gameObject);
+			state.setInactive();
 		} 
 	}
 }

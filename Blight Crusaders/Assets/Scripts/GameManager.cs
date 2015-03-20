@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void FreezeOtherCharacters(GameObject characterAttacking){
+	public void FreezeOtherCharacters(GameObject characterAttacking){
 		int i = 0;
 		while (i < characters.Count) {
 			string name = characterAttacking.name;
@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour {
 		GameObject selected = action.ReturnSelected ();
 		FreezeOtherCharacters (selected);
 		action.UseAbility ();
-		selected.GetComponent<CharacterState> ().setCanQueue ();
 	}	
 
 

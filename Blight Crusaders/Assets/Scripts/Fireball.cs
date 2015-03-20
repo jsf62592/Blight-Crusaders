@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Fireball : Ability {
 
-	public void UseAbility(GameObject selected, GameObject targeted){
-		Debug.Log ("PLAYER: " + selected.name);
-		Debug.Log ("ENEMY: " + targeted.name);
+	public override void do_stuff(GameObject selected, GameObject given_target){
+		CharacterState s = selected.GetComponent<CharacterState>();
+		StartCoroutine(s.moveTo(given_target));
 	}
 }

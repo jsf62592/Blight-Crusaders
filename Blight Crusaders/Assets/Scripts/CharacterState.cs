@@ -80,6 +80,10 @@ public class CharacterState : MonoBehaviour {
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 
+		if(this.on_cooldown_huh()){
+
+		}
+
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
 			this.take_damage(10);
@@ -89,6 +93,11 @@ public class CharacterState : MonoBehaviour {
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(int given_cooldown){
 		this.cooldown = given_cooldown;
+		float i = 0.0f;
+		while(i < given_cooldown){
+			Color.Lerp(Color.black, Color.white, given_cooldown);
+			i += Time.deltaTime;
+		}
 	}
 
 	//is this currently on cooldown (not able to act)?  if yes, return true, else false.
@@ -125,6 +134,12 @@ public class CharacterState : MonoBehaviour {
 		return this.canQueue;
 	}
 
+	public IEnumerator getHurt(){
+		animator.SetInteger("Direction", 1);
+		yield return new WaitForSeconds(attack.length);
+		Debug.Log(hurt.length);
+		animator.SetInteger("Direction", 0);
+	}
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
@@ -152,13 +167,17 @@ public class CharacterState : MonoBehaviour {
 			inrange=true;
 			Animator animator = GetComponent<Animator>();
 			animator.SetInteger("Direction", 1);
+			dest.GetComponent<Animator>().SetInteger("Direction", 2);
 			dest.AddComponent<SE_Enemy_Fireball>().apply_effect();
+			//StartCoroutine("slowTime");
 			yield return new WaitForSeconds(attack.length);
 			animator.SetInteger("Direction", 0);
+			dest.GetComponent<Animator>().SetInteger("Direction", 0);
 			elaspedTime = 0.0f;
 			StartCoroutine(getback(origposn));
 		}
 	}
+
 	
 	//move the enemy to the starting position
 	IEnumerator getback(Vector3 originalPos){
@@ -171,8 +190,15 @@ public class CharacterState : MonoBehaviour {
 		if (Vector3.Distance(transform.position, originalPos) < 1) {
 			GameManager.instance.UnFreezeCharacters();
 			inrange=false;
+			elaspedTime = 0.0f;
 			this.cooldown_start(4);
 		}
+	}
+
+	IEnumerator slowTime(){
+		Time.timeScale = 0.5f;
+		yield return new WaitForSeconds(0.03f);
+		Time.timeScale = 1.0f;
 	}
 
 	//no touchie
