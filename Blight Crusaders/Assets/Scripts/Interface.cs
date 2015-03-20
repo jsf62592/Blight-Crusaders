@@ -47,7 +47,7 @@ public class Interface : MonoBehaviour {
 		drawImage = false;
 		drawTime = 20;
 		drawTimer = drawTime;
-		
+
 	}
 	
 	RuntimePlatform platform = Application.platform;
@@ -65,8 +65,7 @@ public class Interface : MonoBehaviour {
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh () && state.getActive()) {
 						selected = hit.collider.gameObject;
 						selected.GetComponent<PlayerAction> ().Select ();
-					}
-					
+					}	
 				}
 			}
 			//if attack input is is progress (a player was clicked)
@@ -253,14 +252,12 @@ public class Interface : MonoBehaviour {
 		Debug.Log ("UP");
 		gesture = "o";
 		drawImage = true;
-		selected.GetComponent<AttackAndHurt> ().moveto (targeted);
 	}
 	
 	public void downInput(){
 		Debug.Log ("DOWN");
 		gesture = "x";
 		drawImage = true;
-		selected.GetComponent<AttackAndHurt> ().moveto (targeted);
 	}
 }
 

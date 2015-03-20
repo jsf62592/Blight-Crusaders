@@ -31,6 +31,7 @@ public abstract class Ability : MonoBehaviour {
 	
 	//add a message onto the ability queue
 	public void add_to_queue(GameObject given_target){
-		Ability_Message message = new Ability_Message(this, given_target);
+		Message message = new Message(this.gameObject, given_target, this);
+		GameManager.instance.AddQueueAction(message);
 	}
 }

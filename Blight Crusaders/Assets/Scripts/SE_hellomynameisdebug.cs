@@ -7,7 +7,7 @@ public class SE_hellomynameisdebug : Status_Effect {
 
 	// Use this for initialization
 	void Start () {
-		setup (4);
+		//setup (4);
 	}
 
 	protected override void immediate_effect(){

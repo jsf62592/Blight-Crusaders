@@ -1,0 +1,15 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class SE_Enemy_Fireball : Status_Effect {
+
+	void Awake() {
+		setup (0);
+	}
+
+	protected override void immediate_effect(){
+		Debug.Log("HEY");
+		state.take_damage(50);
+		Destroy (this);
+	}
+}

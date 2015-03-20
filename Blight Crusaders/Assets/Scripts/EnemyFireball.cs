@@ -3,8 +3,14 @@ using System.Collections;
 
 public class EnemyFireball : Ability {
 
-	public void UseAbility(GameObject selected, GameObject targeted){
-		//Debug.Log ("ENEMY: " + selected.name);
-		//Debug.Log ("PLAYER: " + targeted.name);
+	void Start(){
+		setup(5);
+	}
+
+	public override void do_stuff(GameObject selected, GameObject given_target){
+		CharacterState s = selected.GetComponent<CharacterState>();
+		StartCoroutine(s.moveTo(given_target));
+		//given_target.AddComponent<SE_Enemy_Fireball>().apply_effect();
+
 	}
 }

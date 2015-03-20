@@ -6,8 +6,7 @@ public class GameManager : MonoBehaviour {
 
 //	bool canEnemyAttack;
 	public static GameManager instance;
-	Queue<Message> playerAction;
-	Queue<Message> enemyAction;
+	Queue<Message> QueueAction;
 	List<GameObject> characters;
 
 	// Use this for initialization
@@ -15,8 +14,7 @@ public class GameManager : MonoBehaviour {
 		characters = new List<GameObject> ();
 		PopulateCharacters (characters);
 		instance = this;
-		playerAction = new Queue<Message> ();
-		enemyAction = new Queue<Message> ();
+		QueueAction = new Queue<Message> ();
 	}
 
 	void PopulateCharacters(List<GameObject> characters){
@@ -38,14 +36,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		while (playerAction.Count > 0) {
-			Message action = playerAction.Dequeue();
-			StartCoroutine(UsePlayerAction(action));
-		}
-
-		while (enemyAction.Count > 0) {
-			Message action = enemyAction.Dequeue();
-			StartCoroutine(UseEnemyAction(action));
+		while (QueueAction.Count > 0) {
+			Message action = QueueAction.Dequeue();
+			StartCoroutine(UseAction(action));
 		}
 	}
 
@@ -71,7 +64,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	IEnumerator UsePlayerAction(Message action){
+	IEnumerator UseAction(Message action){
 		GameObject selected = action.ReturnSelected ();
 		FreezeOtherCharacters (selected);
 		action.UseAbility ();
@@ -79,19 +72,8 @@ public class GameManager : MonoBehaviour {
 		UnFreezeCharacters (selected);
 	}	
 
-	IEnumerator UseEnemyAction(Message action){
-		GameObject selected = action.ReturnSelected ();
-		FreezeOtherCharacters (selected);
-		action.UseAbility ();
-		yield return new WaitForSeconds (1f);
-		UnFreezeCharacters (selected);
-	}
 
-	public void AddPlayerAction(Message action){
-		playerAction.Enqueue (action);
-	}
-
-	public void AddEnemyAction(Message action){
-		enemyAction.Enqueue (action);
+	public void AddQueueAction(Message action){
+		QueueAction.Enqueue (action);
 	}
 }

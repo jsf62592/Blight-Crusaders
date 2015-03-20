@@ -8,9 +8,10 @@ public class CharacterState : MonoBehaviour {
 	public float distance_initial_offset;
 
 	bool active;
+	bool inrange = false;
 
 	//the total length of the screen.  It gets this from outside this scrip.
-	private int screen_length;
+	private float screen_length;
 	//used for keeping time
 	private float time_next_second;
 	//the amount of time left before this character can act.  In seconds.
@@ -27,15 +28,15 @@ public class CharacterState : MonoBehaviour {
 	void Start () {
 		this.active = true;
 		this.time_next_second = 0;
-		this.cooldown = 0;
+		this.cooldown = Random.Range(3,7);
 
-		this.health_max = 5;
+		this.health_max = 100;
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 
-		this.screen_length = 3; 
+		this.screen_length = Camera.main.orthographicSize; 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY   (/0 ^0)/ ^ I_____I");
 
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
@@ -72,9 +73,7 @@ public class CharacterState : MonoBehaviour {
 
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
-			Vector3 pos = this.transform.position;
-			pos.x -= 1;
-			this.transform.position = pos;
+			this.take_damage(10);
 		}
 	}
 
@@ -105,23 +104,6 @@ public class CharacterState : MonoBehaviour {
 		return this.active;
 	}
 
-	public IEnumerator takeOtherDamage (GameObject attacked){
-		if (attacked.tag != "Player") {
-			attacked.GetComponent<Animator>().SetInteger("Direction",2);
-			Vector3 attackPos = attacked.transform.position;
-			attackPos.x += 3;
-			attacked.transform.position = attackPos;
-			yield return new WaitForSeconds(1);
-			attacked.GetComponent<Animator>().SetInteger("Direction", 0);
-		} else {
-			attacked.GetComponent<Animator>().SetInteger("Direction",2);
-			Vector3 attackPos = attacked.transform.position;
-			attackPos.x -= 1;
-			attacked.transform.position = attackPos;
-			yield return new WaitForSeconds(.5f);
-			attacked.GetComponent<Animator>().SetInteger("Direction", 0);
-		}
-	}
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
@@ -135,7 +117,82 @@ public class CharacterState : MonoBehaviour {
 		move_according_to_health();
 	}
 
+	/*
+	// Update is called once per frame
+	void Update () {
+		
+		//know if other enemies are attacking, (even itself)
+		bool e1at = e1.GetComponent<EnemyAttack> ().attacking;
+		
+		bool e2at = e2.GetComponent<EnemyAttack> ().attacking; 
+		bool e3at = e3.GetComponent<EnemyAttack> ().attacking;
 
+		if ((!e1at && !e2at && !e3at) || attacking) {
+			attackcycle (p1);
+		}
+		if (!attacking) {
+			
+			getback ();
+			animator.SetInteger("Direction",0);
+		}
+	}
+
+	public void attackcycle(GameObject player){
+		if (!this.on_cooldown_huh () && this.getActive()) {
+			Debug.Log("HEY");
+			attacking = true;
+			// Decide(k
+			moveto (p1);
+			attack += Time.deltaTime;
+			
+			
+		} else {
+			attacking =false;
+		}
+		
+		if (attack > 1.0) {
+			state.cooldown_start (Random.Range (7, 10));
+			attack = 0.0;
+		}
+	}*/
+
+
+	bool inRange(Vector3 origpos, Vector3 destpos){
+		return Vector3.Distance(destpos, origpos) < 1;
+	}
+	
+	//enemy approaches to player, preform melee attack
+	//returns new posn/*
+	public IEnumerator moveTo(GameObject dest){
+		Debug.Log("HEY");
+		Vector3 origposn = transform.position;
+		Vector3 destposn = dest.transform.position - new Vector3(1,0,0);
+		if (Vector3.Distance(origposn, destposn) < 3) {
+			inrange=true;
+			Animator animator = GetComponent<Animator>();
+			animator.SetInteger("Direction", 1);
+			//StartCoroutine(dest.GetComponent<CharacterState>().takeOtherDamage(dest));
+		}
+		while (!inrange) {
+			transform.position = Vector3.Lerp(origposn, destposn, .05f);
+			yield return null;
+		}
+
+		
+	}/*
+	
+	//move the enemy to the starting position
+	void getback(){
+		Vector3 origposn = transform.position;
+		if (inrange) {
+			transform.position = Vector3.Lerp(origposn, selforigposn, .05f);
+		}
+		if ((Mathf.Abs (origposn.x - selforigposn.x) < 1) &&
+		    (Mathf.Abs (origposn.y - selforigposn.y) < 1) &&
+		    (Mathf.Abs (origposn.z - selforigposn.z) < 1)) {
+			inrange=false;
+		}
+	}*/
 
 	//no touchie
 	private void move_according_to_health(){

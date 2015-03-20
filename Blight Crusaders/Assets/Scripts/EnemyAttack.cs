@@ -14,6 +14,7 @@ public class EnemyAttack : MonoBehaviour {
 	double p1HPprecentage;
 	double p2HPprecentage;
 	Animator animator;
+	EnemyFireball f;
 	
 	
 	//position of players
@@ -44,6 +45,7 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		f = GetComponent<EnemyFireball>();
 		animator = gameObject.GetComponent<Animator> ();
 		//get players' health and max health, in order to know the precentage.
 		p1 = GameObject.Find("P1");
@@ -77,84 +79,16 @@ public class EnemyAttack : MonoBehaviour {
 		state = GetComponent<CharacterState> ();
 		state.cooldown_start (Random.Range(3,5));
 	}
-	/*
+
 	// Update is called once per frame
 	void Update () {
 		if(!state.on_cooldown_huh() && state.getActive()){
-			EnemyFireball f = new EnemyFireball();
+			if(f == null){
+				f = this.gameObject.AddComponent<EnemyFireball>();
+			}
 			GameObject p1 = GameObject.Find ("P1");
-			Message m = new Message(this.gameObject, p1, f);
-			GameManager.instance.AddEnemyAction(m);
+			f.add_to_queue(p1);
 			state.cooldown_start(Random.Range (3, 5));
 		} 
-	}*/
-	
-	
-	// Update is called once per frame
-	void Update () {
-		
-		//know if other enemies are attacking, (even itself)
-		bool e1at = e1.GetComponent<EnemyAttack> ().attacking;
-		
-		bool e2at = e2.GetComponent<EnemyAttack> ().attacking; 
-		bool e3at = e3.GetComponent<EnemyAttack> ().attacking;
-
-		if ((!e1at && !e2at && !e3at) || attacking) {
-			attackcycle (p1);
-		}
-		if (!attacking) {
-			
-			getback ();
-			animator.SetInteger("Direction",0);
-		}
-	}
-	
-	void attackcycle(GameObject player){
-		if (!state.on_cooldown_huh () && state.getActive()) {
-			attacking = true;
-			// Decide(k
-			moveto (p1);
-			attack += Time.deltaTime;
-
-			
-		} else {
-			attacking =false;
-		}
-		
-		if (attack > 1.0) {
-			state.cooldown_start (Random.Range (7, 10));
-			attack = 0.0;
-		}
-	}
-	
-	
-	//enemy approaches to player, preform melee attack
-	//returns new posn/*
-	void moveto(GameObject dest){
-		Vector3 origposn = transform.position;
-		Vector3 destposn = dest.transform.position;
-		if (!inrange) {
-			transform.position = Vector3.Lerp(origposn, destposn, .05f);
-
-		}
-		if (Vector3.Distance(origposn, destposn) < 3) {
-			inrange=true;
-			animator.SetInteger("Direction", 1);
-			StartCoroutine(dest.GetComponent<CharacterState>().takeOtherDamage(dest));
-		}
-
-	}
-	
-	//move the enemy to the starting position
-	void getback(){
-		Vector3 origposn = transform.position;
-		if (inrange) {
-			transform.position = Vector3.Lerp(origposn, selforigposn, .05f);
-		}
-		if ((Mathf.Abs (origposn.x - selforigposn.x) < 1) &&
-		    (Mathf.Abs (origposn.y - selforigposn.y) < 1) &&
-		    (Mathf.Abs (origposn.z - selforigposn.z) < 1)) {
-			inrange=false;
-		}
 	}
 }
