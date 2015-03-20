@@ -24,6 +24,14 @@ public abstract class Ability : MonoBehaviour {
 	public int get_max_cooldown(){
 		return max_cooldown;
 	}
+
+	protected virtual void playAnimation(){
+
+	}
+
+	protected virtual void attachEffects(){
+
+	}
 	
 	//attaches various Status_Effects and tells the given_target to add_attached_status_effects()
 	//NOTE:  should only be called by a message on the ability queue

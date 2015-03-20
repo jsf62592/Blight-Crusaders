@@ -22,7 +22,7 @@ public class CharacterState : MonoBehaviour {
 	//the amount of time left before this character can act.  In seconds.
 	private int cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
-	private double health_current;
+	public double health_current;
 	//current health as a percentage of the max health
 	private float health_percent;
 	//how far it should be from the closest edge of the screen
@@ -134,6 +134,10 @@ public class CharacterState : MonoBehaviour {
 		return this.canQueue;
 	}
 
+	public float returnHurt(){
+		return hurt.length;
+	}
+
 	public IEnumerator getHurt(){
 		animator.SetInteger("Direction", 1);
 		yield return new WaitForSeconds(attack.length);
@@ -163,19 +167,7 @@ public class CharacterState : MonoBehaviour {
 			elaspedTime += Time.deltaTime;
 			yield return null;
 		}
-		if (Vector3.Distance(transform.position, destposn) < 1) {
-			inrange=true;
-			Animator animator = GetComponent<Animator>();
-			animator.SetInteger("Direction", 1);
-			dest.GetComponent<Animator>().SetInteger("Direction", 2);
-			dest.AddComponent<SE_Enemy_Fireball>().apply_effect();
-			//StartCoroutine("slowTime");
-			yield return new WaitForSeconds(attack.length);
-			animator.SetInteger("Direction", 0);
-			dest.GetComponent<Animator>().SetInteger("Direction", 0);
-			elaspedTime = 0.0f;
-			StartCoroutine(getback(origposn));
-		}
+		return;
 	}
 
 	
