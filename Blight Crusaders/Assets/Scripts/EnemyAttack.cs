@@ -82,13 +82,14 @@ public class EnemyAttack : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(!state.on_cooldown_huh() && state.getActive()){
+		if(!state.on_cooldown_huh() && state.getActive() && state.getCanQueue()){
+			Debug.Log("HEY ITS ME: " + gameObject.name);
 			if(f == null){
 				f = this.gameObject.AddComponent<EnemyFireball>();
 			}
 			GameObject p1 = GameObject.Find ("P1");
 			f.add_to_queue(p1);
-			state.cooldown_start(Random.Range (3, 5));
+			state.setCannotQueue();
 		} 
 	}
 }

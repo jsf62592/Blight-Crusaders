@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	Queue<Message> QueueAction;
 	List<GameObject> characters;
+	bool canDequeue = true;
 
 	// Use this for initialization
 	void Start () {
@@ -37,8 +38,12 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		while (QueueAction.Count > 0) {
-			Message action = QueueAction.Dequeue();
-			StartCoroutine(UseAction(action));
+			if(canDequeue) {
+				Message action = QueueAction.Dequeue();
+				UseAction(action);
+				canDequeue = false;
+			}
+			else return;
 		}
 	}
 
@@ -53,23 +58,20 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void UnFreezeCharacters(GameObject characterAttacking){
+	public void UnFreezeCharacters(){
 		int i = 0;
 		while (i < characters.Count) {
-			string name = characterAttacking.gameObject.name;
-			if(characters[i].name != name){
-				characters[i].GetComponent<CharacterState>().setActive();
-			}
+			characters [i].GetComponent<CharacterState> ().setActive ();
 			i++;
 		}
+		canDequeue = true;
 	}
 
-	IEnumerator UseAction(Message action){
+	void UseAction(Message action){
 		GameObject selected = action.ReturnSelected ();
 		FreezeOtherCharacters (selected);
 		action.UseAbility ();
-		yield return new WaitForSeconds (3f);
-		UnFreezeCharacters (selected);
+		selected.GetComponent<CharacterState> ().setCanQueue ();
 	}	
 
 

@@ -8,7 +8,12 @@ public class CharacterState : MonoBehaviour {
 	public float distance_initial_offset;
 
 	bool active;
+	bool canQueue = true;
 	bool inrange = false;
+	Animator animator;
+
+	public AnimationClip hurt;
+	public AnimationClip attack;
 
 	//the total length of the screen.  It gets this from outside this scrip.
 	private float screen_length;
@@ -22,6 +27,9 @@ public class CharacterState : MonoBehaviour {
 	private float health_percent;
 	//how far it should be from the closest edge of the screen
 	private float distance;
+	float time = 1.0f;
+	float elaspedTime = 0.0f;
+
 
 
 	// Use this for initialization
@@ -29,6 +37,7 @@ public class CharacterState : MonoBehaviour {
 		this.active = true;
 		this.time_next_second = 0;
 		this.cooldown = Random.Range(3,7);
+		this.animator = GetComponent<Animator> ();
 
 		this.health_max = 100;
 
@@ -104,6 +113,18 @@ public class CharacterState : MonoBehaviour {
 		return this.active;
 	}
 
+	public void setCanQueue(){
+		this.canQueue = true;
+	}
+	
+	public void setCannotQueue(){
+		this.canQueue = false;
+	}
+	
+	public bool getCanQueue(){
+		return this.canQueue;
+	}
+
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
@@ -114,95 +135,58 @@ public class CharacterState : MonoBehaviour {
 		}
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
-		move_according_to_health();
-	}
-
-	/*
-	// Update is called once per frame
-	void Update () {
-		
-		//know if other enemies are attacking, (even itself)
-		bool e1at = e1.GetComponent<EnemyAttack> ().attacking;
-		
-		bool e2at = e2.GetComponent<EnemyAttack> ().attacking; 
-		bool e3at = e3.GetComponent<EnemyAttack> ().attacking;
-
-		if ((!e1at && !e2at && !e3at) || attacking) {
-			attackcycle (p1);
-		}
-		if (!attacking) {
-			
-			getback ();
-			animator.SetInteger("Direction",0);
-		}
-	}
-
-	public void attackcycle(GameObject player){
-		if (!this.on_cooldown_huh () && this.getActive()) {
-			Debug.Log("HEY");
-			attacking = true;
-			// Decide(k
-			moveto (p1);
-			attack += Time.deltaTime;
-			
-			
-		} else {
-			attacking =false;
-		}
-		
-		if (attack > 1.0) {
-			state.cooldown_start (Random.Range (7, 10));
-			attack = 0.0;
-		}
-	}*/
-
-
-	bool inRange(Vector3 origpos, Vector3 destpos){
-		return Vector3.Distance(destpos, origpos) < 1;
+		move_according_to_health ();
 	}
 	
 	//enemy approaches to player, preform melee attack
 	//returns new posn/*
 	public IEnumerator moveTo(GameObject dest){
-		Debug.Log("HEY");
 		Vector3 origposn = transform.position;
-		Vector3 destposn = dest.transform.position - new Vector3(1,0,0);
-		if (Vector3.Distance(origposn, destposn) < 3) {
+		Vector3 destposn = dest.transform.position + new Vector3(1,0,0);
+		while (elaspedTime < time) {
+			transform.position = Vector3.Lerp(origposn, destposn, (elaspedTime / time));
+			elaspedTime += Time.deltaTime;
+			yield return null;
+		}
+		if (Vector3.Distance(transform.position, destposn) < 1) {
 			inrange=true;
 			Animator animator = GetComponent<Animator>();
 			animator.SetInteger("Direction", 1);
-			//StartCoroutine(dest.GetComponent<CharacterState>().takeOtherDamage(dest));
+			dest.AddComponent<SE_Enemy_Fireball>().apply_effect();
+			yield return new WaitForSeconds(attack.length);
+			animator.SetInteger("Direction", 0);
+			elaspedTime = 0.0f;
+			StartCoroutine(getback(origposn));
 		}
-		while (!inrange) {
-			transform.position = Vector3.Lerp(origposn, destposn, .05f);
-			yield return null;
-		}
-
-		
-	}/*
+	}
 	
 	//move the enemy to the starting position
-	void getback(){
-		Vector3 origposn = transform.position;
-		if (inrange) {
-			transform.position = Vector3.Lerp(origposn, selforigposn, .05f);
+	IEnumerator getback(Vector3 originalPos){
+		Vector3 currentPos = transform.position;
+		while (elaspedTime < time) {
+			transform.position = Vector3.Lerp(currentPos, originalPos, (elaspedTime / time));
+			elaspedTime += Time.deltaTime;
+			yield return null;
 		}
-		if ((Mathf.Abs (origposn.x - selforigposn.x) < 1) &&
-		    (Mathf.Abs (origposn.y - selforigposn.y) < 1) &&
-		    (Mathf.Abs (origposn.z - selforigposn.z) < 1)) {
+		if (Vector3.Distance(transform.position, originalPos) < 1) {
+			GameManager.instance.UnFreezeCharacters();
 			inrange=false;
+			this.cooldown_start(4);
 		}
-	}*/
+	}
 
 	//no touchie
 	private void move_according_to_health(){
+		//this.animator.SetInteger ("Direction", 2);
+		//yield return new WaitForSeconds (hurt.length);
+		//this.animator.SetInteger ("Direction", 0);
 		float new_x_position;
 		//if it's on the left side
-		if(distance_initial_offset < 0){
+		if (distance_initial_offset < 0) {
 			new_x_position = distance;
 		}
 		//if it's on the right side
-		else{
+		else {
 			new_x_position = screen_length - distance;
 		}
 		print (new_x_position);

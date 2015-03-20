@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1001 &254162968
 Prefab:
@@ -128,8 +127,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: distance_initial_offset
-      value: -1
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: hurt
+      value: 
+      objectReference: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
@@ -378,6 +385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 0
   distance_initial_offset: 0
+  hurt: {fileID: 0}
+  attack: {fileID: 0}
 --- !u!1 &909862865
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +644,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 100
   distance_initial_offset: 1
+  hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
 --- !u!61 &1496181438
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -859,6 +870,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 100
   distance_initial_offset: 1
+  hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
 --- !u!61 &1595471959
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -968,7 +981,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 100
-  distance_initial_offset: -1
+  distance_initial_offset: 3
+  hurt: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
+  attack: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
 --- !u!61 &1947263876
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1141,6 +1156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 100
   distance_initial_offset: 3
+  hurt: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
+  attack: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
 --- !u!61 &2086782848
 BoxCollider2D:
   m_ObjectHideFlags: 0

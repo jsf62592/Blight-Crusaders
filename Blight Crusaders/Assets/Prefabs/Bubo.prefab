@@ -82,6 +82,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 0
   distance_initial_offset: 0
+  hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

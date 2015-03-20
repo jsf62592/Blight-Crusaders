@@ -8,7 +8,6 @@ public class SE_Enemy_Fireball : Status_Effect {
 	}
 
 	protected override void immediate_effect(){
-		Debug.Log("HEY");
 		state.take_damage(50);
 		Destroy (this);
 	}
