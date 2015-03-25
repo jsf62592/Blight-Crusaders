@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1001 &254162968
 Prefab:
@@ -128,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: distance_initial_offset
-      value: 3
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: hurt
@@ -983,7 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 100
-  distance_initial_offset: 3
+  distance_initial_offset: -5
   hurt: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
   attack: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
 --- !u!61 &1947263876

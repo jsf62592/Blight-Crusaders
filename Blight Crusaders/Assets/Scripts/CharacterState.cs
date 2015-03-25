@@ -29,11 +29,13 @@ public class CharacterState : MonoBehaviour {
 	private float distance;
 	float time = 1.0f;
 	float elaspedTime = 0.0f;
-
+	SpriteRenderer sp;
 
 
 	// Use this for initialization
 	void Start () {
+		sp = GetComponent<SpriteRenderer> ();
+		Debug.Log("THIS IS THE COLOR: " + sp.color);
 		this.active = true;
 		this.time_next_second = 0;
 		this.cooldown = Random.Range(3,7);
@@ -75,7 +77,7 @@ public class CharacterState : MonoBehaviour {
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
 			if (cooldown > 0 && getActive()){
-			cooldown--;
+				cooldown--;
 			}
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
@@ -94,11 +96,33 @@ public class CharacterState : MonoBehaviour {
 	public void cooldown_start(int given_cooldown){
 		this.cooldown = given_cooldown;
 		float i = 0.0f;
-		while(i < given_cooldown){
-			Color.Lerp(Color.black, Color.white, given_cooldown);
-			i += Time.deltaTime;
-		}
+		StartCoroutine(changeColor (given_cooldown));
 	}
+
+	IEnumerator changeColor(int cooldown){
+		elaspedTime = 0.0f;
+		while (elaspedTime < cooldown) {
+			if(this.getActive()){
+				sp.color = Color.Lerp (Color.black, Color.white, elaspedTime);
+				elaspedTime += Time.deltaTime / cooldown;
+				yield return null;
+			}
+			else {
+				yield return null;
+			}
+		}	
+		elaspedTime = 0.0f;
+	}
+
+	bool ColorChange(){
+		if ((sp.color.r < 1.0f) &&
+			(sp.color.g < 1.0f) &&
+			(sp.color.b < 1.0f)) {
+			return true;
+		} else {
+			return false;
+		}
+	}		
 
 	//is this currently on cooldown (not able to act)?  if yes, return true, else false.
 	public bool on_cooldown_huh(){
@@ -156,6 +180,7 @@ public class CharacterState : MonoBehaviour {
 	//enemy approaches to player, preform melee attack
 	//returns new posn/*
 	public IEnumerator moveTo(GameObject dest){
+		elaspedTime = 0.0f;
 		Vector3 origposn = transform.position;
 		Vector3 destposn = dest.transform.position + new Vector3(1,0,0);
 		while (elaspedTime < time) {
