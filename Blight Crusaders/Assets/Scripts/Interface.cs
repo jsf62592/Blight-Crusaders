@@ -55,7 +55,7 @@ public class Interface : MonoBehaviour {
 	void Update(){
 		//If this is on mobile, detect touch input
 		if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.WindowsPlayer ) {
-			if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
+			if (Input.touchCount > 0) {
 				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 				
 				//If an object is touched? FOR THE FUTURE: do nothing if the master object says an enemy is attacking
@@ -66,6 +66,9 @@ public class Interface : MonoBehaviour {
 						selected = hit.collider.gameObject;
 						selected.GetComponent<PlayerAction> ().Select ();
 					}	
+				} else {
+					selected.GetComponent<PlayerAction>().DeSelect();
+					ResetInput();
 				}
 			}
 			//if attack input is is progress (a player was clicked)
@@ -83,7 +86,7 @@ public class Interface : MonoBehaviour {
 				//setTargets(); //set the values for the targets based on the screen position
 				//recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit
 			}
-			
+	
 			//reset input if mouse is up
 			if(Input.GetTouch (0).phase == TouchPhase.Ended){
 				//checkTargetHits(); //check if they form an X or O
@@ -109,9 +112,17 @@ public class Interface : MonoBehaviour {
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh() && state.getActive()) {
 						selected = hit.collider.gameObject;
 						selected.GetComponent<PlayerAction>().Select();
+						GameManager.instance.FreezeOtherCharacters(selected);
 					}
+					else if (hit.collider.tag == "Enemy"){
+						targeted = hit.collider.gameObject;
+					}
+
+				} else {
+					selected.GetComponent<PlayerAction>().DeSelect();
+					ResetInput();
 				}
-			}
+			}/*
 			//if attack input is is progress (a player was clicked)
 			if (selected!= null && targeted == null) {
 				RaycastHit2D hit2 = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
@@ -120,16 +131,24 @@ public class Interface : MonoBehaviour {
 					targeted = hit2.collider.gameObject;
 					state = hit2.collider.GetComponent<CharacterState>();
 				}
-			}
+			}*/
 			
 			if(targeted != null){ //if we have a target
-				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);//the onscreen position of the target
+				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);
+				Fireball f = selected.GetComponent<Fireball>();
+				if(f == null){
+					f = selected.gameObject.AddComponent<Fireball>();
+				}
+				f.add_to_queue(targeted);
+				state.setInactive();
+				selected.GetComponent<PlayerAction>().DeSelect();
+				ResetInput();//the onscreen position of the target
 				//setTargets(); //set the values for the targets based on the screen position
 				//recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit
 			}
 			
 			
-			
+			/*
 			//reset input if mouse is up
 			if(Input.GetMouseButtonUp(0)){
 				//checkTargetHits(); //check if they form an X or O
@@ -141,7 +160,7 @@ public class Interface : MonoBehaviour {
 				}
 				selected.GetComponent<PlayerAction>().DeSelect ();
 				ResetInput();
-			}
+			}*/
 			
 			
 		}
@@ -234,6 +253,7 @@ public class Interface : MonoBehaviour {
 		targeted = null;
 		LastFourTargetHits = new int[4];
 		Debug.Log("input reset");
+		GameManager.instance.UnFreezeCharacters();
 	}
 	
 	public void circleInput(){

@@ -20,7 +20,7 @@ public class CharacterState : MonoBehaviour {
 	//used for keeping time
 	private float time_next_second;
 	//the amount of time left before this character can act.  In seconds.
-	private int cooldown;
+	private float cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
 	private double health_current;
 	//current health as a percentage of the max health
@@ -38,7 +38,7 @@ public class CharacterState : MonoBehaviour {
 		Debug.Log("THIS IS THE COLOR: " + sp.color);
 		this.active = true;
 		this.time_next_second = 0;
-		this.cooldown = Random.Range(3,7);
+		this.cooldown = 5.0f;
 		this.animator = GetComponent<Animator> ();
 
 		this.health_max = 100;
@@ -93,36 +93,29 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
-	public void cooldown_start(int given_cooldown){
+	public void cooldown_start(float given_cooldown){
 		this.cooldown = given_cooldown;
-		float i = 0.0f;
 		StartCoroutine(changeColor (given_cooldown));
 	}
 
-	IEnumerator changeColor(int cooldown){
-		elaspedTime = 0.0f;
-		while (elaspedTime < cooldown) {
+	IEnumerator changeColor(float cooldown){
+		float t = 0.0f;
+		while (t < cooldown) {
 			if(this.getActive()){
-				sp.color = Color.Lerp (Color.black, Color.white, elaspedTime);
-				elaspedTime += Time.deltaTime / cooldown;
+				sp.color = Color.Lerp (Color.black, Color.white, t / cooldown);
+				t += Time.deltaTime;
 				yield return null;
 			}
 			else {
 				yield return null;
 			}
-		}	
+		}
+		if(t >= cooldown)
+		{
+			sp.color = Color.white;
+		}
 		elaspedTime = 0.0f;
 	}
-
-	bool ColorChange(){
-		if ((sp.color.r < 1.0f) &&
-			(sp.color.g < 1.0f) &&
-			(sp.color.b < 1.0f)) {
-			return true;
-		} else {
-			return false;
-		}
-	}		
 
 	//is this currently on cooldown (not able to act)?  if yes, return true, else false.
 	public bool on_cooldown_huh(){
@@ -182,7 +175,12 @@ public class CharacterState : MonoBehaviour {
 	public IEnumerator moveTo(GameObject dest){
 		elaspedTime = 0.0f;
 		Vector3 origposn = transform.position;
-		Vector3 destposn = dest.transform.position + new Vector3(1,0,0);
+		Vector3 destposn;
+		if(dest.tag == "Player"){
+			destposn = dest.transform.position + new Vector3(1,0,0);
+		} else {
+			destposn = dest.transform.position - new Vector3(1,0,0);
+		}
 		while (elaspedTime < time) {
 			transform.position = Vector3.Lerp(origposn, destposn, (elaspedTime / time));
 			elaspedTime += Time.deltaTime;
@@ -194,7 +192,14 @@ public class CharacterState : MonoBehaviour {
 			animator.SetInteger("Direction", 1);
 			dest.GetComponent<Animator>().SetInteger("Direction", 2);
 			dest.AddComponent<SE_Enemy_Fireball>().apply_effect();
-			//StartCoroutine("slowTime");
+			StartCoroutine("slowTime");
+			float x = dest.transform.position.x;
+			if(dest.tag != "Player"){
+				x += 1;
+			} else {
+				x -= 1;
+			}
+			dest.transform.position = new Vector3(x, dest.transform.position.y, dest.transform.position.z);
 			yield return new WaitForSeconds(attack.length);
 			animator.SetInteger("Direction", 0);
 			dest.GetComponent<Animator>().SetInteger("Direction", 0);
