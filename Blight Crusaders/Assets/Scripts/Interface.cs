@@ -70,7 +70,7 @@ public class Interface : MonoBehaviour {
 	RuntimePlatform platform = Application.platform;
 	
 	void Update(){
-		//If this is on mobile, detect touch input
+		/*//If this is on mobile, detect touch input
 		if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.WindowsPlayer ) {
 			if (Input.touchCount > 0) {
 				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -124,7 +124,72 @@ public class Interface : MonoBehaviour {
 				selected.GetComponent<PlayerAction>().DeSelect ();
 				ResetInput();
 			}
-			
+			*/
+			if(platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.WindowsPlayer) {
+				
+				if (Input.touchCount > 0) {
+					RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+					//if an object is clicked FOR THE FUTURE: do nothing if the master object says an enemy is attacking
+					if (hit.collider != null) {
+						state = hit.collider.GetComponent<CharacterState>();
+						//if that object is a player off cooldown, they are selected
+						if (hit.collider.tag == "Player" && !state.on_cooldown_huh() && state.getActive()) {
+							selected = hit.collider.gameObject;
+							selected.GetComponent<PlayerAction> ().Select ();
+							abilButton1 = selected.GetComponent<PlayerAction> ().GetButton1();
+							abilbutton2 = selected.GetComponent<PlayerAction> ().GetButton2();
+							abilButton3 = selected.GetComponent<PlayerAction> ().GetButton3();
+							touchX = (int) Input.mousePosition.x;
+							touchY = (int) Input.mousePosition.y;
+							drawButtons = true;
+							GameManager.instance.FreezeOtherCharacters(selected);
+							
+						}
+						else if (hit.collider.tag == "Enemy" && !picking){
+							targeted = hit.collider.gameObject;
+						}
+						
+						
+						
+					} else if(!picking) {
+						selected.GetComponent<PlayerAction>().DeSelect();
+						ResetInput();
+						drawButtons = false;
+					}
+					
+					
+					if (picking){
+						//figure out which ability got clicked or reset input
+						button = 0;
+						Vector2 mousePlace = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
+						Debug.Log("picking");
+						if(Vector2.Distance(mousePlace,new Vector2(abilButton1x,abilButton1y)) <= 25){ 
+							Debug.Log("button1 hit");
+							button = 1;
+							picking = false;
+							drawButtons = false;
+						}else if(Vector2.Distance(mousePlace,new Vector2(abilButton2x,abilButton2y)) <= 25){ 
+							Debug.Log("button2 hit");
+							button = 2;
+							picking = false;
+							drawButtons = false;
+						}else if(Vector2.Distance(mousePlace,new Vector2(abilButton3x,abilButton3y)) <= 25){ 
+							Debug.Log("button3 hit");
+							button = 3;
+							picking = false;
+							drawButtons = false;
+						}else{
+							Debug.Log("button1 missed mousex: " + Input.mousePosition.x + " mousey: " + Input.mousePosition.y);
+							ResetInput();
+						}
+					}
+					
+					if(selected != null && targeted == null && button == 0){
+						Debug.Log("picking true");
+						picking = true;
+					}
+				}
 			//if this is in Unity detect mouse instead of touch
 		}else if(platform == RuntimePlatform.WindowsEditor) {
 
@@ -267,11 +332,11 @@ public class Interface : MonoBehaviour {
 			GUI.DrawTexture(new Rect(touchX-25,Screen.height -touchY+50,50,50), abilButton1, ScaleMode.StretchToFill);
 			GUI.DrawTexture(new Rect(touchX-25-50,Screen.height - touchY,50,50), abilButton1, ScaleMode.StretchToFill);
 			abilButton1x = touchX+50;
-			abilButton1y = touchY;
+			abilButton1y = touchY -25;
 			abilButton2x = touchX;
 			abilButton2y = touchY - 75;
 			abilButton3x = touchX-50;
-			abilButton3y = touchY;
+			abilButton3y = touchY -25;
 			//abilButton2x;
 			//abilButton2y;
 			//abilButton3x;
