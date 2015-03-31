@@ -6,7 +6,12 @@ public class PlayerAction : MonoBehaviour {
 	public double changeColors = 0.0;
 	GameObject target;
 	CharacterState state;
-	
+	Boolean selected;
+	Boolean selectable;
+	public Texture Button1;
+	public Texture Button2;
+	public Texture Button3;
+
 	// Use this for initialization
 	void Start () {
 		state = GetComponent<CharacterState> ();
@@ -14,6 +19,21 @@ public class PlayerAction : MonoBehaviour {
 	}
 	
 	void Update(){
+		if (!state.on_cooldown_huh () && state.getActive ()) {
+			selectable = true;
+				} else {
+			selectable = false;
+				}
+
+		if (selected) {
+			gameObject.renderer.material.color = Color.blue;
+		}else if (selectable) {
+			gameObject.renderer.material.color = Color.red;
+		}else{
+			gameObject.renderer.material.color = Color.white;
+		}
+
+
 		if (changeColors > 0.0) { 
 			changeColors -= Time.deltaTime; 
 		}
@@ -42,11 +62,21 @@ public class PlayerAction : MonoBehaviour {
 	
 	public void Select(){
 		GameManager.instance.FreezeOtherCharacters(this.gameObject);
-		gameObject.renderer.material.color = Color.blue;
+		selected = true;
 	}
 	
 	public void DeSelect(){
-		gameObject.renderer.material.color = Color.white;
+		selected = false;
+	}
+
+	public Texture GetButton1(){
+		return Button1;
+	}
+	public Texture GetButton2(){
+		return Button2;
+	}
+	public Texture GetButton3(){
+		return Button3;
 	}
 	
 }

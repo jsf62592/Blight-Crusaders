@@ -12,6 +12,7 @@ public class Interface : MonoBehaviour {
 	public GameObject selected;
 	public GameObject targeted;
 	CharacterState state;
+	Boolean drawButtons = false;
 	
 	
 	public Vector3 targetScreenPosition; 
@@ -26,12 +27,20 @@ public class Interface : MonoBehaviour {
 	public Boolean draw;
 	public Texture circleImage;
 	public Texture xImage;
+
+	public Texture abilButton1;
+	public Texture abilbutton2;
+	public Texture abilButton3;
 	
 	public Vector2 mousePos;
 	public String gesture;
 	public Boolean drawImage;
 	public int drawTime;
 	public int drawTimer;
+
+	public int touchX;
+	public int touchY;
+
 	
 	
 	
@@ -65,10 +74,18 @@ public class Interface : MonoBehaviour {
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh () && state.getActive()) {
 						selected = hit.collider.gameObject;
 						selected.GetComponent<PlayerAction> ().Select ();
+						abilButton1 = selected.GetComponent<PlayerAction> ().GetButton1();
+					    abilbutton2 = selected.GetComponent<PlayerAction> ().GetButton2();
+						abilButton3 = selected.GetComponent<PlayerAction> ().GetButton3();
+						touchX = (int) Input.mousePosition.x;
+						touchY = (int) Input.mousePosition.y;
+						drawButtons = true;
+						GameManager.instance.FreezeOtherCharacters(selected);
 					}	
 				} else {
 					selected.GetComponent<PlayerAction>().DeSelect();
 					ResetInput();
+					drawButtons = false;
 				}
 			}
 			//if attack input is is progress (a player was clicked)
@@ -111,7 +128,13 @@ public class Interface : MonoBehaviour {
 					//if that object is a player off cooldown, they are selected
 					if (hit.collider.tag == "Player" && !state.on_cooldown_huh() && state.getActive()) {
 						selected = hit.collider.gameObject;
-						selected.GetComponent<PlayerAction>().Select();
+						selected.GetComponent<PlayerAction> ().Select ();
+						abilButton1 = selected.GetComponent<PlayerAction> ().GetButton1();
+						abilbutton2 = selected.GetComponent<PlayerAction> ().GetButton2();
+						abilButton3 = selected.GetComponent<PlayerAction> ().GetButton3();
+						touchX = (int) Input.mousePosition.x;
+						touchY = (int) Input.mousePosition.y;
+						drawButtons = true;
 						GameManager.instance.FreezeOtherCharacters(selected);
 					}
 					else if (hit.collider.tag == "Enemy"){
@@ -121,6 +144,7 @@ public class Interface : MonoBehaviour {
 				} else {
 					selected.GetComponent<PlayerAction>().DeSelect();
 					ResetInput();
+					drawButtons = false;
 				}
 			}/*
 			//if attack input is is progress (a player was clicked)
@@ -183,6 +207,16 @@ public class Interface : MonoBehaviour {
 			drawImage = false;
 			drawTimer = drawTime;
 		}
+
+		if (drawButtons) {
+
+			
+			GUI.DrawTexture(new Rect(touchX-25+50,Screen.height - touchY,50,50), abilButton1, ScaleMode.StretchToFill);
+			GUI.DrawTexture(new Rect(touchX-25,Screen.height -touchY+50,50,50), abilButton1, ScaleMode.StretchToFill);
+			GUI.DrawTexture(new Rect(touchX-25-50,Screen.height - touchY,50,50), abilButton1, ScaleMode.StretchToFill);
+
+		}
+	
 		
 	}
 	
