@@ -78,5 +78,18 @@ public class PlayerAction : MonoBehaviour {
 	public Texture GetButton3(){
 		return Button3;
 	}
+
+	public void UseButton1(GameObject targeted){
+		Debug.Log ("Button1");
+
+	}
+	public void UseButton2(GameObject targeted){
+		Debug.Log ("Button1");
+
+	}
+	public void UseButton3(GameObject targeted){
+		Debug.Log ("Button1");
+
+	}
 	
 }

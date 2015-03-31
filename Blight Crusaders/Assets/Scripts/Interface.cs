@@ -12,8 +12,7 @@ public class Interface : MonoBehaviour {
 	public GameObject selected;
 	public GameObject targeted;
 	CharacterState state;
-	Boolean drawButtons = false;
-	
+	Boolean drawButtons = false;	
 	
 	public Vector3 targetScreenPosition; 
 	public Vector2 target1; //top right
@@ -40,6 +39,15 @@ public class Interface : MonoBehaviour {
 
 	public int touchX;
 	public int touchY;
+	public int button = 0;
+	public Boolean picking = false;
+	public float abilButton1x;
+	public float abilButton1y;
+	public float abilButton2x;
+	public float abilButton2y;
+	public float abilButton3x;
+	public float abilButton3y;
+
 
 	
 	
@@ -81,7 +89,7 @@ public class Interface : MonoBehaviour {
 						touchY = (int) Input.mousePosition.y;
 						drawButtons = true;
 						GameManager.instance.FreezeOtherCharacters(selected);
-					}	
+					}
 				} else {
 					selected.GetComponent<PlayerAction>().DeSelect();
 					ResetInput();
@@ -119,6 +127,7 @@ public class Interface : MonoBehaviour {
 			
 			//if this is in Unity detect mouse instead of touch
 		}else if(platform == RuntimePlatform.WindowsEditor) {
+
 			if (Input.GetMouseButtonDown (0)) {
 				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
 				
@@ -136,16 +145,52 @@ public class Interface : MonoBehaviour {
 						touchY = (int) Input.mousePosition.y;
 						drawButtons = true;
 						GameManager.instance.FreezeOtherCharacters(selected);
+
 					}
-					else if (hit.collider.tag == "Enemy"){
+					else if (hit.collider.tag == "Enemy" && !picking){
 						targeted = hit.collider.gameObject;
 					}
 
-				} else {
+				
+
+				} else if(!picking) {
 					selected.GetComponent<PlayerAction>().DeSelect();
 					ResetInput();
 					drawButtons = false;
 				}
+
+
+				if (picking){
+					//figure out which ability got clicked or reset input
+					button = 0;
+					Vector2 mousePlace = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
+					Debug.Log("picking");
+					if(Vector2.Distance(mousePlace,new Vector2(abilButton1x,abilButton1y)) <= 25){ 
+						Debug.Log("button1 hit");
+						button = 1;
+						picking = false;
+						drawButtons = false;
+					}else if(Vector2.Distance(mousePlace,new Vector2(abilButton2x,abilButton2y)) <= 25){ 
+							Debug.Log("button2 hit");
+							button = 2;
+							picking = false;
+							drawButtons = false;
+					}else if(Vector2.Distance(mousePlace,new Vector2(abilButton3x,abilButton3y)) <= 25){ 
+						Debug.Log("button3 hit");
+						button = 3;
+						picking = false;
+						drawButtons = false;
+					}else{
+						Debug.Log("button1 missed mousex: " + Input.mousePosition.x + " mousey: " + Input.mousePosition.y);
+						ResetInput();
+					}
+				}
+
+				if(selected != null && targeted == null && button == 0){
+					Debug.Log("picking true");
+					picking = true;
+				}
+
 			}/*
 			//if attack input is is progress (a player was clicked)
 			if (selected!= null && targeted == null) {
@@ -156,8 +201,15 @@ public class Interface : MonoBehaviour {
 					state = hit2.collider.GetComponent<CharacterState>();
 				}
 			}*/
-			
+
+
+
+
+
 			if(targeted != null){ //if we have a target
+				if(button == 1){ Debug.Log ("ABLITY1 USED"); }
+				else if(button == 2){ Debug.Log ("ABLITY2 USED"); }
+				else if(button == 3){ Debug.Log ("ABLITY3 USED"); }
 				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);
 				Fireball f = selected.GetComponent<Fireball>();
 				if(f == null){
@@ -170,7 +222,7 @@ public class Interface : MonoBehaviour {
 				//setTargets(); //set the values for the targets based on the screen position
 				//recordTargetHits(Input.mousePosition.x, Input.mousePosition.y); //record the last targets hit
 			}
-			
+
 			
 			/*
 			//reset input if mouse is up
@@ -214,6 +266,16 @@ public class Interface : MonoBehaviour {
 			GUI.DrawTexture(new Rect(touchX-25+50,Screen.height - touchY,50,50), abilButton1, ScaleMode.StretchToFill);
 			GUI.DrawTexture(new Rect(touchX-25,Screen.height -touchY+50,50,50), abilButton1, ScaleMode.StretchToFill);
 			GUI.DrawTexture(new Rect(touchX-25-50,Screen.height - touchY,50,50), abilButton1, ScaleMode.StretchToFill);
+			abilButton1x = touchX+50;
+			abilButton1y = touchY;
+			abilButton2x = touchX;
+			abilButton2y = touchY - 75;
+			abilButton3x = touchX-50;
+			abilButton3y = touchY;
+			//abilButton2x;
+			//abilButton2y;
+			//abilButton3x;
+			//abilButton3y;
 
 		}
 	
@@ -288,6 +350,9 @@ public class Interface : MonoBehaviour {
 		LastFourTargetHits = new int[4];
 		Debug.Log("input reset");
 		GameManager.instance.UnFreezeCharacters();
+		button = 0;
+		picking = false;
+		drawButtons = false;
 	}
 	
 	public void circleInput(){
