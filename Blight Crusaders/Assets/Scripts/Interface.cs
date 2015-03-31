@@ -272,9 +272,9 @@ public class Interface : MonoBehaviour {
 		Debug.Log ("UP");
 		gesture = "o";
 		drawImage = true;
-		Fireball f = selected.GetComponent<Fireball>();
+		Ability_Basic_Attack f = selected.GetComponent<Ability_Basic_Attack>();
 		if(f == null){
-			f = selected.gameObject.AddComponent<Fireball>();
+			f = selected.gameObject.AddComponent<Ability_Basic_Attack>();
 		}
 		f.add_to_queue(targeted);
 		state.setInactive();

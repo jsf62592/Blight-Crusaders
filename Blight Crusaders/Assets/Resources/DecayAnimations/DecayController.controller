@@ -121,6 +121,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110217424
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BuboAttack
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: -181, y: 113, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110230325
 State:
   m_ObjectHideFlags: 3
@@ -133,6 +148,21 @@ State:
   - {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: -216, y: 48, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110264246
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BuboAttack 0
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: -146, y: 178, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -163,6 +193,8 @@ StateMachine:
   - {fileID: 110200000}
   - {fileID: 110292268}
   - {fileID: 110230325}
+  - {fileID: 110217424}
+  - {fileID: 110264246}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:

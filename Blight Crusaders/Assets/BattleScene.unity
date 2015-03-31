@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1001 &254162968
 Prefab:
@@ -899,6 +898,7 @@ GameObject:
   - 114: {fileID: 1947263875}
   - 114: {fileID: 1947263874}
   - 114: {fileID: 1947263877}
+  - 114: {fileID: 1947263878}
   m_Layer: 0
   m_Name: P1
   m_TagString: Player
@@ -1009,6 +1009,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4973d02cf4df65f4dbf9093ded444e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attack_animation: {fileID: 0}
+--- !u!114 &1947263878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1947263870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack_animation: {fileID: 0}
 --- !u!1 &1974966396
 GameObject:
   m_ObjectHideFlags: 0

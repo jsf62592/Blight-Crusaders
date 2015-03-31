@@ -3,12 +3,15 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 	//the max health of a character, also its starting health
-	public double health_max;
+	public int health_max;
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
-	bool active;
+	//a char is set inactive when another char is attacking
+	bool activehuh;
+
 	bool canQueue = true;
+	//are you next to your target and thus, should stop moving and start attacking
 	bool inrange = false;
 	Animator animator;
 
@@ -36,7 +39,7 @@ public class CharacterState : MonoBehaviour {
 	void Start () {
 		sp = GetComponent<SpriteRenderer> ();
 		Debug.Log("THIS IS THE COLOR: " + sp.color);
-		this.active = true;
+		this.activehuh = true;
 		this.time_next_second = 0;
 		this.cooldown = 5.0f;
 		this.animator = GetComponent<Animator> ();
@@ -128,15 +131,15 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	public void setInactive(){
-		this.active = false;
+		this.activehuh = false;
 	}
 
 	public void setActive(){
-		this.active = true;
+		this.activehuh = true;
 	}
 
 	public bool getActive(){
-		return this.active;
+		return this.activehuh;
 	}
 
 	public void setCanQueue(){
@@ -160,8 +163,11 @@ public class CharacterState : MonoBehaviour {
 
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
-	public void take_damage(double given_damage){
+	public IEnumerator take_damage(double given_damage){
 		this.health_current = this.health_current - given_damage;
+		this.animator.SetInteger ("Direction", 2);
+		yield return  new WaitForSeconds (hurt.length);
+		this.animator.SetInteger ("Direction", 0);
 		if(health_current <= 0){
 			death();
 		}
@@ -232,10 +238,7 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	//no touchie
-	private void move_according_to_health(){
-		//this.animator.SetInteger ("Direction", 2);
-		//yield return new WaitForSeconds (hurt.length);
-		//this.animator.SetInteger ("Direction", 0);
+	public void move_according_to_health(){
 		float new_x_position;
 		//if it's on the left side
 		if (distance_initial_offset < 0) {
