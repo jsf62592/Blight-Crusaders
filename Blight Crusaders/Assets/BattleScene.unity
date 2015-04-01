@@ -300,7 +300,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
 --- !u!1 &775604579
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,8 +337,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!136 &775604581
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -371,7 +371,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
 --- !u!114 &775604584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 0
-  distance_initial_offset: 0
+  distance_initial_offset: 3
   hurt: {fileID: 0}
   attack: {fileID: 0}
 --- !u!1 &909862865
@@ -423,8 +422,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!64 &909862867
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -456,7 +456,6 @@ Transform:
   m_LocalScale: {x: 2.72438645, y: 3.45954013, z: 1.47571003}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
 --- !u!1 &1035488672
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,11 +524,8 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
   m_HDR: 0
   m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: .0219999999
 --- !u!4 &1035488677
 Transform:
   m_ObjectHideFlags: 0
@@ -541,7 +537,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
 --- !u!114 &1035488678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,7 +592,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
 --- !u!1 &1496181435
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +654,7 @@ BoxCollider2D:
   m_Center: {x: 0, y: 0}
 --- !u!95 &1496181439
 Animator:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9500000, guid: 2af5781fb88a7f44798630e2a6cd6d7e,
     type: 2}
@@ -670,10 +664,9 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: dc79a4af88b655848a8b6e811e85dfbd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
   m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &1496181440
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -693,8 +686,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: 9d8e801e09d32664cb23518be9fe25a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1496181441
@@ -708,7 +702,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
 --- !u!1001 &1585461844
 Prefab:
   m_ObjectHideFlags: 0
@@ -795,7 +788,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1595471954
 Animator:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9500000, guid: 2af5781fb88a7f44798630e2a6cd6d7e,
     type: 2}
@@ -805,10 +798,9 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: dc79a4af88b655848a8b6e811e85dfbd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
   m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &1595471955
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -828,8 +820,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: 9d8e801e09d32664cb23518be9fe25a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1595471956
@@ -843,7 +836,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
 --- !u!114 &1595471957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,7 +900,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1947263871
 Animator:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9500000, guid: a2185edd16095704ba24bdeca4b2fdae,
     type: 2}
@@ -918,10 +910,9 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c1aed856c591f0c4080ad978a956bfc9, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
   m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &1947263872
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -941,8 +932,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: bca03c2f6a7b7e145b3493a77ae5c8ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1947263873
@@ -956,7 +948,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
 --- !u!114 &1947263874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4973d02cf4df65f4dbf9093ded444e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack_animation: {fileID: 0}
+  attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
 --- !u!114 &1947263878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,7 +1012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack_animation: {fileID: 0}
+  attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
 --- !u!1 &1974966396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,7 +1075,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
 --- !u!1 &2086782842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,7 +1097,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &2086782843
 Animator:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9500000, guid: 473925a553cacee40bbd6840a2dec93b,
     type: 2}
@@ -1117,10 +1107,9 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a66b0253f5814bb46807bae46f93a2db, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
   m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &2086782844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1140,8 +1129,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
+  m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: dcfc3f283a18f924296961446f34192a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2086782845
@@ -1155,7 +1145,6 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
 --- !u!114 &2086782846
 MonoBehaviour:
   m_ObjectHideFlags: 0
