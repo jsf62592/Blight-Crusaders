@@ -96,7 +96,7 @@ public abstract class Ability : MonoBehaviour {
 			moveto_ranged(given_target);
 		}
 		//play the attack animation
-		StartCoroutine("playAnimation");
+		//StartCoroutine("playAnimation");
 		//attach all the status effects
 		attachEffects (given_target);
 		//move back to the original position

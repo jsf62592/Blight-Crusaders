@@ -13,8 +13,7 @@ public class EnemyAttack : MonoBehaviour {
 	double p2HP;
 	double p1HPprecentage;
 	double p2HPprecentage;
-	Animator animator;
-	
+
 	
 	//position of players
 	Vector3 p1posn;
@@ -44,7 +43,6 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		animator = gameObject.GetComponent<Animator> ();
 		//get players' health and max health, in order to know the precentage.
 		p1 = GameObject.Find("P1");
 		p1HP = p1.GetComponent<CharacterState> ().get_health ();

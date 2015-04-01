@@ -4,7 +4,6 @@ using System.Collections;
 public class Ability_Basic_Attack : Ability {
 
 	void Start(){
-		Animator animation = GetComponent<Animator> ();
 		setup (5, true);
 	}
 

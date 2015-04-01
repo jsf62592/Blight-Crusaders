@@ -22,7 +22,8 @@ public class PlayerAction : MonoBehaviour {
 			target = null;
 		}
 	}
-	
+
+	/*
 	public void Attack(GameObject targeted){
 		target = targeted;
 		Debug.Log ("HEALTH: " + target.GetComponent<CharacterState> ().get_health ());
@@ -33,6 +34,7 @@ public class PlayerAction : MonoBehaviour {
 		GetComponent<CharacterState> ().cooldown_start(UnityEngine.Random.Range(1,5));
 
 	}
+	*/
 	
 	void ChangeColors(){
 		target.renderer.material.color = Color.red;
