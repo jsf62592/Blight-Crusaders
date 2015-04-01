@@ -56,12 +56,13 @@ public class CharacterState : MonoBehaviour {
 		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
 
 
-		//if the initial offset is wrong, complain and blow up
+		//the initial offset is used in other places to determine a gameobject's team, so it needs to be non-zero
 		if (distance_initial_offset == 0){
 			throw new UnityException("CharacterState.cs exception:  distance_initial_offset is set to 0 on entity: " + this.name);
 		}
+		//if the initial offset is larger than half of the screen, that means something is starting off-screen, so complain and blow up.
 		if (Mathf.Abs(distance_initial_offset) >= (this.screen_length / 2)){
-			throw new UnityException("CharacterState.cs exception:  distance_initial_offset >= (screen_length / 2)");
+			throw new UnityException("CharacterState.cs exception:  distance_initial_offset >= (screen_length / 2) | name: " + this.name + " | screen_length: " + screen_length);
 		}
 
 		move_according_to_health ();

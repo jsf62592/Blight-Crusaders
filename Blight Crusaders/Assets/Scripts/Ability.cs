@@ -2,6 +2,36 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*////////////////////////////////////////////////////////////////
+This comment will lay out how the ability system works and is
+intended for people who just want to make a new ability and maybe
+understand a bit how the process works.
+
+this is how a new ability is made:
+
+1.(optional)  a status effect is made 
+
+2.  an ability script is made.
+	-this must have a 'setup(...)' function in 'start()'
+	-this should override 'attachEffects(...)' such that it adds
+		the status affects it should apply to the target
+
+3. the ability script is attached to the gameobject(s) in the 
+	editor as a component
+
+
+this is how the ability works:
+
+1.  something calls 'add_to_queue(...)'
+2.  'add_to_queue(...)' makes a message and puts it on the queue
+3.  that message eventually gets dequeued, at which point it 
+	calls the ability's 'do_stuff(...)' method
+4.  'do_stuff(...)' moves the character "casting" the ability to
+	the appropriate spot, plays an attack animation, adds status 
+	effects to the target as components, and then moves the 
+	"caster" back to its original position
+
+*////////////////////////////////////////////////////////////////
 public abstract class Ability : MonoBehaviour {
 	
 	//this is the cooldown on the ability
@@ -21,10 +51,9 @@ public abstract class Ability : MonoBehaviour {
 	
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
-	protected void setup(int given_max_cooldown, bool given_meleehuh, AnimationClip a){
+	protected void setup(int given_max_cooldown, bool given_meleehuh){
 		max_cooldown = given_max_cooldown;
 		meleehuh = given_meleehuh;
-		attack_animation = a;
 		state = this.GetComponent<CharacterState> ();
 		if(state == null){
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
@@ -48,6 +77,7 @@ public abstract class Ability : MonoBehaviour {
 	protected virtual void attachEffects(GameObject given_target){}
 
 
+
 	////////////////////////////////////////////////////////////////
 	//YOU SHOULD PROBABLY IGNORE EVERYTHING BELOW THIS 
 	////////////////////////////////////////////////////////////////
@@ -56,7 +86,7 @@ public abstract class Ability : MonoBehaviour {
 
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
-	public void do_stuff(GameObject selected, GameObject given_target){
+	public void do_stuff(GameObject given_target){
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
 			moveto_melee(given_target);
@@ -77,6 +107,7 @@ public abstract class Ability : MonoBehaviour {
 	protected IEnumerator playAnimation(){
 		Animator animator = GetComponent<Animator>();
 		animator.SetInteger("Direction", 1);
+		print ("omfg animation i swear to god..." + this.name + " | " + attack_animation);
 		yield return new WaitForSeconds(attack_animation.length);
 		Debug.Log ("HEY");
 		animator.SetInteger("Direction", 0);
