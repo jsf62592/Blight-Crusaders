@@ -135,11 +135,17 @@ public class Interface : MonoBehaviour {
 			
 			if(targeted != null){ //if we have a target
 				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);
+
+				/*
+
 				Fireball f = selected.GetComponent<Fireball>();
 				if(f == null){
 					f = selected.gameObject.AddComponent<Fireball>();
 				}
 				f.add_to_queue(targeted);
+
+				*/
+
 				state.setInactive();
 				selected.GetComponent<PlayerAction>().DeSelect();
 				ResetInput();//the onscreen position of the target

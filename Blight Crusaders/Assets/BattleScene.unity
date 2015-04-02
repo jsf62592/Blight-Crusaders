@@ -127,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: distance_initial_offset
-      value: 3
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: hurt
@@ -300,93 +300,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!1 &775604579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 775604583}
-  - 33: {fileID: 775604582}
-  - 136: {fileID: 775604581}
-  - 23: {fileID: 775604580}
-  - 114: {fileID: 775604584}
-  m_Layer: 0
-  m_Name: P2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &775604580
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 775604579}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
---- !u!136 &775604581
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 775604579}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &775604582
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 775604579}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &775604583
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 775604579}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.58496189, y: -2.24809885, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &775604584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 775604579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health_max: 0
-  distance_initial_offset: 3
-  hurt: {fileID: 0}
-  attack: {fileID: 0}
-  health_current: 0
 --- !u!1 &909862865
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +553,6 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 1
   hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
-  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   health_current: 0
 --- !u!61 &1496181438
 BoxCollider2D:
@@ -865,7 +777,6 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 1
   hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
-  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   health_current: 0
 --- !u!61 &1595471959
 BoxCollider2D:
@@ -892,8 +803,8 @@ GameObject:
   - 61: {fileID: 1947263876}
   - 114: {fileID: 1947263875}
   - 114: {fileID: 1947263874}
-  - 114: {fileID: 1947263877}
   - 114: {fileID: 1947263878}
+  - 114: {fileID: 1947263877}
   m_Layer: 0
   m_Name: P1
   m_TagString: Player
@@ -977,9 +888,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 100
-  distance_initial_offset: 3
+  distance_initial_offset: -3
   hurt: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
-  attack: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
   health_current: 0
 --- !u!61 &1947263876
 BoxCollider2D:
@@ -1001,7 +911,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1947263870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4973d02cf4df65f4dbf9093ded444e2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 99ee379dd1ecd0c44ac23a62f61ec0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
@@ -1176,7 +1086,6 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 3
   hurt: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
-  attack: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
   health_current: 0
 --- !u!61 &2086782848
 BoxCollider2D:

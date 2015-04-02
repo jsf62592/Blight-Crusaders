@@ -53,10 +53,10 @@
      <Compile Include="Assets\Scripts\Ability_debug.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
-     <Compile Include="Assets\Scripts\EnemyFireball.cs" />
-     <Compile Include="Assets\Scripts\Fireball.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
+     <Compile Include="Assets\Scripts\Legacy_EnemyFireball.cs" />
+     <Compile Include="Assets\Scripts\Legacy_Fireball.cs" />
      <Compile Include="Assets\Scripts\Message.cs" />
      <Compile Include="Assets\Scripts\PlayerAction.cs" />
      <Compile Include="Assets\Scripts\SE_Alch_Bomb.cs" />

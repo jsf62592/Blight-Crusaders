@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 	//the max health of a character, also its starting health
-	public int health_max;
+	public int health_max = 100;
 	//initial offset from the center of the screen.  cannot be 0, as this is used to determine which way this should move when damaged
 	public float distance_initial_offset;
 
@@ -27,7 +27,8 @@ public class CharacterState : MonoBehaviour {
 	public double health_current;
 	//current health as a percentage of the max health
 	private float health_percent;
-	//how far it should be from the closest edge of the screen
+	//how far it should be from the middle of the screen.  (x=0)
+	//note that this is only calculated at start() and when moving according to health
 	private float distance;
 	float time = 1.0f;
 	float elaspedTime = 0.0f;
@@ -43,7 +44,6 @@ public class CharacterState : MonoBehaviour {
 		this.cooldown = 5.0f;
 		this.animator = GetComponent<Animator> ();
 
-		this.health_max = 100;
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
@@ -55,7 +55,9 @@ public class CharacterState : MonoBehaviour {
 		this.screen_length = 20f;
 
 
-		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
+		//calculate the distance from the middle
+		distance = (((screen_length / 2) - Mathf.Abs(distance_initial_offset)) * (1 - health_percent)) + Mathf.Abs(distance_initial_offset);
+
 
 		//the initial offset is used in other places to determine a gameobject's team, so it needs to be non-zero
 		if (distance_initial_offset == 0){
@@ -75,25 +77,19 @@ public class CharacterState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if ((transform.position.x < -13) || (transform.position.x > 14)) {
-			death ();
-		}
-		//Debug.Log ("SCREEN SIZE IS: "+ screen_length);
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
-			if (cooldown > 0 && getActive()){
+			if (cooldown > 0 && activehuh){
 				cooldown--;
 			}
+			apply_effects();
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 
-		if(this.on_cooldown_huh()){
-
-		}
 
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
-			this.take_damage(10);
+			take_damage(10);
 		}
 	}
 
@@ -167,7 +163,6 @@ public class CharacterState : MonoBehaviour {
 			death();
 		}
 		this.health_percent = (float)this.health_current / (float)this.health_max;
-		this.distance = ((this.screen_length / 2) - Mathf.Abs(distance_initial_offset)) * this.health_percent;
 		move_according_to_health ();
 	}
 	*/
@@ -175,28 +170,36 @@ public class CharacterState : MonoBehaviour {
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
+		//modify the current health
 		health_current = health_current - given_damage;
+		//if no health is left, call death()
 		if(health_current <= 0){
 			//death();
 		}
+		//set health_percent for the new current health
 		health_percent = (float)health_current / (float)health_max;
-		distance = ((screen_length / 2) - Mathf.Abs(distance_initial_offset)) * health_percent;
+
+		//move appropriately
 		move_according_to_health();
 	}
 	
 	//DO NOT TOUCH THIS.  UNLESS YOUR NAME IS JAMES O'BRIEN, DO NOT TOUCH THIS.
 	public void move_according_to_health(){
 		float new_x_position;
+
+		//calculate the distance from the middle
+		distance = (((screen_length / 2) - Mathf.Abs(distance_initial_offset)) * (1 - health_percent)) + Mathf.Abs(distance_initial_offset);
+
 		//if it's on the left side
 		if(distance_initial_offset < 0){
-			new_x_position = distance;
+			new_x_position = -1 * distance;
 		}
 		//if it's on the right side
 		else{
-			new_x_position = screen_length - distance;
+			new_x_position = distance;
 		}
-		print ("CharacterState | " + this.name + "moved to new position: " + new_x_position);
-		this.transform.position = new Vector3 (new_x_position, this.transform.position.y, this.transform.position.z);
+		print ("CharacterState | " + this.name + "moved from x-coord: " + transform.position.x + " to new x-coord: " + new_x_position);
+		transform.position = new Vector3 (new_x_position, transform.position.y, transform.position.z);
 	}
 
 	private void death(){
@@ -205,6 +208,13 @@ public class CharacterState : MonoBehaviour {
 		} else {
 			Destroy (this.gameObject);
 			GameManager.instance.PopCharacter (this.gameObject);
+		}
+	}
+
+	//this applies status effects on this gameobject.  should only be used in update().
+	private void apply_effects(){
+		foreach(Status_Effect effect in this.gameObject.GetComponents<Status_Effect>()){
+			effect.apply_effect();
 		}
 	}
 }

@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
 
 	void PopulateCharacters(List<GameObject> characters){
 		characters.Add(GameObject.Find ("P1"));
-		characters.Add(GameObject.Find ("P2"));
 		characters.Add(GameObject.Find ("E1"));
 		characters.Add(GameObject.Find ("E2"));
 		characters.Add(GameObject.Find ("E3"));

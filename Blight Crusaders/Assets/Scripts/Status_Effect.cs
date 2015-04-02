@@ -2,11 +2,11 @@
 using System.Collections;
 
 public abstract class Status_Effect : MonoBehaviour {
-
+	//how long this lasts in seconds
 	protected int duration;
-
+	//has this called immediate_effect() yet?
 	protected bool applied_immediatehuh = false;
-
+	//the CharacterState component on the gameobject this is attached to
 	protected CharacterState state;
 	
 	//does the stuff this should do.

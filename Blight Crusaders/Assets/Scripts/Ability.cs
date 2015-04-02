@@ -87,6 +87,7 @@ public abstract class Ability : MonoBehaviour {
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
 	public void do_stuff(GameObject given_target){
+		/*
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
 			moveto_melee(given_target);
@@ -96,11 +97,14 @@ public abstract class Ability : MonoBehaviour {
 			moveto_ranged(given_target);
 		}
 		//play the attack animation
-		//StartCoroutine("playAnimation");
+		StartCoroutine("playAnimation");
 		//attach all the status effects
 		attachEffects (given_target);
 		//move back to the original position
+		print("this should be changed ~<:|");
 		StartCoroutine(moveto_destination (origposn));
+		*/
+		attachEffects (given_target);
 	}
 
 	//plays the attack animation

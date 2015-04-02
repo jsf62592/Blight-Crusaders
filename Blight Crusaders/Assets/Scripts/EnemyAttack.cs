@@ -6,24 +6,19 @@ public class EnemyAttack : MonoBehaviour {
 	CharacterState state;
 	double attack = 0.0;
 
-	//health of players
+	//health of player
 	GameObject p1;
-	GameObject p2;
 	double p1HP;
-	double p2HP;
 	double p1HPprecentage;
-	double p2HPprecentage;
 
 	
-	//position of players
+	//position of player
 	Vector3 p1posn;
-	Vector3 p2posn;
-	
+
 	
 	//position recorder to go back from a melee attack
 	Vector3 p1origposn;
-	Vector3 p2origposn;
-	
+
 	Vector3 selforigposn;
 	//determines if the enemy is close enough to a player
 	// in order to perform attack or know that it's time to come back
@@ -49,24 +44,17 @@ public class EnemyAttack : MonoBehaviour {
 		double p1HPMAX = p1.GetComponent<CharacterState> ().health_max;
 		p1HPprecentage = p1HP / p1HPMAX;
 		
-		p2 = GameObject.Find("P2");
-		p2HP = p2.GetComponent<CharacterState> ().get_health ();
-		double p2HPMAX = p2.GetComponent<CharacterState> ().health_max;
-		p2HPprecentage = p2HP / p2HPMAX;
+
 		
 		//find enemies
 		e1 = GameObject.Find("E1");
-		
 		e2 = GameObject.Find("E2");
-		
 		e3 = GameObject.Find("E3");
-		//position of players
-		
+
+		//position of player
 		p1posn = p1.transform.position;
-		p2posn = p2.transform.position;
-		
+
 		// record the starting position of the enemy
-		
 		selforigposn = transform.position;
 		
 		
@@ -77,11 +65,13 @@ public class EnemyAttack : MonoBehaviour {
 	}
 
 	// Update is called once per frame
+	/*
 	void Update () {
 		if(!state.on_cooldown_huh() && state.getActive()){
 			EnemyFireball f = GetComponent<EnemyFireball>();
 			if(f == null){
-				f = this.gameObject.AddComponent<EnemyFireball>();
+				print ("EnemyAttack tried to instantiate an ability.  that's bad");
+				//f = this.gameObject.AddComponent<EnemyFireball>();
 			}
 			GameObject p1 = GameObject.Find ("P1");
 			f.add_to_queue(p1);
@@ -89,4 +79,5 @@ public class EnemyAttack : MonoBehaviour {
 			state.setInactive();
 		} 
 	}
+	*/
 }
