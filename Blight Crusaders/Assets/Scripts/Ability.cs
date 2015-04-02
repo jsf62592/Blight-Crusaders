@@ -7,20 +7,20 @@ This comment will lay out how the ability system works and is
 intended for people who just want to make a new ability and maybe
 understand a bit how the process works.
 
-this is how a new ability is made:
+This is how to make a new ability:
 
-1.(optional)  a status effect is made 
+1.(optional) make a status effect
 
-2.  an ability script is made.
+2.  make an ability script
 	-this must have a 'setup(...)' function in 'start()'
 	-this should override 'attachEffects(...)' such that it adds
 		the status affects it should apply to the target
 
-3. the ability script is attached to the gameobject(s) in the 
-	editor as a component
+3.  attach the ability script to the gameobject(s) in the editor as 
+	a component
 
 
-this is how the ability works:
+This is how the ability works:
 
 1.  something calls 'add_to_queue(...)'
 2.  'add_to_queue(...)' makes a message and puts it on the queue
@@ -48,6 +48,16 @@ public abstract class Ability : MonoBehaviour {
 	float time = 2.0f;
 	public AnimationClip attack_animation;
 	Vector3 origposn;
+
+
+	//used for keeping time
+	private float time_next_second;
+
+	
+
+	void Start(){
+		time_next_second = 0;
+	}
 	
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
@@ -87,11 +97,12 @@ public abstract class Ability : MonoBehaviour {
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
 	public void do_stuff(GameObject given_target){
-		/*
+		
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
 			moveto_melee(given_target);
 		}
+	/*
 		//else this is ranged and should move appropriately
 		else{
 			moveto_ranged(given_target);
@@ -100,9 +111,11 @@ public abstract class Ability : MonoBehaviour {
 		StartCoroutine("playAnimation");
 		//attach all the status effects
 		attachEffects (given_target);
-		//move back to the original position
-		print("this should be changed ~<:|");
-		StartCoroutine(moveto_destination (origposn));
+		if(meleehuh){
+			//move back to the original position
+			print("this should be changed ~<:|");
+			StartCoroutine(moveto_destination (origposn));
+		}
 		*/
 		attachEffects (given_target);
 	}
@@ -119,11 +132,21 @@ public abstract class Ability : MonoBehaviour {
 
 	//a helper function
 	//moves the character to the destination
-	protected IEnumerator moveto_destination(Vector3 given_destination){
-		while (elaspedTime < time) {
-			transform.position = Vector3.Lerp(origposn, given_destination, (elaspedTime / time));
-			elaspedTime += Time.deltaTime;
-			yield return null;
+	protected void moveto_destination(Vector3 given_destination){
+		float move_proportion = 0f;
+		float duration = 15.0f;	
+		while (move_proportion < 1f){
+			print ("time: " + Time.time + " next: " + time_next_second);
+		/*
+			if (Time.time >= time_next_second) { 
+				time_next_second = Time.time + .25f;
+				print (move_proportion);
+				//transform.position = Vector3.Lerp(origposn, given_destination, move_proportion);
+				move_proportion += .25f;
+			}
+		*/
+			move_proportion += Time.deltaTime/duration;
+			time_next_second = Time.time + .25f;
 		}
 	}
 
@@ -137,7 +160,7 @@ public abstract class Ability : MonoBehaviour {
 		} else {
 			destposn = given_target.transform.position - new Vector3(1,0,0);
 		}
-		StartCoroutine (moveto_destination(destposn));
+		moveto_destination(destposn);
 	}
 
 	//move the character to shoot a ranged ability
@@ -150,6 +173,6 @@ public abstract class Ability : MonoBehaviour {
 		} else {
 			destposn = transform.position - new Vector3(1,0,0);
 		} 
-		StartCoroutine (moveto_destination(destposn));
+		moveto_destination(destposn);
 	}
 }

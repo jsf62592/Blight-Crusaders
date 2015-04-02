@@ -102,6 +102,8 @@ public class Interface : MonoBehaviour {
 			
 			//if this is in Unity detect mouse instead of touch
 		}else if(platform == RuntimePlatform.WindowsEditor) {
+
+
 			if (Input.GetMouseButtonDown (0)) {
 				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
 				
@@ -136,15 +138,13 @@ public class Interface : MonoBehaviour {
 			if(targeted != null){ //if we have a target
 				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);
 
-				/*
-
-				Fireball f = selected.GetComponent<Fireball>();
-				if(f == null){
-					f = selected.gameObject.AddComponent<Fireball>();
+		
+				Ability ba = selected.GetComponent<Ability_Basic_Attack>();
+				if(ba != null){
+					print ("basic attack hurray");
+					ba.add_to_queue(targeted);
 				}
-				f.add_to_queue(targeted);
 
-				*/
 
 				state.setInactive();
 				selected.GetComponent<PlayerAction>().DeSelect();
