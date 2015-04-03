@@ -82,11 +82,9 @@ public class CharacterState : MonoBehaviour {
 			if (cooldown > 0 && activehuh){
 				cooldown--;
 			}
-			apply_effects();
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
-
-
+		apply_effects();
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
 			take_damage(10);

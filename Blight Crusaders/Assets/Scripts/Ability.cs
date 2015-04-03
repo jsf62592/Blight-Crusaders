@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/*////////////////////////////////////////////////////////////////
+/*================================================================
 This comment will lay out how the ability system works and is
 intended for people who just want to make a new ability and maybe
 understand a bit how the process works.
@@ -31,7 +31,8 @@ This is how the ability works:
 	effects to the target as components, and then moves the 
 	"caster" back to its original position
 
-*////////////////////////////////////////////////////////////////
+================================================================*/
+
 public abstract class Ability : MonoBehaviour {
 	
 	//this is the cooldown on the ability
@@ -47,7 +48,8 @@ public abstract class Ability : MonoBehaviour {
 	float elaspedTime = 0.0f;
 	float time = 2.0f;
 	public AnimationClip attack_animation;
-	Vector3 origposn;
+	Vector3 original_position;
+	Vector3 attack_position;
 
 
 	//used for keeping time
@@ -84,31 +86,63 @@ public abstract class Ability : MonoBehaviour {
 	//this is what you redefine every ability.
 	//this should only be called in do_stuff()
 	//attaches various Status_Effects and tells the given_target to add_attached_status_effects()
-	protected virtual void attachEffects(GameObject given_target){}
+	protected virtual void attachEffects(GameObject given_target){
+
+}
 
 
 
-	////////////////////////////////////////////////////////////////
+	/*================================================================
 	//YOU SHOULD PROBABLY IGNORE EVERYTHING BELOW THIS 
-	////////////////////////////////////////////////////////////////
+	================================================================*/
 
 
+
+	public void do_stuff(GameObject given_target){
+		StartCoroutine(omfg(given_target));
+	}
 
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
-	public void do_stuff(GameObject given_target){
-		
+	public IEnumerator omfg(GameObject given_target){
+		float movement_progress = 0f;
+		float movement_rate = .1f;
+
+		//move to the appropriate place to attack
+		while (movement_progress < 1){
+			move_attack(movement_progress, given_target);
+			movement_progress += movement_rate;
+			yield return 0;
+		}
+
+		//play the attack animation
+		//playAnimation ();
+
+		//attach all the status effects
+		print ("attached");
+		attachEffects (given_target);
+
+		//move back to the original position
+		while (movement_progress > 0){
+			//move_back (movement_progress);
+			movement_progress -= movement_rate;
+			yield return 0;
+		}
+
+
+		/*
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
 			moveto_melee(given_target);
 		}
-	/*
 		//else this is ranged and should move appropriately
 		else{
 			moveto_ranged(given_target);
 		}
+
 		//play the attack animation
 		StartCoroutine("playAnimation");
+
 		//attach all the status effects
 		attachEffects (given_target);
 		if(meleehuh){
@@ -117,16 +151,28 @@ public abstract class Ability : MonoBehaviour {
 			StartCoroutine(moveto_destination (origposn));
 		}
 		*/
-		attachEffects (given_target);
+
 	}
 
+	protected void move_attack(float given_lerp_proportion, GameObject given_target){
+		//move to the appropriate place if this is a melee ability
+		if (meleehuh){
+			move_attack_melee(given_lerp_proportion, given_target);
+		}
+		/*
+		//else this is ranged and should move appropriately
+		else{
+			move_attack_ranged(given_lerp_proportion, given_target);
+		}
+		*/
+	}
+	protected void move_back(float given_lerp_proportion){}
+
 	//plays the attack animation
-	protected IEnumerator playAnimation(){
+	protected void playAnimation(){
 		Animator animator = GetComponent<Animator>();
 		animator.SetInteger("Direction", 1);
-		print ("omfg animation i swear to god..." + this.name + " | " + attack_animation);
-		yield return new WaitForSeconds(attack_animation.length);
-		Debug.Log ("HEY");
+		//yield return new WaitForSeconds(attack_animation.length);
 		animator.SetInteger("Direction", 0);
 	}
 
@@ -151,22 +197,22 @@ public abstract class Ability : MonoBehaviour {
 	}
 
 	//moves the character to be in front of the target
-	protected void moveto_melee(GameObject given_target){
+	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
 		elaspedTime = 0.0f;
-		origposn = transform.position;
-		Vector3 destposn;
+		original_position = transform.position;
+
 		if(given_target.tag == "Player"){
-			destposn = given_target.transform.position + new Vector3(1,0,0);
+			attack_position = given_target.transform.position + new Vector3(1,0,0);
 		} else {
-			destposn = given_target.transform.position - new Vector3(1,0,0);
+			attack_position = given_target.transform.position - new Vector3(1,0,0);
 		}
-		moveto_destination(destposn);
+		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
 
 	//move the character to shoot a ranged ability
-	protected void moveto_ranged(GameObject given_target){
+	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
 		elaspedTime = 0.0f;
-		origposn = transform.position;
+		original_position = transform.position;
 		Vector3 destposn;
 		if(given_target.tag == "Player"){
 			destposn = transform.position + new Vector3(1,0,0);

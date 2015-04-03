@@ -64,12 +64,12 @@ public class EnemyAttack : MonoBehaviour {
 		state.cooldown_start (Random.Range(3,5));
 	}
 
+	/*
 	// Update is called once per frame
 	void Update () {
 		if(!state.on_cooldown_huh() && state.getActive()){
 			Ability f = GetComponent<Ability_Basic_Attack>();
 			if(f == null){
-				print ("EnemyAttack tried to instantiate an ability.  that's bad");
 				throw new UnityException("EnemyAttack: " + this.name +" could not find an ability");
 			}
 			GameObject p1 = GameObject.Find ("P1");
@@ -78,4 +78,5 @@ public class EnemyAttack : MonoBehaviour {
 			state.setInactive();
 		} 
 	}
+	*/
 }

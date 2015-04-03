@@ -8,6 +8,7 @@ public class SE_Basic_Attack : Status_Effect {
 	}
 	
 	protected override void immediate_effect(){
+		print ("applied");
 		state.take_damage (50);
 	}
 }

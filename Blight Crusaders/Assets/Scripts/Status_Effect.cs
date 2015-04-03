@@ -8,14 +8,19 @@ public abstract class Status_Effect : MonoBehaviour {
 	protected bool applied_immediatehuh = false;
 	//the CharacterState component on the gameobject this is attached to
 	protected CharacterState state;
-	
+
+	float tick_rate = 0.0f;
+
+
 	//does the stuff this should do.
 	//the effect kills itself when it runs its course
 	public void apply_effect(){
+
 		//if the immediate effect has been applied and the duration isn't 0, apply the persistant_effect()
-		if((applied_immediatehuh) && (duration > 0)){
+		if((applied_immediatehuh) && (duration > 0) && (tick_rate >= 1.0f)){
 			persistant_effect();
 			duration--;
+			tick_rate = 0.0f;
 		}
 
 		//if the immediate_effect() hasn't been applied, apply it
@@ -30,6 +35,7 @@ public abstract class Status_Effect : MonoBehaviour {
 			Destroy(this);
 		}
 
+		tick_rate += Time.deltaTime;
 	}
 
 	//call this in Start() and set the duration with it

@@ -137,6 +137,18 @@ Prefab:
       propertyPath: attack
       value: 
       objectReference: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
+    - target: {fileID: 6100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: m_Center.x
+      value: -.200000003
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
@@ -902,7 +914,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Size: {x: 3, y: 4}
-  m_Center: {x: 0, y: 0}
+  m_Center: {x: -.200000003, y: 0}
 --- !u!114 &1947263877
 MonoBehaviour:
   m_ObjectHideFlags: 0
