@@ -267,7 +267,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 100
+  health_max: 200
   distance_initial_offset: 1
   hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 0}
@@ -934,7 +934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ee379dd1ecd0c44ac23a62f61ec0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement_rate: .100000001
 --- !u!114 &1947263878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,7 +945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement_rate: .0500000007
 --- !u!114 &1947263879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,7 +956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement_rate: .100000001
 --- !u!1 &1974966396
 GameObject:
   m_ObjectHideFlags: 0

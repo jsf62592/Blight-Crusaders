@@ -49,7 +49,6 @@
      <Compile Include="Assets\Scripts\Ability.cs" />
      <Compile Include="Assets\Scripts\Ability_Alch_Bomb.cs" />
      <Compile Include="Assets\Scripts\Ability_Basic_Attack.cs" />
-     <Compile Include="Assets\Scripts\Ability_Message.cs" />
      <Compile Include="Assets\Scripts\Ability_Plague_Bolt.cs" />
      <Compile Include="Assets\Scripts\Ability_debug.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />

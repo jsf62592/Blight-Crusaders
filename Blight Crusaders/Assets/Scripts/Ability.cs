@@ -33,48 +33,59 @@ This is how the ability works:
 
 ================================================================*/
 
-public abstract class Ability : MonoBehaviour {
-	
+public abstract class Ability : MonoBehaviour {	
 	//this is the cooldown on the ability
 	protected int max_cooldown;
-	
-	//this is the CharacterState of what this is attached to
-	protected CharacterState state;
 
 	//is this ability melee or ranged?
 	//determines where the character moves to begin attack animation
 	bool meleehuh;
-	
-	float time = 2.0f;
-	Vector3 original_position;
-	Vector3 original_enemy_position;
-	Vector3 attack_position;
 
-
-	//used for keeping time
-	private float time_next_second;
-
-	protected float movement_progress = 0f;
-	public float movement_rate = .1f;
+	//the prefab that holds the sprite of the projectile.  It also holds a transform
 	protected GameObject projectile_prefab;
+	//this is the instance of projectile_prefab that is made and moved around
 	protected GameObject projectile_instance;
 
-	void Start(){
-		time_next_second = 0;
-	}
+	//the position of this character before this ability was "cast"
+	Vector3 original_position;
+	//the position of the target before this ability was "cast"
+	Vector3 original_enemy_position;
+	//the position this character should be in when this ability is "cast"
+	Vector3 attack_position;
+
+	//used for tracking movement towards the target when this ability is "cast"
+	protected float movement_progress;
+	//how fast the character moves towards the target when this ability is "cast"
+	//note:  movement speed is also affected by the distance between this character and the target
+	protected float movement_rate = .05f;
+
+	//this is the CharacterState of what this is attached to
+	protected CharacterState state;
 	
+
+
+
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
 	protected void setup(int given_max_cooldown, bool given_meleehuh, string given_projectile_loadpath){
 		max_cooldown = given_max_cooldown;
 		meleehuh = given_meleehuh;
-		if((! given_meleehuh) && (Resources.Load(given_projectile_loadpath) == null)){
-			throw new UnityException("Ability: " + this.name + " could not load prefab");
-		}
-		projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
+
+		//look for a CharacterState on what this is a component of
 		state = this.GetComponent<CharacterState> ();
+		//make sure this was setup(...) correctly
+		//if this was attached to something without a CharacterState component, complain
 		if(state == null){
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
+		}
+
+		//if this is a ranged ability: load the prefab from resources
+		if(! given_meleehuh){
+			projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
+			//if this is a ranged ability and there wasn't a prefab at the given path, complain
+			if(Resources.Load(given_projectile_loadpath) == null){
+				throw new UnityException("Ability: " + this.name + " is ranged but could not load the prefab");
+			}
 		}
 	}
 
@@ -92,9 +103,7 @@ public abstract class Ability : MonoBehaviour {
 	//this is what you redefine every ability.
 	//this should only be called in do_stuff()
 	//attaches various Status_Effects and tells the given_target to add_attached_status_effects()
-	protected virtual void attachEffects(GameObject given_target){
-
-}
+	protected virtual void attachEffects(GameObject given_target){}
 
 
 
@@ -103,19 +112,20 @@ public abstract class Ability : MonoBehaviour {
 	================================================================*/
 
 
-
-	public void do_stuff(GameObject given_target){
-		StartCoroutine(omfg(given_target));
+	//only the message should call this
+	public void do_stuff_wrapper(GameObject given_target){
+		StartCoroutine(do_stuff(given_target));
 	}
 
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
-	public IEnumerator omfg(GameObject given_target){
+	public IEnumerator do_stuff(GameObject given_target){
+		//reset movement such that it starts at the beginning
 		movement_progress = 0f;
+		//record the original_position of this character
 		original_position = transform.position;
+		//record the original position of the target
 		original_enemy_position = given_target.transform.position;
-
-
 
 		//move to the appropriate place to attack
 		while (movement_progress <= 1){
@@ -127,9 +137,7 @@ public abstract class Ability : MonoBehaviour {
 		//play the attack animation
 		yield return StartCoroutine (playAnimation());
 
-
 		//attach all the status effects
-		print ("attached");
 		attachEffects (given_target);
 
 		//move back to the original position
@@ -139,8 +147,11 @@ public abstract class Ability : MonoBehaviour {
 			yield return 0;
 		}
 
+		//GameManager.instance.UnFreezeCharacters();
+		//state.cooldown_start (max_cooldown);
 	}
 
+	//move to attack.  does different things depending on whether this is a melee ability or not
 	protected void move_attack(float given_lerp_proportion, GameObject given_target){
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
@@ -186,8 +197,7 @@ public abstract class Ability : MonoBehaviour {
 
 		projectile_instance.transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 
-		print (given_lerp_proportion);
-		if (given_lerp_proportion >= .9){
+		if (given_lerp_proportion >= (1 - movement_rate)){
 			Destroy(projectile_instance.gameObject);
 		}
 	}
