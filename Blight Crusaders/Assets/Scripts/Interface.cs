@@ -139,9 +139,10 @@ public class Interface : MonoBehaviour {
 				targetScreenPosition = Camera.main.WorldToScreenPoint(targeted.transform.position);
 
 		
-				Ability ba = selected.GetComponent<Ability_Basic_Attack>();
+				//Ability ba = selected.GetComponent<Ability_Basic_Attack>();
+				Ability ba = selected.GetComponent<Ability_Alch_Bomb>();
 				if(ba != null){
-					print ("basic attack hurray");
+					print ("basic attack hurray?");
 					ba.add_to_queue(targeted);
 				}
 
@@ -255,7 +256,7 @@ public class Interface : MonoBehaviour {
 	
 	public void ResetInput(){
 		Debug.Log(LastFourTargetHits.ToString());
-		selected = null;
+		//selected = null;
 		targeted = null;
 		LastFourTargetHits = new int[4];
 		Debug.Log("input reset");

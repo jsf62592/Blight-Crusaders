@@ -16,6 +16,7 @@ public class CharacterState : MonoBehaviour {
 	Animator animator;
 
 	public AnimationClip hurt;
+	public AnimationClip attack_animation;
 
 	//the total length of the screen.  It gets this from outside this scrip.
 	private float screen_length;
@@ -115,6 +116,18 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator attackMelee(){
+		this.animator.SetInteger ("Direction", 1);
+		yield return  new WaitForSeconds (attack_animation.length);
+		this.animator.SetInteger ("Direction", 0);
+	}
+
+	protected IEnumerator getHurt(){
+		this.animator.SetInteger ("Direction", 2);
+		yield return  new WaitForSeconds (hurt.length);
+		this.animator.SetInteger ("Direction", 0);
+	}
+
 	//is this currently on cooldown (not able to act)?  if yes, return true, else false.
 	public bool on_cooldown_huh(){
 		return this.cooldown > 0;
@@ -149,25 +162,10 @@ public class CharacterState : MonoBehaviour {
 		return this.canQueue;
 	}
 	
-	/*
-	//make this character take 'given_damage' amount of damage
-	//NOTE:  this will move the character as well
-	public IEnumerator take_damage(double given_damage){
-		this.health_current = this.health_current - given_damage;
-		this.animator.SetInteger ("Direction", 2);
-		yield return  new WaitForSeconds (hurt.length);
-		this.animator.SetInteger ("Direction", 0);
-		if(health_current <= 0){
-			death();
-		}
-		this.health_percent = (float)this.health_current / (float)this.health_max;
-		move_according_to_health ();
-	}
-	*/
-	
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
+		StartCoroutine (getHurt ());
 		//modify the current health
 		health_current = health_current - given_damage;
 		//if no health is left, call death()
@@ -176,7 +174,6 @@ public class CharacterState : MonoBehaviour {
 		}
 		//set health_percent for the new current health
 		health_percent = (float)health_current / (float)health_max;
-
 		//move appropriately
 		move_according_to_health();
 	}

@@ -45,17 +45,19 @@ public abstract class Ability : MonoBehaviour {
 	//determines where the character moves to begin attack animation
 	bool meleehuh;
 	
-	float elaspedTime = 0.0f;
 	float time = 2.0f;
-	public AnimationClip attack_animation;
 	Vector3 original_position;
+	Vector3 original_enemy_position;
 	Vector3 attack_position;
 
 
 	//used for keeping time
 	private float time_next_second;
 
-	
+	protected float movement_progress = 0f;
+	public float movement_rate = .1f;
+	protected GameObject projectile_prefab;
+	protected GameObject projectile_instance;
 
 	void Start(){
 		time_next_second = 0;
@@ -63,9 +65,13 @@ public abstract class Ability : MonoBehaviour {
 	
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
-	protected void setup(int given_max_cooldown, bool given_meleehuh){
+	protected void setup(int given_max_cooldown, bool given_meleehuh, string given_projectile_loadpath){
 		max_cooldown = given_max_cooldown;
 		meleehuh = given_meleehuh;
+		if((! given_meleehuh) && (Resources.Load(given_projectile_loadpath) == null)){
+			throw new UnityException("Ability: " + this.name + " could not load prefab");
+		}
+		projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
 		state = this.GetComponent<CharacterState> ();
 		if(state == null){
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
@@ -105,52 +111,33 @@ public abstract class Ability : MonoBehaviour {
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
 	public IEnumerator omfg(GameObject given_target){
-		float movement_progress = 0f;
-		float movement_rate = .1f;
+		movement_progress = 0f;
+		original_position = transform.position;
+		original_enemy_position = given_target.transform.position;
+
+
 
 		//move to the appropriate place to attack
-		while (movement_progress < 1){
+		while (movement_progress <= 1){
 			move_attack(movement_progress, given_target);
 			movement_progress += movement_rate;
 			yield return 0;
 		}
 
 		//play the attack animation
-		//playAnimation ();
+		yield return StartCoroutine (playAnimation());
+
 
 		//attach all the status effects
 		print ("attached");
 		attachEffects (given_target);
 
 		//move back to the original position
-		while (movement_progress > 0){
-			//move_back (movement_progress);
+		while (movement_progress >= 0){
+			move_back (movement_progress, given_target);
 			movement_progress -= movement_rate;
 			yield return 0;
 		}
-
-
-		/*
-		//move to the appropriate place if this is a melee ability
-		if (meleehuh){
-			moveto_melee(given_target);
-		}
-		//else this is ranged and should move appropriately
-		else{
-			moveto_ranged(given_target);
-		}
-
-		//play the attack animation
-		StartCoroutine("playAnimation");
-
-		//attach all the status effects
-		attachEffects (given_target);
-		if(meleehuh){
-			//move back to the original position
-			print("this should be changed ~<:|");
-			StartCoroutine(moveto_destination (origposn));
-		}
-		*/
 
 	}
 
@@ -159,66 +146,57 @@ public abstract class Ability : MonoBehaviour {
 		if (meleehuh){
 			move_attack_melee(given_lerp_proportion, given_target);
 		}
-		/*
 		//else this is ranged and should move appropriately
 		else{
 			move_attack_ranged(given_lerp_proportion, given_target);
 		}
-		*/
-	}
-	protected void move_back(float given_lerp_proportion){}
-
-	//plays the attack animation
-	protected void playAnimation(){
-		Animator animator = GetComponent<Animator>();
-		animator.SetInteger("Direction", 1);
-		//yield return new WaitForSeconds(attack_animation.length);
-		animator.SetInteger("Direction", 0);
 	}
 
-	//a helper function
-	//moves the character to the destination
-	protected void moveto_destination(Vector3 given_destination){
-		float move_proportion = 0f;
-		float duration = 15.0f;	
-		while (move_proportion < 1f){
-			print ("time: " + Time.time + " next: " + time_next_second);
-		/*
-			if (Time.time >= time_next_second) { 
-				time_next_second = Time.time + .25f;
-				print (move_proportion);
-				//transform.position = Vector3.Lerp(origposn, given_destination, move_proportion);
-				move_proportion += .25f;
-			}
-		*/
-			move_proportion += Time.deltaTime/duration;
-			time_next_second = Time.time + .25f;
+	protected void move_back(float given_lerp_proportion, GameObject given_target){
+		//move to the appropriate place if this is a melee ability
+		if (meleehuh){
+			move_attack_melee(given_lerp_proportion, given_target);
 		}
 	}
 
 	//moves the character to be in front of the target
 	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
-		elaspedTime = 0.0f;
-		original_position = transform.position;
-
 		if(given_target.tag == "Player"){
-			attack_position = given_target.transform.position + new Vector3(1,0,0);
+			attack_position = original_enemy_position + new Vector3(1,0,0);
 		} else {
-			attack_position = given_target.transform.position - new Vector3(1,0,0);
+			attack_position = original_enemy_position - new Vector3(1,0,0);
 		}
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
 
 	//move the character to shoot a ranged ability
 	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
-		elaspedTime = 0.0f;
-		original_position = transform.position;
-		Vector3 destposn;
+
 		if(given_target.tag == "Player"){
-			destposn = transform.position + new Vector3(1,0,0);
+			if(given_lerp_proportion == 0){
+				projectile_instance = (GameObject) Instantiate (projectile_prefab, transform.position + new Vector3(1,0,0), transform.rotation);
+			}
+			attack_position = original_enemy_position - new Vector3(1,0,0);
 		} else {
-			destposn = transform.position - new Vector3(1,0,0);
-		} 
-		moveto_destination(destposn);
+			if(given_lerp_proportion == 0){
+				projectile_instance = (GameObject) Instantiate (projectile_prefab, transform.position + new Vector3(1,0,0), transform.rotation);
+			}
+			attack_position = original_enemy_position - new Vector3(1,0,0);
+		}
+
+		projectile_instance.transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
+
+		print (given_lerp_proportion);
+		if (given_lerp_proportion >= .9){
+			Destroy(projectile_instance.gameObject);
+		}
+	}
+
+	//plays the attack animation
+	protected IEnumerator playAnimation(){
+		CharacterState cs = GetComponent<CharacterState> ();
+		if (meleehuh) {
+			yield return StartCoroutine (cs.attackMelee ());
+		}
 	}
 }

@@ -149,6 +149,10 @@ Prefab:
       propertyPath: m_Center.x
       value: -.200000003
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: attack_animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
@@ -565,6 +569,7 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 1
   hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack_animation: {fileID: 0}
   health_current: 0
 --- !u!61 &1496181438
 BoxCollider2D:
@@ -789,6 +794,7 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 1
   hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack_animation: {fileID: 0}
   health_current: 0
 --- !u!61 &1595471959
 BoxCollider2D:
@@ -817,6 +823,7 @@ GameObject:
   - 114: {fileID: 1947263874}
   - 114: {fileID: 1947263878}
   - 114: {fileID: 1947263877}
+  - 114: {fileID: 1947263879}
   m_Layer: 0
   m_Name: P1
   m_TagString: Player
@@ -902,6 +909,7 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: -3
   hurt: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
+  attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
   health_current: 0
 --- !u!61 &1947263876
 BoxCollider2D:
@@ -926,7 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ee379dd1ecd0c44ac23a62f61ec0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
+  movement_rate: .100000001
 --- !u!114 &1947263878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,7 +946,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
+  movement_rate: .0500000007
+--- !u!114 &1947263879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1947263870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement_rate: .100000001
 --- !u!1 &1974966396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1118,7 @@ MonoBehaviour:
   health_max: 100
   distance_initial_offset: 3
   hurt: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
+  attack_animation: {fileID: 0}
   health_current: 0
 --- !u!61 &2086782848
 BoxCollider2D:
