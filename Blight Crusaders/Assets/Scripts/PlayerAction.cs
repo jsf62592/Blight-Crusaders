@@ -28,7 +28,7 @@ public class PlayerAction : MonoBehaviour {
 		if (selected) {
 			gameObject.renderer.material.color = Color.blue;
 		}else if (selectable) {
-			gameObject.renderer.material.color = Color.red;
+			//gameObject.renderer.material.color = Color.red;
 		}else{
 			gameObject.renderer.material.color = Color.white;
 		}
@@ -48,14 +48,14 @@ public class PlayerAction : MonoBehaviour {
 		Debug.Log ("HEALTH: " + target.GetComponent<CharacterState> ().get_health ());
 		target.GetComponent<CharacterState> ().take_damage (.5);
 		Debug.Log (name + " Attacks " + target.name);
-		target.renderer.material.color = Color.red;
+		//target.renderer.material.color = Color.red;
 		changeColors = 10;
 		GetComponent<CharacterState> ().cooldown_start(UnityEngine.Random.Range(1,5));
 
 	}
 	
 	void ChangeColors(){
-		target.renderer.material.color = Color.red;
+		//target.renderer.material.color = Color.red;
 		
 		changeColors = 10;
 	}

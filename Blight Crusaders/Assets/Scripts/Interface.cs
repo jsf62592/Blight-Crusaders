@@ -13,23 +13,16 @@ public class Interface : MonoBehaviour {
 	Boolean drawButtons = false; //draw the ability input buttons	
 
 	//declare these somewhere based on ability button prefabs
-	public GameObject abilButton1;
-	public GameObject abilbutton2;
-	public GameObject abilButton3;
+	public Texture ability1Texture;
+	public Texture ability2Texture;
+	public Texture ability3Texture;
 
 	public int touchX; //current input touch position
 	public int touchY; 
 	public int button = 0; //button that was hit
-
-	//positions of the buttons
-	public float abilButton1x;
-	public float abilButton1y;
-	public float abilButton2x;
-	public float abilButton2y;
-	public float abilButton3x;
-	public float abilButton3y;
-
+	
 	public Boolean touch; //are we taking touch input instead of mouse
+	public Boolean turn; //is it the player's turn
 	public Vector3 retouch; //touch position fixed for scene positions
 	
 
@@ -39,8 +32,7 @@ public class Interface : MonoBehaviour {
 		state = selected.GetComponent<CharacterState> ();
 		target = null;
 		targeted = false; 
-
-		//FOR FUTURE instantiate abilitiy buttons and hide them
+		turn = false;
 	}
 
 	//find out what platform is running the code
@@ -50,8 +42,8 @@ public class Interface : MonoBehaviour {
 		//Pop player input UI
 		if (!state.on_cooldown_huh () && state.getActive ()) {
 			retouch = camera.WorldToScreenPoint (selected.transform.position);
-			drawButtons = true;
 			GameManager.instance.FreezeOtherCharacters (selected);
+			turn = true;
 		}
 		
 		//If on a touch platform, detect touch instead
@@ -77,32 +69,9 @@ public class Interface : MonoBehaviour {
 				target = hit.collider.gameObject;
 				targeted = true;
 			}
-
-			//figure out which ability got clicked, if any
-			//FOR FUTURE detect touches on button objects
-			if (drawButtons) {
-				button = 0;
-				Vector2 mousePlace = retouch;
-				Debug.Log ("mouse x: " + Input.mousePosition.x + " mousey: " + Input.mousePosition.y);
-				if (Vector2.Distance (mousePlace, new Vector2 (abilButton1x, abilButton1y)) <= 25) { 
-					Debug.Log ("button1 hit");
-					button = 1;
-					drawButtons = false;
-				} else if (Vector2.Distance (mousePlace, new Vector2 (abilButton2x, abilButton2y)) <= 25) { 
-					Debug.Log ("button2 hit");
-					button = 2;
-					drawButtons = false;
-				} else if (Vector2.Distance (mousePlace, new Vector2 (abilButton3x, abilButton3y)) <= 25) { 
-					Debug.Log ("button3 hit");
-					button = 3;
-					drawButtons = false;
-				} else {
-					Debug.Log ("buttons missed");
-				}
-			}
-
 		}
 
+	
 		//if we have a target enemy
 		if(targeted){ 
 
@@ -111,37 +80,54 @@ public class Interface : MonoBehaviour {
 				Debug.Log ("ABLITY1 USED"); 
 				Fireball();
 			}else if(button == 2){ 
-				Debug.Log ("ABLITY2 USED"); 
+				Debug.Log ("ABLITY2 USED");
+				Fireball();
 			}else if(button == 3){ 
 				Debug.Log ("ABLITY3 USED"); 
+				Fireball();
 			}
 
 		ResetInput();
 		}
 
 		if (button != 0) { targeting = true;} //Once an ability is selected, next input should be a target enemy
+		if(!targeting && !targeted && turn){ drawButtons = true; }
+		if (!turn) { drawButtons = false; }
 	}
 
 		
-			
-	
 	public void OnGUI(){
 
 		//Draw the buttons for abilities id the player is selected
-		//FOR FUTURE simple show button objects
 		if (drawButtons) {
-			//GUI.DrawTexture(new Rect(retouch.x - 25, Screen.height - retouch.y +50,50,50), abilButton1, ScaleMode.StretchToFill);
-			abilButton1x = retouch.x;       //-25
-			abilButton1y = retouch.y +25;  //-25
-			//GUI.DrawTexture(new Rect(retouch.x + 25, Screen.height - retouch.y,50,50), abilButton1, ScaleMode.StretchToFill);
-			abilButton2x = retouch.x + 50;
-			abilButton2y = retouch.y -25;
-			//GUI.DrawTexture(new Rect(retouch.x -25, Screen.height - retouch.y -50,50,50), abilButton1, ScaleMode.StretchToFill);
-			abilButton3x = retouch.x;
-			abilButton3y = retouch.y - 75;
+			Rect button3 = new Rect(retouch.x - 25 +25, Screen.height - retouch.y +50 -10,50,50);
+			Rect button2 = new Rect(retouch.x + 25, Screen.height - retouch.y -10,50,50);
+			Rect button1 = new Rect(retouch.x -25 + 25, Screen.height - retouch.y -50 -10,50,50);
+
+			GUI.DrawTexture(button1,  ability1Texture);
+			GUI.DrawTexture(button2,  ability2Texture);
+			GUI.DrawTexture(button3,  ability3Texture);
+			Event e = Event.current;
+			if (e.type == EventType.MouseDown) {
+				if (button1.Contains(e.mousePosition)) {
+					Debug.Log ("Button1 hit");
+					button = 1;
+					drawButtons = false;
+				}
+
+				if (button2.Contains(e.mousePosition)) {
+					Debug.Log ("Button2 hit");
+					button = 2;
+					drawButtons = false;
+				}
+
+				if (button3.Contains(e.mousePosition)) {
+					Debug.Log ("Button3 hit");
+					button = 3;
+					drawButtons = false;
+				}
+			}
 		}
-	
-		
 	}
 
 	//Reset after player attack
@@ -154,6 +140,7 @@ public class Interface : MonoBehaviour {
 		targeting = false;
 		targeted = false;
 		target = null;
+		turn = false;
 		Debug.Log("input reset");
 	}
 
