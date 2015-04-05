@@ -15,7 +15,7 @@ public class CharacterState : MonoBehaviour {
 	bool inrange = false;
 	Animator animator;
 
-	public AnimationClip hurt;
+	public AnimationClip hurt_animation;
 	public AnimationClip attack_animation;
 
 	//the total length of the screen.  It gets this from outside this scrip.
@@ -62,11 +62,18 @@ public class CharacterState : MonoBehaviour {
 
 		//the initial offset is used in other places to determine a gameobject's team, so it needs to be non-zero
 		if (distance_initial_offset == 0){
-			throw new UnityException("CharacterState.cs exception:  distance_initial_offset is set to 0 on entity: " + this.name);
+			throw new UnityException("CharacterState.cs:  distance_initial_offset is set to 0 on entity: " + this.name);
 		}
 		//if the initial offset is larger than half of the screen, that means something is starting off-screen, so complain and blow up.
 		if (Mathf.Abs(distance_initial_offset) >= (this.screen_length / 2)){
-			throw new UnityException("CharacterState.cs exception:  distance_initial_offset >= (screen_length / 2) | name: " + this.name + " | screen_length: " + screen_length);
+			throw new UnityException("CharacterState.cs:  distance_initial_offset >= (screen_length / 2) | name: " + this.name + " | screen_length: " + screen_length);
+		}
+
+		if (attack_animation == null){
+			throw new UnityException("CharacterState.cs:  no attack_animation set: " + this.name);
+		}
+		if (hurt_animation == null){
+			throw new UnityException("CharacterState.cs:  no hurt_animation set: " + this.name);
 		}
 
 		move_according_to_health ();
@@ -124,7 +131,7 @@ public class CharacterState : MonoBehaviour {
 
 	protected IEnumerator getHurt(){
 		this.animator.SetInteger ("Direction", 2);
-		yield return  new WaitForSeconds (hurt.length);
+		yield return  new WaitForSeconds (hurt_animation.length);
 		this.animator.SetInteger ("Direction", 0);
 	}
 

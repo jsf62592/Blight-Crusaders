@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 public class Ability_debug : Ability {
 	void Start(){
-		setup (5, true, null);
+		setup (5, false, "Prefabs/Alch_Bomb");
 	}
 	protected override void attachEffects(GameObject given_target){
 		given_target.AddComponent<SE_hellomynameisdebug> ();
@@ -25,8 +25,14 @@ public class Ability_debug : Ability {
 	void Update(){
 		if(Input.GetKeyDown("g")){
 			print ("Kamehameha");
+			GameObject targ = GameObject.FindGameObjectWithTag("Player");
+			print(targ.name);
+
+			add_to_queue(targ);
+
+
 			//do not  do this.  ever.  do not do this.
-			do_stuff(this.gameObject);  //do not  do this.  do not do this.
+			//do_stuff_wrapper(targ);  //do not  do this.  do not do this.
 			//do not  do this.  ever.  do not do this.
 		}
 	}

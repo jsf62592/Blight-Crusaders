@@ -38,7 +38,7 @@ public abstract class Ability : MonoBehaviour {
 	protected int max_cooldown;
 
 	//is this ability melee or ranged?
-	//determines where the character moves to begin attack animation
+	//affects attack movement and animations
 	bool meleehuh;
 
 	//the prefab that holds the sprite of the projectile.  It also holds a transform
@@ -59,10 +59,14 @@ public abstract class Ability : MonoBehaviour {
 	//note:  movement speed is also affected by the distance between this character and the target
 	protected float movement_rate = .05f;
 
-	//this is the CharacterState of what this is attached to
+	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
 	
-
+	//this is how much the attacker should be offset from the target's position
+	protected Vector3 melee_offset = new Vector3(1,0,0);
+	//this is how much the projectile should be offset from the original position when spawned
+	//and the target's position when destroyed
+	protected Vector3 ranged_offset = new Vector3(1,0,0);
 
 
 	//call this in Start() and set the max_cooldown with it
@@ -79,10 +83,10 @@ public abstract class Ability : MonoBehaviour {
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
 		}
 
-		//if this is a ranged ability: load the prefab from resources
+		//if this is a ranged ability: load the prefab from resource
 		if(! given_meleehuh){
 			projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
-			//if this is a ranged ability and there wasn't a prefab at the given path, complain
+			//if there wasn't a prefab at the given path, complain
 			if(Resources.Load(given_projectile_loadpath) == null){
 				throw new UnityException("Ability: " + this.name + " is ranged but could not load the prefab");
 			}
@@ -110,6 +114,7 @@ public abstract class Ability : MonoBehaviour {
 	/*================================================================
 	//YOU SHOULD PROBABLY IGNORE EVERYTHING BELOW THIS 
 	================================================================*/
+
 
 
 	//only the message should call this
@@ -147,8 +152,9 @@ public abstract class Ability : MonoBehaviour {
 			yield return 0;
 		}
 
-		//GameManager.instance.UnFreezeCharacters();
-		//state.cooldown_start (max_cooldown);
+		//unfreeze other characters
+		GameManager.instance.UnFreezeCharacters();
+		state.cooldown_start (max_cooldown);
 	}
 
 	//move to attack.  does different things depending on whether this is a melee ability or not
@@ -163,6 +169,7 @@ public abstract class Ability : MonoBehaviour {
 		}
 	}
 
+	//move back to the original position if this is a melee ability
 	protected void move_back(float given_lerp_proportion, GameObject given_target){
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
@@ -172,30 +179,28 @@ public abstract class Ability : MonoBehaviour {
 
 	//moves the character to be in front of the target
 	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
-		if(given_target.tag == "Player"){
-			attack_position = original_enemy_position + new Vector3(1,0,0);
-		} else {
-			attack_position = original_enemy_position - new Vector3(1,0,0);
+		//if the target isn't a player, they're on the other side of the screen thus the offset is opposite
+		if(given_target.tag != "Player"){
+			melee_offset = melee_offset * -1;
 		}
+		attack_position = original_enemy_position + melee_offset;
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
 
-	//move the character to shoot a ranged ability
+	//move the projectile of a ranged ability
 	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
-
+		//if this is targeting the player, invert the offset
 		if(given_target.tag == "Player"){
-			if(given_lerp_proportion == 0){
-				projectile_instance = (GameObject) Instantiate (projectile_prefab, transform.position + new Vector3(1,0,0), transform.rotation);
-			}
-			attack_position = original_enemy_position - new Vector3(1,0,0);
-		} else {
-			if(given_lerp_proportion == 0){
-				projectile_instance = (GameObject) Instantiate (projectile_prefab, transform.position + new Vector3(1,0,0), transform.rotation);
-			}
-			attack_position = original_enemy_position - new Vector3(1,0,0);
+			ranged_offset = ranged_offset * -1;
 		}
+		//if this is the first frame, spawn a new projectile
+		if(given_lerp_proportion == 0){
+			projectile_instance = (GameObject) Instantiate (projectile_prefab, original_position + ranged_offset, transform.rotation);
+		}
+		//calculate the position where this projectile should 'hit'
+		attack_position = original_enemy_position - ranged_offset;
 
-		projectile_instance.transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
+		projectile_instance.transform.position = Vector3.Lerp(original_position + ranged_offset, attack_position, given_lerp_proportion);
 
 		if (given_lerp_proportion >= (1 - movement_rate)){
 			Destroy(projectile_instance.gameObject);
@@ -204,9 +209,8 @@ public abstract class Ability : MonoBehaviour {
 
 	//plays the attack animation
 	protected IEnumerator playAnimation(){
-		CharacterState cs = GetComponent<CharacterState> ();
 		if (meleehuh) {
-			yield return StartCoroutine (cs.attackMelee ());
+			yield return StartCoroutine (state.attackMelee ());
 		}
 	}
 }
