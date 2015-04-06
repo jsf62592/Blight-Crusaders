@@ -42,7 +42,6 @@ public class CharacterState : MonoBehaviour {
 		Debug.Log("THIS IS THE COLOR: " + sp.color);
 		this.activehuh = true;
 		this.time_next_second = 0;
-		this.cooldown = 5.0f;
 		this.animator = GetComponent<Animator> ();
 
 
@@ -92,12 +91,23 @@ public class CharacterState : MonoBehaviour {
 			}
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
+
+		if (cooldown == 0 && getActive () && gameObject.tag != "Player") {
+			GameObject prefab1 = (GameObject) Instantiate(Resources.Load("Prefabs/ready"), transform.position, transform.rotation);
+		}					
+
 		apply_effects();
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
 			take_damage(10);
 		}
 	}
+
+
+	public float getCooldown(){
+		return cooldown;
+	}
+	  		//terry's stuff
 
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(float given_cooldown){
@@ -106,6 +116,10 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	IEnumerator changeColor(float cooldown){
+		if (sp == null) {
+			sp = GetComponent<SpriteRenderer>();
+		}
+		sp.color = Color.black;				//terry's stuff
 		float t = 0.0f;
 		while (t < cooldown) {
 			if(this.getActive()){

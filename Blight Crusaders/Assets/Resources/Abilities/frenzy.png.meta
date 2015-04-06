@@ -1,0 +1,223 @@
+fileFormatVersion: 2
+guid: 2c85d015b7e914841a099338f5f3d8e4
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: frenzy_0
+    21300002: frenzy_1
+    21300004: frenzy_2
+    21300006: frenzy_3
+    21300008: frenzy_4
+    21300010: frenzy_5
+    21300012: frenzy_6
+    21300014: frenzy_7
+    21300016: frenzy_8
+    21300018: frenzy_9
+    21300020: frenzy_10
+    21300022: frenzy_11
+    21300024: frenzy_12
+    21300026: frenzy_13
+    21300028: frenzy_14
+    21300030: frenzy_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: frenzy_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_1
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_2
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_3
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_4
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_5
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_6
+      rect:
+        serializedVersion: 2
+        x: 2088
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_7
+      rect:
+        serializedVersion: 2
+        x: 2436
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_8
+      rect:
+        serializedVersion: 2
+        x: 2784
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_9
+      rect:
+        serializedVersion: 2
+        x: 3132
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_10
+      rect:
+        serializedVersion: 2
+        x: 3480
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_11
+      rect:
+        serializedVersion: 2
+        x: 3828
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_12
+      rect:
+        serializedVersion: 2
+        x: 4176
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_13
+      rect:
+        serializedVersion: 2
+        x: 4524
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_14
+      rect:
+        serializedVersion: 2
+        x: 4872
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frenzy_15
+      rect:
+        serializedVersion: 2
+        x: 5220
+        y: 0
+        width: 348
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
