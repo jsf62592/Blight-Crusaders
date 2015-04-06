@@ -16,6 +16,9 @@ public class Interface : MonoBehaviour {
 	public Texture ability1Texture;
 	public Texture ability2Texture;
 	public Texture ability3Texture;
+
+	public Texture victoryScreen;
+	public Texture defeatScreen;
 	
 	public int touchX; //current input touch position
 	public int touchY; 
@@ -24,6 +27,12 @@ public class Interface : MonoBehaviour {
 	public Boolean touch; //are we taking touch input instead of mouse
 	public Boolean turn; //is it the player's turn
 	public Vector3 retouch; //touch position fixed for scene positions
+
+	public Boolean end;
+	public Boolean dead;
+	public int size = 150;
+	public int endCount;
+	public int okayEndCount = 100;
 	
 	
 	// Use this for initialization
@@ -33,12 +42,23 @@ public class Interface : MonoBehaviour {
 		target = null;
 		targeted = false; 
 		turn = false;
+		end = false;
+		dead = false;
+		endCount = 0;
+		ability1Texture = Resources.Load("Saw") as Texture;
+		ability2Texture = Resources.Load("Bottle") as Texture;
+		ability3Texture = Resources.Load("Bible") as Texture;
+		
+		victoryScreen = Resources.Load("victoryScreen") as Texture;
+		defeatScreen = Resources.Load("defeatScreen") as Texture;
 	}
 	
 	//find out what platform is running the code
 	RuntimePlatform platform = Application.platform;
 	
 	void Update(){
+		if (end) { endCount++; }
+
 		//Pop player input UI
 		if (!state.on_cooldown_huh () && state.getActive ()) {
 			retouch = camera.WorldToScreenPoint (selected.transform.position);
@@ -58,6 +78,7 @@ public class Interface : MonoBehaviour {
 		
 		//if you click an enemy during targeting
 		if ((touch && Input.touchCount > 0) || (!touch && Input.GetMouseButtonDown (0))) {
+			if(end && endCount > okayEndCount){ Application.Quit(); }
 			RaycastHit2D hit;
 			
 			//raycast based on mouse position
@@ -107,7 +128,7 @@ public class Interface : MonoBehaviour {
 	
 	
 	public void OnGUI(){
-		
+
 		if (!targeting && !targeted && turn) {
 			drawButtons = true;
 		} else {
@@ -117,10 +138,14 @@ public class Interface : MonoBehaviour {
 		
 		//Draw the buttons for abilities id the player is selected
 		if (drawButtons) {
-			Rect button3 = new Rect(retouch.x - 25 +25, Screen.height - retouch.y +50 -10,50,50);
-			Rect button2 = new Rect(retouch.x + 25, Screen.height - retouch.y -10,50,50);
-			Rect button1 = new Rect(retouch.x -25 + 25, Screen.height - retouch.y -50 -10,50,50);
-			
+			//Rect button3 = new Rect(retouch.x - 25 +25, Screen.height - retouch.y +50 -10,size,size);
+			//Rect button2 = new Rect(retouch.x + 25, Screen.height - retouch.y -10,size,size);
+			//Rect button1 = new Rect(retouch.x -25 + 25, Screen.height - retouch.y -50 -10,size,size);
+
+			Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
+			Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
+			Rect button3 = new Rect(retouch.x - size/2 + size/2 + size/4, Screen.height - retouch.y - size/2 + size/4,size,size);
+
 			GUI.DrawTexture(button1,  ability1Texture);
 			GUI.DrawTexture(button2,  ability2Texture);
 			GUI.DrawTexture(button3,  ability3Texture);
@@ -148,6 +173,14 @@ public class Interface : MonoBehaviour {
 				}
 			}
 		}
+
+		if (end) {
+			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
+			if(dead){ GUI.DrawTexture(endScreen,  defeatScreen);
+			}else{ GUI.DrawTexture(endScreen,  victoryScreen); }
+
+			
+		}
 		
 	}
 	
@@ -172,5 +205,13 @@ public class Interface : MonoBehaviour {
 		}
 		f.add_to_queue(target);
 	}
-	
+
+	public void GameOver(){
+		end = true;
+	}
+
+	public void Dead(){
+		dead = true;
+	}
+
 }
