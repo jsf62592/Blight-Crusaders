@@ -155,6 +155,7 @@ public abstract class Ability : MonoBehaviour {
 		//unfreeze other characters
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
+		//state.setActive();							//terry's stuff
 	}
 
 	//move to attack.  does different things depending on whether this is a melee ability or not
