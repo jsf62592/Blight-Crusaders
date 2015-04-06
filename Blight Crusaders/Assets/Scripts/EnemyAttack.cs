@@ -34,7 +34,8 @@ public class EnemyAttack : MonoBehaviour {
 	
 	Ability f1;
 	Ability aoe;
-	
+	Ability ba;
+
 	//a boolean indicates if the enemy is attacking
 	bool attacking;
 
@@ -48,10 +49,11 @@ public class EnemyAttack : MonoBehaviour {
 		double p1HPMAX = p1.GetComponent<CharacterState> ().health_max;
 		p1HPprecentage = p1HP / p1HPMAX;
 		
-		
-		 f1 = this.GetComponent<Ability_Strike> ();
-		 aoe = GetComponent<Ability_Aoe> ();
-		 p1 = GameObject.Find ("P1");
+
+		ba = GetComponent<Ability_Basic_Attack> ();
+		f1 = this.GetComponent<Ability_Strike> ();
+		aoe = GetComponent<Ability_Aoe> ();
+		p1 = GameObject.Find ("P1");
 		
 		//find enemies
 		e1 = GameObject.Find("E1");
@@ -66,10 +68,10 @@ public class EnemyAttack : MonoBehaviour {
 
 		state = this.gameObject.GetComponent<CharacterState> ();
 		if (this.gameObject.name == "E1") {
-			state.cooldown_start(20.0f);
+			state.cooldown_start(5.0f);
 		}
 		if (this.gameObject.name == "E2") {
-			state.cooldown_start(8.0f);
+			state.cooldown_start(30.0f);
 		}
 		if (this.gameObject.name == "E3") {
 			state.cooldown_start(12.0f);
@@ -81,24 +83,8 @@ public class EnemyAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ((! state.on_cooldown_huh ()) && state.getActive ()) {
-			f1.add_to_queue (p1);
-			//aoe.add_to_queue(p1);
-			GameManager.instance.FreezeOtherCharacters(this.gameObject);
-			state.setInactive();
+			this.GetComponent<Enemy>().decision(p1);
 		}
 	}
 }
-		/*
-		if(!state.on_cooldown_huh() && state.getActive()){
-			Ability f = GetComponent<Ability_Basic_Attack>();
-			if(f == null){
-				throw new UnityException("EnemyAttack: " + this.name +" could not find an ability");
-			}
-			GameObject p1 = GameObject.Find ("P1");
-			f.add_to_queue(p1);
-			GameManager.instance.FreezeOtherCharacters(this.gameObject);
-			state.setInactive();
-		} 
-	}
-	*/
-
+	

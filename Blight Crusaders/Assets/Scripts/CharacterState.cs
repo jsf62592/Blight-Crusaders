@@ -48,7 +48,9 @@ public class CharacterState : MonoBehaviour {
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
-
+		if (this.gameObject.name == "P1") {
+			this.cooldown_start(10);
+		}
 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
 		//this.screen_length = Camera.main.orthographicSize; 
@@ -92,9 +94,12 @@ public class CharacterState : MonoBehaviour {
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 
+
 		if (cooldown == 0 && getActive () && gameObject.tag != "Player") {
 			GameObject prefab1 = (GameObject) Instantiate(Resources.Load("Prefabs/ready"), transform.position, transform.rotation);
-		}					
+			Destroy(prefab1, 1.0f);
+		}	
+
 
 		apply_effects();
 		if(Input.GetKeyDown("f")){
@@ -102,12 +107,7 @@ public class CharacterState : MonoBehaviour {
 			take_damage(10);
 		}
 	}
-
-
-	public float getCooldown(){
-		return cooldown;
-	}
-	  		//terry's stuff
+	
 
 	//put this character on cooldown (make it unable to act) for 'given_cooldown' seconds
 	public void cooldown_start(float given_cooldown){
@@ -119,7 +119,7 @@ public class CharacterState : MonoBehaviour {
 		if (sp == null) {
 			sp = GetComponent<SpriteRenderer>();
 		}
-		sp.color = Color.black;				//terry's stuff
+		sp.color = Color.black;		
 		float t = 0.0f;
 		while (t < cooldown) {
 			if(this.getActive()){
