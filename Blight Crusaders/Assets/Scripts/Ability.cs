@@ -153,6 +153,7 @@ public abstract class Ability : MonoBehaviour {
 		//move back to the original position
 		while (movement_progress >= 0){
 			move_back (movement_progress, given_target);
+			print (this.name + " offset: " + melee_offset + " pos:  " + this.transform.position);
 			movement_progress -= movement_rate;
 			yield return 0;
 		}
@@ -186,7 +187,7 @@ public abstract class Ability : MonoBehaviour {
 	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
 		//if the target isn't a player, they're on the other side of the screen thus the offset is opposite
 		if(given_target.tag != "Player"){
-			melee_offset = melee_offset * -1;
+			melee_offset.x = Mathf.Abs(melee_offset.x) * -1;
 		}
 		attack_position = original_enemy_position + melee_offset;
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
