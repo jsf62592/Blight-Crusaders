@@ -186,7 +186,9 @@ public class CharacterState : MonoBehaviour {
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
-		
+		if(given_damage < 0){
+			throw new UnityException("CharacterState.cs:  take_damage() given negative given_damage: " + this.name);
+		}
 		StartCoroutine (getHurt ());
 		if(!isDead()){
 			//modify the current health
