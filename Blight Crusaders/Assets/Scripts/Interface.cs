@@ -11,7 +11,9 @@ public class Interface : MonoBehaviour {
 	public Boolean targeting; //are we looking for a target
 	CharacterState state; //the state of the selected player character
 	public Boolean drawButtons = false; //draw the ability input buttons	
-	
+
+	public static Interface instance;
+
 	//declare these somewhere based on ability button prefabs
 	public Texture ability1Texture;
 	public Texture ability2Texture;
@@ -33,10 +35,16 @@ public class Interface : MonoBehaviour {
 	public int size = 150;
 	public int endCount;
 	public int okayEndCount = 100;
+
+	
+	Ability ba;
+	Ability ab;
+	Ability heal;
 	
 	
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		selected = GameObject.Find("P1");
 		state = selected.GetComponent<CharacterState> ();
 		target = null;
@@ -48,6 +56,10 @@ public class Interface : MonoBehaviour {
 		ability1Texture = Resources.Load("Saw") as Texture;
 		ability2Texture = Resources.Load("Bottle") as Texture;
 		ability3Texture = Resources.Load("Bible") as Texture;
+
+		ba = selected.GetComponent<Ability_Basic_Attack>();
+		ab = selected.GetComponent<Ability_Alch_Bomb>();
+		heal = selected.GetComponent<Ability_Heal>();
 		
 		victoryScreen = Resources.Load("victoryScreen") as Texture;
 		defeatScreen = Resources.Load("defeatScreen") as Texture;
@@ -60,7 +72,7 @@ public class Interface : MonoBehaviour {
 		if (end) { endCount++; }
 
 		//Pop player input UI
-		if (!state.on_cooldown_huh () && state.getActive ()) {
+		if (!state.on_cooldown_huh () && state.getActive () && !state.isDead()) {
 			retouch = camera.WorldToScreenPoint (selected.transform.position);
 			GameManager.instance.FreezeOtherCharacters (selected);
 			turn = true;
@@ -104,15 +116,15 @@ public class Interface : MonoBehaviour {
 			//Which ability
 			if(button == 1){ 
 				Debug.Log ("ABLITY1 USED"); 
-				Fireball();
+				BasicAttack();
 				targeted = false;
 			}else if(button == 2){ 
 				Debug.Log ("ABLITY2 USED");
-				Fireball();
+				Alch_Bomb();
 				targeted = false;
 			}else if(button == 3){ 
 				Debug.Log ("ABLITY3 USED"); 
-				Fireball();
+				Heal();
 				targeted = false;
 			}
 			ResetInput();
@@ -198,12 +210,18 @@ public class Interface : MonoBehaviour {
 	}
 	
 	//Fireball ability
-	public void Fireball(){
-		Ability_Basic_Attack f = selected.GetComponent<Ability_Basic_Attack>();
-		if(f == null){
-			f = selected.gameObject.AddComponent<Ability_Basic_Attack>();
-		}
-		f.add_to_queue(target);
+	public void BasicAttack(){
+		ba.add_to_queue(target);
+	}
+
+	//Fireball ability
+	public void Alch_Bomb(){
+		ab.add_to_queue(target);
+	}
+
+	//Fireball ability
+	public void Heal(){
+		heal.add_to_queue(target);
 	}
 
 	public void GameOver(){

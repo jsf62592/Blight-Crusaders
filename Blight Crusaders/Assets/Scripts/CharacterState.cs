@@ -34,22 +34,25 @@ public class CharacterState : MonoBehaviour {
 	float time = 1.0f;
 	float elaspedTime = 0.0f;
 	SpriteRenderer sp;
+	bool dead;
 
 
 	// Use this for initialization
 	void Start () {
+		dead = false;
 		sp = GetComponent<SpriteRenderer> ();
 		Debug.Log("THIS IS THE COLOR: " + sp.color);
 		this.activehuh = true;
 		this.time_next_second = 0;
-		this.cooldown = 5.0f;
 		this.animator = GetComponent<Animator> ();
 
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
-
+		if (this.gameObject.name == "P1") {
+			this.cooldown_start(10);
+		}
 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
 		//this.screen_length = Camera.main.orthographicSize; 
@@ -145,6 +148,10 @@ public class CharacterState : MonoBehaviour {
 		return health_current;
 	}
 
+	public bool isDead(){
+		return dead;
+	}
+
 	public void setInactive(){
 		this.activehuh = false;
 	}
@@ -172,17 +179,20 @@ public class CharacterState : MonoBehaviour {
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
-		StartCoroutine (getHurt ());
-		//modify the current health
-		health_current = health_current - given_damage;
-		//if no health is left, call death()
-		if(health_current <= 0){
-			//death();
+		if(!isDead()){
+			//modify the current health
+			health_current = health_current - given_damage;
+			//if no health is left, call death()
+			if(health_current <= 0){
+				death();
+			} else {
+				StartCoroutine (getHurt ());
+				//set health_percent for the new current health
+				health_percent = (float)health_current / (float)health_max;
+				//move appropriately
+				move_according_to_health();
+			}
 		}
-		//set health_percent for the new current health
-		health_percent = (float)health_current / (float)health_max;
-		//move appropriately
-		move_according_to_health();
 	}
 	
 	//DO NOT TOUCH THIS.  UNLESS YOUR NAME IS JAMES O'BRIEN, DO NOT TOUCH THIS.
@@ -206,10 +216,13 @@ public class CharacterState : MonoBehaviour {
 
 	private void death(){
 		if (this.gameObject.name == "P1") {
-			Application.Quit ();
+			this.animator.SetInteger("Direction", 3);
+			Interface.instance.Dead();
+			Interface.instance.GameOver();
+			dead = true;
 		} else {
-			Destroy (this.gameObject);
-			GameManager.instance.PopCharacter (this.gameObject);
+			this.animator.SetInteger("Direction", 3);
+			dead = true;
 		}
 	}
 
