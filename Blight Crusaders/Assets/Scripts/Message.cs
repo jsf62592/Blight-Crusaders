@@ -22,6 +22,6 @@ public class Message {
 	}
 
 	public void UseAbility(){
-		ability.do_stuff_wrapper (targeted);
+			ability.do_stuff_wrapper (targeted);
 	}
 }
