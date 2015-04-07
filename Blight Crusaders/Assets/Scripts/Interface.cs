@@ -102,10 +102,13 @@ public class Interface : MonoBehaviour {
 			
 			//if an object is clicked
 			if (hit != null && hit.collider != null && hit.collider.tag == "Enemy" && targeting) {
-				target = hit.collider.gameObject;
-				targeted = true;
-				turn = false;
-				state.setInactive();
+				CharacterState enemyState = hit.collider.GetComponent<CharacterState>();
+				if(!enemyState.isDead()){
+					target = hit.collider.gameObject;
+					targeted = true;
+					turn = false;
+					state.setInactive();
+				}
 			}
 		}
 		

@@ -75,7 +75,7 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if ((! state.on_cooldown_huh ()) && state.getActive () && !p1State.isDead()) {
+		if ((! state.on_cooldown_huh ()) && state.getActive () && !p1State.isDead() && !state.isDead()) {
 				this.GetComponent<Enemy>().decision(p1);
 		}
 	}

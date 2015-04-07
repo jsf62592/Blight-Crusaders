@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	Queue<Message> QueueAction;
 	List<GameObject> characters;
 	bool canDequeue = true;
+	int enemyDeath = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(enemyDeath >= 3){
+			Interface.instance.GameOver();
+		}
+
 		while (QueueAction.Count > 0) {
 			if(canDequeue) {
 				Message action = QueueAction.Dequeue();
@@ -64,6 +69,10 @@ public class GameManager : MonoBehaviour {
 			i++;
 		}
 		canDequeue = true;
+	}
+
+	public void EnemyDeath(){
+		enemyDeath++;
 	}
 
 	void UseAction(Message action){

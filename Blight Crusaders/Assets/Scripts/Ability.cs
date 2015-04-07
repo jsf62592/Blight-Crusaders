@@ -57,7 +57,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float movement_rate = .01f;
+	protected float movement_rate = .025f;
+	protected float projectile_rate = 0.05f;
 
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -135,7 +136,11 @@ public abstract class Ability : MonoBehaviour {
 		//move to the appropriate place to attack
 		while (movement_progress <= 1){
 			move_attack(movement_progress, given_target);
-			movement_progress += movement_rate;
+			if(meleehuh){
+				movement_progress += movement_rate;
+			} else {
+				movement_progress += projectile_rate;
+			}
 			yield return 0;
 		}
 
@@ -202,7 +207,7 @@ public abstract class Ability : MonoBehaviour {
 
 		projectile_instance.transform.position = Vector3.Lerp(original_position + ranged_offset, attack_position, given_lerp_proportion);
 
-		if (given_lerp_proportion >= (1 - movement_rate)){
+		if (given_lerp_proportion >= (1 - projectile_rate)){
 			Destroy(projectile_instance.gameObject);
 		}
 	}

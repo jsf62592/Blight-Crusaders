@@ -95,6 +95,13 @@ public class CharacterState : MonoBehaviour {
 			}
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
+
+		if (cooldown == 0 && getActive () && gameObject.tag != "Player" && !isDead()) {
+			print ("2");
+			GameObject prefab1 = (GameObject) Instantiate(Resources.Load("Prefabs/ready"), transform.position, transform.rotation);
+			Destroy(prefab1, 1.0f);
+		}
+
 		apply_effects();
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
@@ -179,14 +186,19 @@ public class CharacterState : MonoBehaviour {
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
+		
+		StartCoroutine (getHurt ());
 		if(!isDead()){
 			//modify the current health
 			health_current = health_current - given_damage;
 			//if no health is left, call death()
 			if(health_current <= 0){
+				health_current = 0;
+				health_percent = (float)health_current / (float)health_max;
+				//move appropriately
+				move_according_to_health();
 				death();
 			} else {
-				StartCoroutine (getHurt ());
 				//set health_percent for the new current health
 				health_percent = (float)health_current / (float)health_max;
 				//move appropriately
@@ -217,11 +229,13 @@ public class CharacterState : MonoBehaviour {
 	private void death(){
 		if (this.gameObject.name == "P1") {
 			this.animator.SetInteger("Direction", 3);
+			GameManager.instance.FreezeOtherCharacters(this.gameObject);
 			Interface.instance.Dead();
 			Interface.instance.GameOver();
 			dead = true;
 		} else {
 			this.animator.SetInteger("Direction", 3);
+			GameManager.instance.EnemyDeath();
 			dead = true;
 		}
 	}
