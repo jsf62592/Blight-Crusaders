@@ -44,8 +44,10 @@ public class GameManager : MonoBehaviour {
 		while (QueueAction.Count > 0) {
 			if(canDequeue) {
 				Message action = QueueAction.Dequeue();
-				UseAction(action);
-				canDequeue = false;
+				if(!action.ReturnSelected().GetComponent<CharacterState>().isDead()){
+					UseAction(action);
+					canDequeue = false;
+				}
 			}
 			else return;
 		}

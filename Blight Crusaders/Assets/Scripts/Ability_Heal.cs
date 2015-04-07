@@ -17,7 +17,7 @@ public class Ability_Heal : Ability {
 	
 	protected override void attachEffects(GameObject given_target){
 		//will be given some other attributes
-		given_target.AddComponent<SE_Strike> ();
+		given_target.AddComponent<SE_Heal> ();
 		//negative damage taken
 	}
 }

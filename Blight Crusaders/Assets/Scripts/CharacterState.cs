@@ -51,7 +51,7 @@ public class CharacterState : MonoBehaviour {
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 		if (this.gameObject.name == "P1") {
-			this.cooldown_start(10);
+			this.cooldown_start(7);
 		}
 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
@@ -186,9 +186,7 @@ public class CharacterState : MonoBehaviour {
 	//make this character take 'given_damage' amount of damage
 	//NOTE:  this will move the character as well
 	public void take_damage(int given_damage){
-		if(given_damage < 0){
-			throw new UnityException("CharacterState.cs:  take_damage() given negative given_damage: " + this.name);
-		}
+		
 		StartCoroutine (getHurt ());
 		if(!isDead()){
 			//modify the current health
@@ -206,30 +204,6 @@ public class CharacterState : MonoBehaviour {
 				//move appropriately
 				move_according_to_health();
 			}
-		}
-	}
-
-	//make this character heal 'given_heal' amount of damage
-	//NOTE:  this will move the character as well
-	public void heal(int given_heal){
-		
-		//StartCoroutine (getBuffed ());
-
-		if(!isDead() && ((health_current + given_heal) <= health_max)){
-			//modify the current health
-			health_current = health_current + given_heal;
-			//set health_percent for the new current health
-			health_percent = (float)health_current / (float)health_max;
-			//move appropriately
-			move_according_to_health();
-		}
-		else{
-			//modify the current health
-			health_current = health_max;
-			//set health_percent for the new current health
-			health_percent = (float)health_current / (float)health_max;
-			//move appropriately
-			move_according_to_health();
 		}
 	}
 	

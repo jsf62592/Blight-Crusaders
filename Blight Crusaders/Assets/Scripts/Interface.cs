@@ -184,7 +184,7 @@ public class Interface : MonoBehaviour {
 					Debug.Log ("Button3 hit");
 					button = 3;
 					drawButtons = false;
-					targeting = true;
+					targeted = true;
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class Interface : MonoBehaviour {
 
 	//Fireball ability
 	public void Heal(){
-		heal.add_to_queue(target);
+		heal.add_to_queue(selected);
 	}
 
 	public void GameOver(){

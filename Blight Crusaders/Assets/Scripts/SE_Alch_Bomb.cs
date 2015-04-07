@@ -4,7 +4,7 @@ using System.Collections;
 public class SE_Alch_Bomb : Status_Effect {
 	
 	void Start(){
-		setup (4);
+		setup (2);
 	}
 
 	protected override void immediate_effect(){
