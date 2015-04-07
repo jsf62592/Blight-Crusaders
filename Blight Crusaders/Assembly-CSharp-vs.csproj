@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Ability_debug.cs" />
      <Compile Include="Assets\Scripts\Bubo.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
+     <Compile Include="Assets\Scripts\Decay.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />

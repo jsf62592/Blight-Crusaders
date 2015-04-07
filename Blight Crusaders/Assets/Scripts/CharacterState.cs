@@ -52,6 +52,7 @@ public class CharacterState : MonoBehaviour {
 			this.cooldown_start(10);
 		}
 
+
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
 		//this.screen_length = Camera.main.orthographicSize; 
 		this.screen_length = 20f;
@@ -89,13 +90,15 @@ public class CharacterState : MonoBehaviour {
 		if (Time.time >= this.time_next_second) { 
 			time_next_second = Time.time + 1;
 			if (cooldown > 0 && activehuh){
-				cooldown--;
+				cooldown--; 
+				print ("1");
 			}
 			//print ("Cooldown:  UPDATE  |  time left:  " + this.cooldown + " | on_cd?: " + this.on_cooldown_huh());
 		}
 
 
 		if (cooldown == 0 && getActive () && gameObject.tag != "Player") {
+			print ("2");
 			GameObject prefab1 = (GameObject) Instantiate(Resources.Load("Prefabs/ready"), transform.position, transform.rotation);
 			Destroy(prefab1, 1.0f);
 		}	

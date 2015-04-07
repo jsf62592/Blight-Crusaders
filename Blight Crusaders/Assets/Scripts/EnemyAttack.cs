@@ -68,13 +68,13 @@ public class EnemyAttack : MonoBehaviour {
 
 		state = this.gameObject.GetComponent<CharacterState> ();
 		if (this.gameObject.name == "E1") {
-			state.cooldown_start(5.0f);
+			state.cooldown_start(3.0f);
 		}
 		if (this.gameObject.name == "E2") {
-			state.cooldown_start(30.0f);
+			state.cooldown_start(10.0f);
 		}
 		if (this.gameObject.name == "E3") {
-			state.cooldown_start(12.0f);
+			state.cooldown_start(8.0f);
 		}
 		//state.cooldown_start (5.0f);
 	}
