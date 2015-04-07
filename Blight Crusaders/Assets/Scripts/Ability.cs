@@ -84,6 +84,16 @@ public abstract class Ability : MonoBehaviour {
 			throw new UnityException("Ability: " + this.name +" could not find a CharacterState component");
 		}
 
+		//if this is a player, invert the melee_offset
+		//if this isn't the player, invert the ranged_offset
+		if(this.tag == "Player"){
+			melee_offset.x = melee_offset.x * -1;
+		}
+		else{
+			ranged_offset.x = ranged_offset.x * -1;
+		}
+
+
 		//if this is a ranged ability: load the prefab from resource
 		if(! given_meleehuh){
 			projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
@@ -185,20 +195,13 @@ public abstract class Ability : MonoBehaviour {
 
 	//moves the character to be in front of the target
 	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
-		//if the target isn't a player, they're on the other side of the screen thus the offset is opposite
-		if(given_target.tag != "Player"){
-			melee_offset.x = Mathf.Abs(melee_offset.x) * -1;
-		}
+
 		attack_position = original_enemy_position + melee_offset;
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
 
 	//move the projectile of a ranged ability
 	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
-		//if this is targeting the player, invert the offset
-		if(given_target.tag == "Player"){
-			ranged_offset = ranged_offset * -1;
-		}
 		//if this is the first frame, spawn a new projectile
 		if(given_lerp_proportion == 0){
 			projectile_instance = (GameObject) Instantiate (projectile_prefab, original_position + ranged_offset, transform.rotation);
