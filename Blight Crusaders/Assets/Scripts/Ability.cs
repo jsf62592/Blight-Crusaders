@@ -163,7 +163,6 @@ public abstract class Ability : MonoBehaviour {
 		//move back to the original position
 		while (movement_progress >= 0){
 			move_back (movement_progress, given_target);
-			print (this.name + " offset: " + melee_offset + " pos:  " + this.transform.position);
 			movement_progress -= movement_rate;
 			yield return 0;
 		}
