@@ -124,7 +124,7 @@ Transform:
   m_LocalScale: {x: .402168334, y: .402168453, z: .402168453}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!1001 &254162968
 Prefab:
   m_ObjectHideFlags: 0
@@ -208,6 +208,10 @@ Prefab:
       propertyPath: hurt_animation
       value: 
       objectReference: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
+    - target: {fileID: 400000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
@@ -262,7 +266,7 @@ Transform:
   m_LocalScale: {x: .402168334, y: .402168453, z: .402168453}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
 --- !u!1001 &313378396
 Prefab:
   m_ObjectHideFlags: 0
@@ -487,7 +491,7 @@ Transform:
   m_LocalScale: {x: .402168334, y: .402168453, z: .402168453}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!1 &909862865
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +561,7 @@ Transform:
   m_LocalScale: {x: 2.72438645, y: 3.45954013, z: 1.47571003}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &1035488672
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,8 +622,8 @@ Camera:
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -638,11 +642,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1035488672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -9}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!114 &1035488678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,34 +728,7 @@ Transform:
   m_LocalScale: {x: .402168334, y: .402168453, z: .402168453}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
---- !u!1 &1340364547
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1340364548}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1340364548
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1340364547}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.123826981, y: 2.63328791, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 9
 --- !u!1 &1496181435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1035,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!114 &1595471957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +1137,7 @@ GameObject:
   - 114: {fileID: 1947263878}
   - 114: {fileID: 1947263879}
   - 114: {fileID: 1947263877}
+  - 114: {fileID: 1947263880}
   m_Layer: 0
   m_Name: P1
   m_TagString: Player
@@ -1217,7 +1195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!114 &1947263874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,6 +1269,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1947263880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1947263870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbe1c89631191f41bbcc2d539e8d6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1974966396

@@ -44,8 +44,12 @@ public class GameManager : MonoBehaviour {
 		while (QueueAction.Count > 0) {
 			if(canDequeue) {
 				Message action = QueueAction.Dequeue();
-				UseAction(action);
-				canDequeue = false;
+				GameObject selected = action.ReturnSelected();			
+				if(!selected.GetComponent<CharacterState>().isDead()){
+					action.UseAbility ();
+					FreezeOtherCharacters (selected);
+					canDequeue = false;
+				}
 			}
 			else return;
 		}
@@ -74,13 +78,6 @@ public class GameManager : MonoBehaviour {
 	public void EnemyDeath(){
 		enemyDeath++;
 	}
-
-	void UseAction(Message action){
-		GameObject selected = action.ReturnSelected ();
-		FreezeOtherCharacters (selected);
-		action.UseAbility ();
-	}	
-
 
 	public void AddQueueAction(Message action){
 		QueueAction.Enqueue (action);

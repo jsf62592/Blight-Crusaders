@@ -97,7 +97,6 @@ public class CharacterState : MonoBehaviour {
 		}
 
 		if (cooldown == 0 && getActive () && gameObject.tag != "Player" && !isDead()) {
-			print ("2");
 			GameObject prefab1 = (GameObject) Instantiate(Resources.Load("Prefabs/ready"), transform.position, transform.rotation);
 			Destroy(prefab1, 1.0f);
 		}
@@ -137,6 +136,24 @@ public class CharacterState : MonoBehaviour {
 		this.animator.SetInteger ("Direction", 1);
 		yield return  new WaitForSeconds (attack_animation.length);
 		this.animator.SetInteger ("Direction", 0);
+	}
+
+	public void moveMelee(){
+		this.animator.SetInteger("Direction", 4);
+	}
+
+	public void returnIdle(){
+		Vector3 xScale = this.gameObject.transform.localScale;
+		xScale.x *= -1;
+		this.gameObject.transform.localScale = xScale;
+		this.animator.SetInteger("Direction",0);
+	}
+
+	public void moveBackMelee(){
+		Vector3 xScale = transform.localScale;
+		xScale.x *= -1;
+		transform.localScale = xScale;
+		this.animator.SetInteger("Direction", 4);
 	}
 
 	protected IEnumerator getHurt(){

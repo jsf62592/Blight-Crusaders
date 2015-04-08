@@ -160,6 +160,9 @@ public abstract class Ability : MonoBehaviour {
 		//attach all the status effects
 		attachEffects (given_target);
 
+		if(meleehuh){
+			state.moveBackMelee();
+		}
 		//move back to the original position
 		while (movement_progress >= 0){
 			move_back (movement_progress, given_target);
@@ -168,6 +171,9 @@ public abstract class Ability : MonoBehaviour {
 		}
 
 		//unfreeze other characters
+		if(meleehuh){
+			state.returnIdle();
+		}
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
 	}
@@ -176,6 +182,7 @@ public abstract class Ability : MonoBehaviour {
 	protected void move_attack(float given_lerp_proportion, GameObject given_target){
 		//move to the appropriate place if this is a melee ability
 		if (meleehuh){
+			state.moveMelee();
 			move_attack_melee(given_lerp_proportion, given_target);
 		}
 		//else this is ranged and should move appropriately
@@ -194,7 +201,6 @@ public abstract class Ability : MonoBehaviour {
 
 	//moves the character to be in front of the target
 	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
-
 		attack_position = original_enemy_position + melee_offset;
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
