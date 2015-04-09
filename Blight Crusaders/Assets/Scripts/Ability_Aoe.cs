@@ -8,8 +8,7 @@ using UnityEngine;
 using System.Collections;
 
 public class Ability_Aoe : Ability {
-	
-	public Transform prefab;
+
 	// Use this for initialization
 	void Start () {
 		setup (5, false, "Prefabs/aoe");
@@ -18,8 +17,7 @@ public class Ability_Aoe : Ability {
 	
 	protected override void attachEffects(GameObject given_target){
 		//will be given some other attributes
-	//	given_target.AddComponent<SE_Strike> ();
-	//	prefab = (Transform) Instantiate(prefab, given_target.transform.position + new Vector3(0.0f,0.0f,0.0f), transform.rotation);// as Transform;
+		given_target.AddComponent<SE_Strike> ();
 
 	}
 }

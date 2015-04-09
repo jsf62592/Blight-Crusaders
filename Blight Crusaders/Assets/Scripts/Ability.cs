@@ -57,8 +57,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float movement_rate = .025f;
-	protected float projectile_rate = 0.05f;
+	protected float movement_rate = .01f;
+	protected float projectile_rate = 0.025f;
 
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -67,7 +67,7 @@ public abstract class Ability : MonoBehaviour {
 	protected Vector3 melee_offset = new Vector3(1,0,0);
 	//this is how much the projectile should be offset from the original position when spawned
 	//and the target's position when destroyed
-	protected Vector3 ranged_offset = new Vector3(1,0,0);
+	protected Vector3 ranged_offset = new Vector3(1,.5f,0);
 
 
 	//call this in Start() and set the max_cooldown with it
@@ -142,7 +142,10 @@ public abstract class Ability : MonoBehaviour {
 		original_position = transform.position;
 		//record the original position of the target
 		original_enemy_position = given_target.transform.position;
-
+		
+		if(gameObject.name == "P1" && !meleehuh){
+			yield return StartCoroutine (state.throwBottle());
+		}
 		//move to the appropriate place to attack
 		while (movement_progress <= 1){
 			move_attack(movement_progress, given_target);

@@ -64,12 +64,11 @@ public class EnemyAttack : MonoBehaviour {
 			state.cooldown_start(5.0f);
 		}
 		if (this.gameObject.name == "E2") {
-			state.cooldown_start(30.0f);
+			state.cooldown_start(7.0f);
 		}
 		if (this.gameObject.name == "E3") {
 			state.cooldown_start(12.0f);
 		}
-		//state.cooldown_start (5.0f);
 	}
 	
 	

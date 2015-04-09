@@ -153,9 +153,6 @@ public class Interface : MonoBehaviour {
 		
 		//Draw the buttons for abilities id the player is selected
 		if (drawButtons) {
-			//Rect button3 = new Rect(retouch.x - 25 +25, Screen.height - retouch.y +50 -10,size,size);
-			//Rect button2 = new Rect(retouch.x + 25, Screen.height - retouch.y -10,size,size);
-			//Rect button1 = new Rect(retouch.x -25 + 25, Screen.height - retouch.y -50 -10,size,size);
 
 			Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
 			Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
@@ -184,7 +181,9 @@ public class Interface : MonoBehaviour {
 					Debug.Log ("Button3 hit");
 					button = 3;
 					drawButtons = false;
-					targeting = true;
+					Heal ();
+					turn = false;
+					state.setInactive();
 				}
 			}
 		}
@@ -224,7 +223,7 @@ public class Interface : MonoBehaviour {
 
 	//Fireball ability
 	public void Heal(){
-		heal.add_to_queue(target);
+		state.heal (70);
 	}
 
 	public void GameOver(){

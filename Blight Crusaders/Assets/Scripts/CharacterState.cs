@@ -17,6 +17,8 @@ public class CharacterState : MonoBehaviour {
 
 	public AnimationClip hurt_animation;
 	public AnimationClip attack_animation;
+	public AnimationClip throw_animation;
+	public AnimationClip buff_animation;
 
 	//the total length of the screen.  It gets this from outside this scrip.
 	private float screen_length;
@@ -51,7 +53,7 @@ public class CharacterState : MonoBehaviour {
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 		if (this.gameObject.name == "P1") {
-			this.cooldown_start(10);
+			this.cooldown_start(6);
 		}
 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
@@ -149,6 +151,12 @@ public class CharacterState : MonoBehaviour {
 		this.animator.SetInteger("Direction",0);
 	}
 
+	public IEnumerator throwBottle(){
+		this.animator.SetInteger ("Direction", 5);
+		yield return new WaitForSeconds (throw_animation.length);
+		this.animator.SetInteger ("Direction", 0);
+	}
+
 	public void moveBackMelee(){
 		Vector3 xScale = transform.localScale;
 		xScale.x *= -1;
@@ -230,9 +238,11 @@ public class CharacterState : MonoBehaviour {
 	//NOTE:  this will move the character as well
 	public void heal(int given_heal){
 		
-		//StartCoroutine (getBuffed ());
+		StartCoroutine (getBuffed ());
 
 		if(!isDead() && ((health_current + given_heal) <= health_max)){
+
+
 			//modify the current health
 			health_current = health_current + given_heal;
 			//set health_percent for the new current health
@@ -248,6 +258,18 @@ public class CharacterState : MonoBehaviour {
 			//move appropriately
 			move_according_to_health();
 		}
+
+
+	}
+
+	IEnumerator getBuffed(){
+		this.animator.SetInteger ("Direction", 6);
+		GameObject go = (GameObject)Instantiate (Resources.Load ("Prefabs/heal"), transform.position, transform.rotation);
+		yield return new WaitForSeconds (buff_animation.length);
+		this.animator.SetInteger ("Direction", 0);
+		Destroy (go, .25f);
+		cooldown_start (5);
+		GameManager.instance.UnFreezeCharacters ();
 	}
 	
 	//DO NOT TOUCH THIS.  UNLESS YOUR NAME IS JAMES O'BRIEN, DO NOT TOUCH THIS.

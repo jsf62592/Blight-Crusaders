@@ -18,9 +18,9 @@ public class Bubo : Enemy {
 
 	public override void decision(GameObject target){
 		target_Health = target.GetComponent<CharacterState> ().get_health ();
-		if (target_Health > 70) {
+		if (target_Health > 230) {
 			ba.add_to_queue (target);
-		} else if (target_Health > 40) {
+		} else if (target_Health > 150) {
 			st.add_to_queue(target);	
 		} else {
 			fb.add_to_queue(target);

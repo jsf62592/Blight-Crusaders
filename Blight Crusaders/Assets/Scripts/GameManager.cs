@@ -55,6 +55,19 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	void DoubleCheck(){
+		if(QueueAction.Count >= 2){
+			Message action1 = QueueAction.Dequeue();
+			Message action2 = QueueAction.Dequeue();
+			if(action1.ReturnSelected() == action2.ReturnSelected()){
+				QueueAction.Enqueue(action1);
+			} else {
+				QueueAction.Enqueue(action1);
+				QueueAction.Enqueue(action2);
+			}
+		} else return;
+	}
+
 	public void FreezeOtherCharacters(GameObject characterAttacking){
 		int i = 0;
 		while (i < characters.Count) {

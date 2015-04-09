@@ -11,7 +11,7 @@ public class Ability_Frostbolt : Ability {
 
 	// Use this for initialization
 	void Start () {
-		setup (5, false, "Prefabs/frostbolt");
+		setup (7, false, "Prefabs/frostbolt");
 	}
 	
 	protected override void attachEffects(GameObject given_target){
