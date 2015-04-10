@@ -32,6 +32,7 @@ public class Interface : MonoBehaviour {
 
 	public Boolean end;
 	public Boolean dead;
+	public Boolean noTarget;
 	public int size = 150;
 	public int endCount;
 	public int okayEndCount = 100;
@@ -63,6 +64,8 @@ public class Interface : MonoBehaviour {
 		
 		victoryScreen = Resources.Load("victoryScreen") as Texture;
 		defeatScreen = Resources.Load("defeatScreen") as Texture;
+
+		noTarget = false;
 	}
 	
 	//find out what platform is running the code
@@ -110,11 +113,17 @@ public class Interface : MonoBehaviour {
 					state.setInactive();
 				}
 			}
+
+			if(button == 3){
+				targeted = true;
+					turn = false;
+					state.setInactive();
+			}
 		}
 		
 		
 		//if we have a target enemy
-		if(targeted){ 
+		if(targeted && !drawButtons){ 
 			drawButtons = false;
 			//Which ability
 			if(button == 1){ 
@@ -139,11 +148,12 @@ public class Interface : MonoBehaviour {
 		
 		if (button != 0) { } //Once an ability is selected, next input should be a target enemy
 		//if (targeted || targeting || !turn) { drawButtons = false; }
+	
 	}
 	
 	
 	public void OnGUI(){
-
+	
 		if (!targeting && !targeted && turn) {
 			drawButtons = true;
 		} else {
@@ -181,9 +191,7 @@ public class Interface : MonoBehaviour {
 					Debug.Log ("Button3 hit");
 					button = 3;
 					drawButtons = false;
-					Heal ();
-					turn = false;
-					state.setInactive();
+					targeting = true;
 				}
 			}
 		}
@@ -193,7 +201,6 @@ public class Interface : MonoBehaviour {
 			if(dead){ GUI.DrawTexture(endScreen,  defeatScreen);
 			}else{ GUI.DrawTexture(endScreen,  victoryScreen); }
 
-			
 		}
 		
 	}
