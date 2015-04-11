@@ -161,7 +161,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: m_Name
@@ -173,7 +173,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: health_max
-      value: 300
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: distance_initial_offset
@@ -323,7 +323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 40
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -359,7 +359,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_LocalRotation.x
@@ -379,7 +379,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_TagString
@@ -391,7 +391,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 40
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -448,7 +448,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &882778859
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +683,7 @@ MonoBehaviour:
   retouch: {x: 0, y: 0, z: 0}
   end: 0
   dead: 0
+  noTarget: 0
   size: 150
   endCount: 0
   okayEndCount: 100
@@ -784,7 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 40
+  health_max: 110
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
@@ -935,7 +936,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: m_Name
@@ -951,7 +952,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: health_max
-      value: 90
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: distance_initial_offset
@@ -1040,11 +1041,11 @@ Transform:
   m_PrefabInternal: {fileID: 493141280}
   m_GameObject: {fileID: 1595471953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.36000013, y: 1.73000002, z: 0}
+  m_LocalPosition: {x: 4.36000013, y: 1.73000002, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!114 &1595471957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,7 +1070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 40
+  health_max: 90
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
@@ -1232,7 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 300
+  health_max: 450
   distance_initial_offset: -3
   hurt_animation: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
   attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
@@ -1457,7 +1458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 90
+  health_max: 120
   distance_initial_offset: 3
   hurt_animation: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
   attack_animation: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
