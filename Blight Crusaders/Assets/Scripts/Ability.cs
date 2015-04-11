@@ -179,6 +179,7 @@ public abstract class Ability : MonoBehaviour {
 		}
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
+		state.setNotAttacking();
 	}
 
 	//move to attack.  does different things depending on whether this is a melee ability or not

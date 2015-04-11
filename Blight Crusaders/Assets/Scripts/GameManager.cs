@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour {
 				GameObject selected = action.ReturnSelected();			
 				if(!selected.GetComponent<CharacterState>().isDead()){
 					action.UseAbility ();
+					selected.GetComponent<CharacterState>().setAttacking();
 					FreezeOtherCharacters (selected);
 					canDequeue = false;
 				}

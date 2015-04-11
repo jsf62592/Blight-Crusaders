@@ -37,7 +37,7 @@ public class CharacterState : MonoBehaviour {
 	float elaspedTime = 0.0f;
 	SpriteRenderer sp;
 	bool dead;
-
+	bool attacking;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +48,7 @@ public class CharacterState : MonoBehaviour {
 		this.time_next_second = 0;
 		this.animator = GetComponent<Animator> ();
 
+		this.attacking = false;
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
@@ -103,7 +104,9 @@ public class CharacterState : MonoBehaviour {
 			Destroy(prefab1, 1.0f);
 		}
 
-		apply_effects();
+		if(!attacking){
+			apply_effects();
+		}
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
 			take_damage(10);
@@ -186,6 +189,18 @@ public class CharacterState : MonoBehaviour {
 
 	public void setInactive(){
 		this.activehuh = false;
+	}
+
+	public bool returnAttacking(){
+		return attacking;
+	}
+
+	public void setAttacking(){
+		this.attacking = true;
+	}
+
+	public void setNotAttacking(){
+		this.attacking = false;
 	}
 
 	public void setActive(){

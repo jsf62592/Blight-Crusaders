@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &159546726
 GameObject:
@@ -323,7 +324,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 40
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -391,7 +392,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 40
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -784,7 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 40
+  health_max: 130
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
@@ -1069,7 +1070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 40
+  health_max: 90
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
