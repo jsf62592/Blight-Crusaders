@@ -230,7 +230,7 @@ public class Interface : MonoBehaviour {
 
 	//Fireball ability
 	public void Heal(){
-		state.heal (70);
+		state.heal (80);
 	}
 
 	public void GameOver(){

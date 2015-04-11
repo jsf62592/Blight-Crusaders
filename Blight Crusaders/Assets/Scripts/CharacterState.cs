@@ -38,6 +38,8 @@ public class CharacterState : MonoBehaviour {
 	SpriteRenderer sp;
 	bool dead;
 
+	bool attacking;
+
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +49,7 @@ public class CharacterState : MonoBehaviour {
 		this.activehuh = true;
 		this.time_next_second = 0;
 		this.animator = GetComponent<Animator> ();
-
+		this.attacking = false;
 
 		this.health_current = this.health_max;
 		this.health_percent = (float)this.health_current / (float)this.health_max;
@@ -103,7 +105,9 @@ public class CharacterState : MonoBehaviour {
 			Destroy(prefab1, 1.0f);
 		}
 
-		apply_effects();
+		if (!attacking) {
+			apply_effects();
+		}
 		if(Input.GetKeyDown("f")){
 			print ("CharacterState Debug button pressed");
 			take_damage(10);
@@ -184,6 +188,18 @@ public class CharacterState : MonoBehaviour {
 		return dead;
 	}
 
+	public bool getAttacking(){
+		return attacking;
+	}
+
+	public void setAttacking(){
+		attacking = true;
+	}
+
+	public void setNotAttacking(){
+		attacking = false;
+	}
+
 	public void setInactive(){
 		this.activehuh = false;
 	}
@@ -257,6 +273,9 @@ public class CharacterState : MonoBehaviour {
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
 			move_according_to_health();
+		}
+		if (this.gameObject.GetComponent<SE_Plague_Bolt> () != null) {
+			DestroyObject(this.gameObject.GetComponent<SE_Plague_Bolt>());
 		}
 
 
