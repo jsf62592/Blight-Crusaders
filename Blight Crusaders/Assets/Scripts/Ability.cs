@@ -37,12 +37,15 @@ public abstract class Ability : MonoBehaviour {
 	//this is the cooldown on the ability
 	protected int max_cooldown;
 
+	public enum Visual_Types {self, melee, ranged_projectile, ranged_ascending};
+
+
 	//is this ability melee or ranged?
 	//affects attack movement and animations
-	bool meleehuh;
+	Visual_Types visual_type;
 
 	//the prefab that holds the sprite of the projectile.  It also holds a transform
-	protected GameObject projectile_prefab;
+	protected GameObject visual_prefab;
 	//this is the instance of projectile_prefab that is made and moved around
 	protected GameObject projectile_instance;
 
@@ -57,8 +60,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float movement_rate = .01f;
-	protected float projectile_rate = 0.025f;
+	protected float melee_movement_rate = .01f;
+	protected float projectile_movement_rate = 0.025f;
 
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -72,9 +75,9 @@ public abstract class Ability : MonoBehaviour {
 
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
-	protected void setup(int given_max_cooldown, bool given_meleehuh, string given_projectile_loadpath){
+	protected void setup(int given_max_cooldown, Visual_Types given_visual_type, string given_prefab_loadpath){
 		max_cooldown = given_max_cooldown;
-		meleehuh = given_meleehuh;
+		visual_type = given_visual_type;
 
 		//look for a CharacterState on what this is a component of
 		state = this.GetComponent<CharacterState> ();
@@ -95,11 +98,11 @@ public abstract class Ability : MonoBehaviour {
 
 
 		//if this is a ranged ability: load the prefab from resource
-		if(! given_meleehuh){
-			projectile_prefab = (GameObject) Resources.Load(given_projectile_loadpath);
+		if(given_visual_type != Visual_Types.melee){
+			visual_prefab = (GameObject) Resources.Load(given_prefab_loadpath);
 			//if there wasn't a prefab at the given path, complain
-			if(Resources.Load(given_projectile_loadpath) == null){
-				throw new UnityException("Ability: " + this.name + " is ranged but could not load the prefab");
+			if(Resources.Load(given_prefab_loadpath) == null){
+				throw new UnityException("Ability: " + name + " is " + visual_type + " but could not load the prefab");
 			}
 		}
 	}
@@ -143,19 +146,33 @@ public abstract class Ability : MonoBehaviour {
 		original_position = transform.position;
 		//record the original position of the target
 		original_enemy_position = given_target.transform.position;
-		
-		if(gameObject.name == "P1" && !meleehuh){
+
+		//BLEH
+		if(gameObject.name == "P1" && visual_type == Visual_Types.ranged_projectile){
 			yield return StartCoroutine (state.throwBottle());
 		}
-		//move to the appropriate place to attack
-		while (movement_progress <= 1){
-			move_attack(movement_progress, given_target);
-			if(meleehuh){
-				movement_progress += movement_rate;
-			} else {
-				movement_progress += projectile_rate;
+
+		if((visual_type == Visual_Types.melee) || (visual_type == Visual_Types.ranged_projectile)){
+			//move to the appropriate place to attack
+			while (movement_progress <= 1){
+				if(visual_type == Visual_Types.melee){
+					state.moveMelee();
+					helper_melee(movement_progress, given_target);
+					movement_progress += melee_movement_rate;
+				} else {
+					helper_ranged_projectile(movement_progress, given_target);
+					movement_progress += projectile_movement_rate;
+				}
+				yield return 0;
 			}
-			yield return 0;
+		}
+		else {
+			if(visual_type == Visual_Types.self){
+				helper_self();
+			}
+			if(visual_type == Visual_Types.ranged_ascending){
+
+			}
 		}
 
 		//play the attack animation
@@ -164,71 +181,60 @@ public abstract class Ability : MonoBehaviour {
 		//attach all the status effects
 		attachEffects (given_target);
 
-		if(meleehuh){
+		if(visual_type == Visual_Types.melee){
 			state.moveBackMelee();
 		}
-		//move back to the original position
-		while (movement_progress >= 0){
-			move_back (movement_progress, given_target);
-			movement_progress -= movement_rate;
-			yield return 0;
+		//move back to the original position if this is a melee ability
+		if(visual_type == Visual_Types.melee){
+			while (movement_progress >= 0){
+				helper_melee (movement_progress, given_target);
+				movement_progress -= melee_movement_rate;
+				yield return 0;
+			}
 		}
 
 		//unfreeze other characters
-		if(meleehuh){
+		if(visual_type == Visual_Types.melee){
 			state.returnIdle();
 		}
+
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
 		state.setNotAttacking();
 	}
 
-	//move to attack.  does different things depending on whether this is a melee ability or not
-	protected void move_attack(float given_lerp_proportion, GameObject given_target){
-		//move to the appropriate place if this is a melee ability
-		if (meleehuh){
-			state.moveMelee();
-			move_attack_melee(given_lerp_proportion, given_target);
-		}
-		//else this is ranged and should move appropriately
-		else{
-			move_attack_ranged(given_lerp_proportion, given_target);
-		}
-	}
-
-	//move back to the original position if this is a melee ability
-	protected void move_back(float given_lerp_proportion, GameObject given_target){
-		//move to the appropriate place if this is a melee ability
-		if (meleehuh){
-			move_attack_melee(given_lerp_proportion, given_target);
-		}
-	}
-
-	//moves the character to be in front of the target
-	protected void move_attack_melee(float given_lerp_proportion, GameObject given_target){
+	//moves the character for melee abilities
+	protected void helper_melee(float given_lerp_proportion, GameObject given_target){
 		attack_position = original_enemy_position + melee_offset;
 		transform.position = Vector3.Lerp(original_position, attack_position, given_lerp_proportion);
 	}
 
 	//move the projectile of a ranged ability
-	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
+	protected void helper_ranged_projectile(float given_lerp_proportion, GameObject given_target){
 		//if this is the first frame, spawn a new projectile
 		if(given_lerp_proportion == 0){
-			projectile_instance = (GameObject) Instantiate (projectile_prefab, original_position + ranged_offset, transform.rotation);
+			projectile_instance = (GameObject) Instantiate (visual_prefab, original_position + ranged_offset, transform.rotation);
 		}
 		//calculate the position where this projectile should 'hit'
 		attack_position = original_enemy_position - ranged_offset;
 
 		projectile_instance.transform.position = Vector3.Lerp(original_position + ranged_offset, attack_position, given_lerp_proportion);
 
-		if (given_lerp_proportion >= (1 - projectile_rate)){
+		if (given_lerp_proportion >= (1 - projectile_movement_rate)){
 			Destroy(projectile_instance.gameObject);
 		}
 	}
 
+	//move the projectile of a ranged ability
+	protected void helper_self(){
+		projectile_instance = (GameObject) Instantiate (visual_prefab, original_position, transform.rotation);
+	}
+
+
+
 	//plays the attack animation
 	protected IEnumerator playAnimation(){
-		if (meleehuh) {
+		if (visual_type == Visual_Types.melee) {
 			yield return StartCoroutine (state.attackMelee ());
 		}
 	}

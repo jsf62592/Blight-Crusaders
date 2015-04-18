@@ -11,7 +11,7 @@ public class Ability_Firewalk : Ability {
 	
 	// Use this for initialization
 	void Start () {
-		setup (6, false, "Prefabs/firewalk");
+		setup (6, Ability.Visual_Types.ranged_projectile, "Prefabs/firewalk");
 	}
 	
 	protected override void attachEffects(GameObject given_target){

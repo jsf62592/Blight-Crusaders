@@ -57,10 +57,7 @@ public class CharacterState : MonoBehaviour {
 			this.cooldown_start(6);
 		}
 
-		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
-		//this.screen_length = Camera.main.orthographicSize; 
 		this.screen_length = 20f;
-
 
 		//calculate the distance from the middle
 		distance = (((screen_length / 2) - Mathf.Abs(distance_initial_offset)) * (1 - health_percent)) + Mathf.Abs(distance_initial_offset);
@@ -104,6 +101,7 @@ public class CharacterState : MonoBehaviour {
 			Destroy(prefab1, 1.0f);
 		}
 
+		//print ("characterstate| name: " + name + "  cooldown: " + cooldown);
 
 		if(!attacking){
 			apply_effects();
@@ -208,14 +206,6 @@ public class CharacterState : MonoBehaviour {
 		return attacking;
 	}
 
-	public void setAttacking(){
-		this.attacking = true;
-	}
-
-	public void setNotAttacking(){
-		this.attacking = false;
-	}
-
 	public void setActive(){
 		this.activehuh = true;
 	}
@@ -265,18 +255,17 @@ public class CharacterState : MonoBehaviour {
 	//make this character heal 'given_heal' amount of damage
 	//NOTE:  this will move the character as well
 	public void heal(int given_heal){
-		
+		if(isDead()){
+			return;
+		}
 		StartCoroutine (getBuffed ());
 
-		if(!isDead() && ((health_current + given_heal) <= health_max)){
-
-
+		if(((health_current + given_heal) <= health_max)){
 			//modify the current health
 			health_current = health_current + given_heal;
 			//set health_percent for the new current health
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
-			move_according_to_health();
 		}
 		else{
 			//modify the current health
@@ -284,7 +273,6 @@ public class CharacterState : MonoBehaviour {
 			//set health_percent for the new current health
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
-			move_according_to_health();
 		}
 		if (this.gameObject.GetComponent<SE_Plague_Bolt> () != null) {
 			DestroyObject(this.gameObject.GetComponent<SE_Plague_Bolt>());
@@ -299,6 +287,7 @@ public class CharacterState : MonoBehaviour {
 		yield return new WaitForSeconds (buff_animation.length);
 		this.animator.SetInteger ("Direction", 0);
 		Destroy (go, .25f);
+		move_according_to_health();
 		cooldown_start (5);
 		GameManager.instance.UnFreezeCharacters ();
 	}
@@ -318,7 +307,7 @@ public class CharacterState : MonoBehaviour {
 		else{
 			new_x_position = distance;
 		}
-		print ("CharacterState | " + this.name + "moved from x-coord: " + transform.position.x + " to new x-coord: " + new_x_position);
+		//print ("CharacterState | " + this.name + "moved from x-coord: " + transform.position.x + " to new x-coord: " + new_x_position);
 		transform.position = new Vector3 (new_x_position, transform.position.y, transform.position.z);
 	}
 

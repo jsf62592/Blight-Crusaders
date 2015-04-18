@@ -11,7 +11,7 @@ public class Ability_Aoe : Ability {
 
 	// Use this for initialization
 	void Start () {
-		setup (5, false, "Prefabs/aoe");
+		setup (5, Ability.Visual_Types.ranged_projectile, "Prefabs/aoe");
 
 	}
 	

@@ -11,7 +11,7 @@ public class Ability_Frostbolt : Ability {
 
 	// Use this for initialization
 	void Start () {
-		setup (8, false, "Prefabs/frostbolt");
+		setup (8, Ability.Visual_Types.ranged_projectile, "Prefabs/frostbolt");
 	}
 	
 	protected override void attachEffects(GameObject given_target){
