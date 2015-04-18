@@ -136,6 +136,7 @@ public abstract class Ability : MonoBehaviour {
 	//this calls movement, animation, and status effect stuff
 	//NOTE:  should only be called by a message on the ability queue
 	public IEnumerator do_stuff(GameObject given_target){
+		state.setAttacking ();
 		//reset movement such that it starts at the beginning
 		movement_progress = 0f;
 		//record the original_position of this character

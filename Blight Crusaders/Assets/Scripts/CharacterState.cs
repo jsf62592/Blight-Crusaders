@@ -104,6 +104,7 @@ public class CharacterState : MonoBehaviour {
 			Destroy(prefab1, 1.0f);
 		}
 
+
 		if(!attacking){
 			apply_effects();
 		}
@@ -185,6 +186,18 @@ public class CharacterState : MonoBehaviour {
 
 	public bool isDead(){
 		return dead;
+	}
+
+	public bool getAttacking(){
+		return attacking;
+	}
+
+	public void setAttacking(){
+		attacking = true;
+	}
+
+	public void setNotAttacking(){
+		attacking = false;
 	}
 
 	public void setInactive(){
@@ -272,6 +285,9 @@ public class CharacterState : MonoBehaviour {
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
 			move_according_to_health();
+		}
+		if (this.gameObject.GetComponent<SE_Plague_Bolt> () != null) {
+			DestroyObject(this.gameObject.GetComponent<SE_Plague_Bolt>());
 		}
 
 
