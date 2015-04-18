@@ -57,8 +57,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float movement_rate = .01f;
-	protected float projectile_rate = 0.025f;
+	protected float movement_rate = .025f;
+	protected float projectile_rate = 0.05f;
 
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -67,7 +67,7 @@ public abstract class Ability : MonoBehaviour {
 	protected Vector3 melee_offset = new Vector3(1,0,0);
 	//this is how much the projectile should be offset from the original position when spawned
 	//and the target's position when destroyed
-	protected Vector3 ranged_offset = new Vector3(1,.5f,0);
+	protected Vector3 ranged_offset = new Vector3(1,.75f,0);
 
 
 	//call this in Start() and set the max_cooldown with it
@@ -212,6 +212,7 @@ public abstract class Ability : MonoBehaviour {
 
 	//move the projectile of a ranged ability
 	protected void move_attack_ranged(float given_lerp_proportion, GameObject given_target){
+		Animator projectile;
 		//if this is the first frame, spawn a new projectile
 		if(given_lerp_proportion == 0){
 			projectile_instance = (GameObject) Instantiate (projectile_prefab, original_position + ranged_offset, transform.rotation);
@@ -222,7 +223,9 @@ public abstract class Ability : MonoBehaviour {
 		projectile_instance.transform.position = Vector3.Lerp(original_position + ranged_offset, attack_position, given_lerp_proportion);
 
 		if (given_lerp_proportion >= (1 - projectile_rate)){
-			Destroy(projectile_instance.gameObject);
+			projectile = projectile_instance.GetComponent<Animator>();
+			projectile.SetInteger("Direction",1);
+			Destroy(projectile_instance.gameObject, .8f);
 		}
 	}
 

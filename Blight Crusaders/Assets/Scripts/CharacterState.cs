@@ -208,14 +208,6 @@ public class CharacterState : MonoBehaviour {
 		return attacking;
 	}
 
-	public void setAttacking(){
-		this.attacking = true;
-	}
-
-	public void setNotAttacking(){
-		this.attacking = false;
-	}
-
 	public void setActive(){
 		this.activehuh = true;
 	}
