@@ -60,7 +60,7 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float melee_movement_rate = .01f;
+	protected float melee_movement_rate = .025f;
 	protected float projectile_movement_rate = 0.025f;
 
 	//this is the CharacterState component of what this is attached to
@@ -72,6 +72,7 @@ public abstract class Ability : MonoBehaviour {
 	//and the target's position when destroyed
 	protected Vector3 ranged_offset = new Vector3(1,.5f,0);
 
+	public AnimationClip anim_clip;
 
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
@@ -104,7 +105,12 @@ public abstract class Ability : MonoBehaviour {
 			if(Resources.Load(given_prefab_loadpath) == null){
 				throw new UnityException("Ability: " + name + " is " + visual_type + " but could not load the prefab");
 			}
+			if((anim_clip == null) && ((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending))){
+				throw new UnityException("Ability: " + name + " is " + visual_type + " but does not have an animation clip");
+			}
 		}
+
+
 	}
 
 	//get the amount of cooldown time for this ability
@@ -140,13 +146,14 @@ public abstract class Ability : MonoBehaviour {
 	//NOTE:  should only be called by a message on the ability queue
 	public IEnumerator do_stuff(GameObject given_target){
 		state.setAttacking ();
-		//reset movement such that it starts at the beginning
-		movement_progress = 0f;
-		//record the original_position of this character
-		original_position = transform.position;
-		//record the original position of the target
-		original_enemy_position = given_target.transform.position;
-
+		if((visual_type == Visual_Types.melee) || (visual_type == Visual_Types.ranged_projectile)){
+			//reset movement such that it starts at the beginning
+			movement_progress = 0f;
+			//record the original_position of this character
+			original_position = transform.position;
+			//record the original position of the target
+			original_enemy_position = given_target.transform.position;
+		}
 		//BLEH
 		if(gameObject.name == "P1" && visual_type == Visual_Types.ranged_projectile){
 			yield return StartCoroutine (state.throwBottle());
@@ -171,37 +178,42 @@ public abstract class Ability : MonoBehaviour {
 				helper_self();
 			}
 			if(visual_type == Visual_Types.ranged_ascending){
-
+				helper_ranged_ascending(given_target);
 			}
 		}
 
 		//play the attack animation
 		yield return StartCoroutine (playAnimation());
 
+		if((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending)){
+			Destroy(projectile_instance.gameObject);
+		}
+
 		//attach all the status effects
 		attachEffects (given_target);
 
-		if(visual_type == Visual_Types.melee){
-			state.moveBackMelee();
-		}
 		//move back to the original position if this is a melee ability
 		if(visual_type == Visual_Types.melee){
+			state.moveBackMelee();
 			while (movement_progress >= 0){
 				helper_melee (movement_progress, given_target);
 				movement_progress -= melee_movement_rate;
 				yield return 0;
 			}
-		}
-
-		//unfreeze other characters
-		if(visual_type == Visual_Types.melee){
 			state.returnIdle();
 		}
 
+		//unfreeze other characters
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
 		state.setNotAttacking();
 	}
+
+
+
+
+
+
 
 	//moves the character for melee abilities
 	protected void helper_melee(float given_lerp_proportion, GameObject given_target){
@@ -227,15 +239,20 @@ public abstract class Ability : MonoBehaviour {
 
 	//move the projectile of a ranged ability
 	protected void helper_self(){
-		projectile_instance = (GameObject) Instantiate (visual_prefab, original_position, transform.rotation);
+		projectile_instance = (GameObject) Instantiate (visual_prefab, transform.position, transform.rotation);
 	}
 
-
+	protected void helper_ranged_ascending(GameObject given_target){
+		projectile_instance = (GameObject) Instantiate (visual_prefab, given_target.transform.position, given_target.transform.rotation);
+	}
 
 	//plays the attack animation
 	protected IEnumerator playAnimation(){
 		if (visual_type == Visual_Types.melee) {
 			yield return StartCoroutine (state.attackMelee ());
+		}
+		if((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending)){
+			yield return new WaitForSeconds (anim_clip.length);
 		}
 	}
 }

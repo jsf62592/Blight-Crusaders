@@ -80,10 +80,6 @@ public class CharacterState : MonoBehaviour {
 		}
 
 		move_according_to_health ();
-
-
-
-		print ("CharacterState Debug button enabled");
 	}
 	
 	// Update is called once per frame
@@ -105,10 +101,6 @@ public class CharacterState : MonoBehaviour {
 
 		if(!attacking){
 			apply_effects();
-		}
-		if(Input.GetKeyDown("f")){
-			print ("CharacterState Debug button pressed");
-			take_damage(10);
 		}
 	}
 
@@ -288,8 +280,6 @@ public class CharacterState : MonoBehaviour {
 		this.animator.SetInteger ("Direction", 0);
 		Destroy (go, .25f);
 		move_according_to_health();
-		cooldown_start (5);
-		GameManager.instance.UnFreezeCharacters ();
 	}
 	
 	//DO NOT TOUCH THIS.  UNLESS YOUR NAME IS JAMES O'BRIEN, DO NOT TOUCH THIS.
