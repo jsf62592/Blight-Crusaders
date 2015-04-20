@@ -178,6 +178,7 @@ public abstract class Ability : MonoBehaviour {
 		if(meleehuh){
 			state.returnIdle();
 		}
+		state.setBlack();
 		GameManager.instance.UnFreezeCharacters();
 		state.cooldown_start (max_cooldown);
 		state.setNotAttacking();
@@ -218,7 +219,7 @@ public abstract class Ability : MonoBehaviour {
 			projectile_instance = (GameObject) Instantiate (projectile_prefab, original_position + ranged_offset, transform.rotation);
 		}
 		//calculate the position where this projectile should 'hit'
-		attack_position = original_enemy_position - ranged_offset;
+		attack_position = original_enemy_position;
 
 		projectile_instance.transform.position = Vector3.Lerp(original_position + ranged_offset, attack_position, given_lerp_proportion);
 

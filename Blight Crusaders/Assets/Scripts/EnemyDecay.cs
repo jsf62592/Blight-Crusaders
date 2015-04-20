@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Decay : Enemy {
+public class EnemyDecay : Enemy {
 
 	Ability ba;
 	Ability fb;

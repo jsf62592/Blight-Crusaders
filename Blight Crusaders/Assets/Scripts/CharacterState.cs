@@ -120,6 +120,10 @@ public class CharacterState : MonoBehaviour {
 		StartCoroutine(changeColor (given_cooldown));
 	}
 
+	public void setBlack(){
+		sp.color = Color.black;
+	}
+
 	IEnumerator changeColor(float cooldown){
 		float t = 0.0f;
 		while (t < cooldown) {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bubo : Enemy {
+public class EnemyBubo : Enemy {
 
 	Ability ba;
 	Ability fb;
