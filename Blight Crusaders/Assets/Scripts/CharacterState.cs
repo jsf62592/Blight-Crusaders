@@ -127,8 +127,14 @@ public class CharacterState : MonoBehaviour {
 	IEnumerator changeColor(float cooldown){
 		float t = 0.0f;
 		while (t < cooldown) {
-			if(this.getActive()){
-				sp.color = Color.Lerp (Color.black, Color.white, t / cooldown);
+			if (this.getActive ()) {
+				if (get_health () > this.health_max / 2) {
+					sp.color = Color.Lerp (Color.black, Color.white, t / cooldown);
+				} else {
+					
+					sp.color = Color.Lerp (new Color32 (0, 0, 10, 255), new Color32 (200, 200, 255, 255), t / cooldown);
+				}
+
 				t += Time.deltaTime;
 				yield return null;
 			}
@@ -136,9 +142,15 @@ public class CharacterState : MonoBehaviour {
 				yield return null;
 			}
 		}
-		if(t >= cooldown)
-		{
-			sp.color = Color.white;
+		if (t >= cooldown) {
+			
+			if (get_health () > this.health_max / 2) {
+				sp.color = Color.white;
+			} else {
+				
+				sp.color = new Color32 (200, 200, 255, 255);
+				
+			}
 		}
 	}
 
@@ -289,10 +301,8 @@ public class CharacterState : MonoBehaviour {
 
 	IEnumerator getBuffed(){
 		this.animator.SetInteger ("Direction", 6);
-		GameObject go = (GameObject)Instantiate (Resources.Load ("Prefabs/heal"), transform.position, transform.rotation);
 		yield return new WaitForSeconds (buff_animation.length);
 		this.animator.SetInteger ("Direction", 0);
-		Destroy (go, .25f);
 		move_according_to_health();
 	}
 	
