@@ -76,6 +76,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Update () {
 		if ((! state.on_cooldown_huh ()) && state.getActive () && !p1State.isDead() && !state.isDead()) {
 			 this.GetComponent<Enemy>().decision(p1);
+			state.cooldown_start(4);
 		}
 	}
 }

@@ -462,7 +462,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: MaryThrow
-  m_Speed: 1
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: f1d535f2235d76643be9ff7ec6bd2add, type: 2}
@@ -491,14 +491,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110203104}
-      second:
-      - {fileID: 110113662}
-    data:
-      first: {fileID: 110275708}
-      second:
-      - {fileID: 110172222}
-    data:
       first: {fileID: 110200000}
       second:
       - {fileID: 110101875}
@@ -525,6 +517,14 @@ StateMachine:
       second:
       - {fileID: 110131354}
       - {fileID: 110180932}
+    data:
+      first: {fileID: 110275708}
+      second:
+      - {fileID: 110172222}
+    data:
+      first: {fileID: 110203104}
+      second:
+      - {fileID: 110113662}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 60, y: 156, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

@@ -261,18 +261,17 @@ public class CharacterState : MonoBehaviour {
 	//make this character heal 'given_heal' amount of damage
 	//NOTE:  this will move the character as well
 	public void heal(int given_heal){
-		
+		if(isDead()){
+			return;
+		}
 		StartCoroutine (getBuffed ());
-
-		if(!isDead() && ((health_current + given_heal) <= health_max)){
-
-
+		
+		if(((health_current + given_heal) <= health_max)){
 			//modify the current health
 			health_current = health_current + given_heal;
 			//set health_percent for the new current health
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
-			move_according_to_health();
 		}
 		else{
 			//modify the current health
@@ -280,13 +279,12 @@ public class CharacterState : MonoBehaviour {
 			//set health_percent for the new current health
 			health_percent = (float)health_current / (float)health_max;
 			//move appropriately
-			move_according_to_health();
 		}
 		if (this.gameObject.GetComponent<SE_Plague_Bolt> () != null) {
 			DestroyObject(this.gameObject.GetComponent<SE_Plague_Bolt>());
 		}
-
-
+		
+		
 	}
 
 	IEnumerator getBuffed(){
@@ -295,8 +293,7 @@ public class CharacterState : MonoBehaviour {
 		yield return new WaitForSeconds (buff_animation.length);
 		this.animator.SetInteger ("Direction", 0);
 		Destroy (go, .25f);
-		cooldown_start (5);
-		GameManager.instance.UnFreezeCharacters ();
+		move_according_to_health();
 	}
 	
 	//DO NOT TOUCH THIS.  UNLESS YOUR NAME IS JAMES O'BRIEN, DO NOT TOUCH THIS.

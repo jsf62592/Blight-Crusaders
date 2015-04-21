@@ -65,8 +65,6 @@
      <Compile Include="Assets\Scripts\EnemyDecay.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
-     <Compile Include="Assets\Scripts\Legacy_EnemyFireball.cs" />
-     <Compile Include="Assets\Scripts\Legacy_Fireball.cs" />
      <Compile Include="Assets\Scripts\Mary.cs" />
      <Compile Include="Assets\Scripts\Message.cs" />
      <Compile Include="Assets\Scripts\PlayerAction.cs" />

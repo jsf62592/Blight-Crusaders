@@ -684,6 +684,7 @@ MonoBehaviour:
   retouch: {x: 0, y: 0, z: 0}
   end: 0
   dead: 0
+  noTarget: 0
   size: 150
   endCount: 0
   okayEndCount: 100
@@ -866,6 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1496181443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,6 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c85ee8d893a94eab056cdfd3116f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1496181444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,6 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97770e010c9186498784103694a899d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1496181445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,6 +1104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97770e010c9186498784103694a899d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1595471961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,6 +1116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c85ee8d893a94eab056cdfd3116f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1595471962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,6 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1595471963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,6 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ee379dd1ecd0c44ac23a62f61ec0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1947263878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,6 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1947263879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,6 +1294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &1947263880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,6 +1306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbe1c89631191f41bbcc2d539e8d6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
 --- !u!1 &1974966396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,6 +1499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97770e010c9186498784103694a899d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &2086782850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,6 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0aef95ca49edb541a65d2404fc97139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &2086782852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,6 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
 --- !u!114 &2086782853
 MonoBehaviour:
   m_ObjectHideFlags: 0

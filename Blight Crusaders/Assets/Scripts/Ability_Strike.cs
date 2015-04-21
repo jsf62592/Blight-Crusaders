@@ -12,7 +12,7 @@ public class Ability_Strike : Ability {
 
 	// Use this for initialization
 	void Start () {
-		setup (7, false, "Prefabs/strike");
+		setup (7, Visual_Types.ranged_projectile, "Prefabs/strike");
 	}
 	
 	protected override void attachEffects(GameObject given_target){
