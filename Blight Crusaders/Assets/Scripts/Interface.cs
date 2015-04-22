@@ -23,6 +23,7 @@ public class Interface : MonoBehaviour {
 	public Texture defeatScreen;
 	public Texture startScreen;
 	public Texture startButton;
+	public Texture offColor;
 	
 	public int touchX; //current input touch position
 	public int touchY; 
@@ -39,6 +40,7 @@ public class Interface : MonoBehaviour {
 	public int size = 150;
 	public int endCount;
 	public int okayEndCount = 100;
+	public int maxCooldown = 5;
 
 	
 	Ability ba;
@@ -69,6 +71,8 @@ public class Interface : MonoBehaviour {
 		defeatScreen = Resources.Load("defeatScreen") as Texture;
 		startScreen = Resources.Load("startScreen") as Texture;
 		startButton = Resources.Load("startButton") as Texture;
+		offColor = Resources.Load("offColor") as Texture;
+
 
 		noTarget = false;
 
@@ -116,6 +120,7 @@ public class Interface : MonoBehaviour {
 			if (hit != null && hit.collider != null && hit.collider.tag == "Enemy" && targeting) {
 				CharacterState enemyState = hit.collider.GetComponent<CharacterState>();
 				if(!enemyState.isDead()){
+					drawButtons = false;
 					target = hit.collider.gameObject;
 					targeted = true;
 					turn = false;
@@ -124,6 +129,7 @@ public class Interface : MonoBehaviour {
 			}
 
 			if(button == 3){
+				drawButtons = false;
 				targeted = true;
 					turn = false;
 					state.setInactive();
@@ -169,13 +175,29 @@ public class Interface : MonoBehaviour {
 			drawButtons = false;
 		}
 		
-		
-		//Draw the buttons for abilities id the player is selected
 		if (drawButtons && !end) {
+			GUI.Box(new Rect(0, Screen.height - size,size,size), offColor);
+			GUI.Box(new Rect(0 + size, Screen.height - size,size,size),offColor);
+			GUI.Box (new Rect(0 + size*2, Screen.height - size,size,size),offColor);
+				}
 
-			Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
-			Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
-			Rect button3 = new Rect(retouch.x - size/2 + size/2 + size/4, Screen.height - retouch.y - size/2 + size/4,size,size);
+		if (!drawButtons && !end) {
+			//GUI.Box(new Rect(0, Screen.height - size,size,size), "");
+			//GUI.Box(new Rect(0 + size, Screen.height - size,size,size),"");
+			//GUI.Box (new Rect(0 + size*2, Screen.height - size,size,size),"");
+		}
+
+		//Draw the buttons for abilities id the player is selected
+		if (!end) {
+
+			//Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
+			//Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
+			//Rect button3 = new Rect(retouch.x - size/2 + size/2 + size/4, Screen.height - retouch.y - size/2 + size/4,size,size);
+
+			Rect button1 = new Rect(0, Screen.height - size,size,size);
+			Rect button2 = new Rect(0 + size, Screen.height - size,size,size);
+			Rect button3 = new Rect(0 + size*2, Screen.height - size,size,size);
+
 
 			GUI.DrawTexture(button1,  ability1Texture);
 			GUI.DrawTexture(button2,  ability2Texture);
@@ -204,6 +226,19 @@ public class Interface : MonoBehaviour {
 				}
 			}
 		}
+		float cool = determineCool();
+		if (!end) {
+			GUI.Box(new Rect(0, Screen.height - size*cool,size,size), "");
+			GUI.Box(new Rect(0 + size, Screen.height - size*cool,size,size),"");
+			GUI.Box (new Rect(0 + size*2, Screen.height - size*cool,size,size),"");
+		}
+
+		if (!drawButtons && !end) {
+			GUI.Box(new Rect(0, Screen.height - size,size,size), "");
+			GUI.Box(new Rect(0 + size, Screen.height - size,size,size),"");
+			GUI.Box (new Rect(0 + size*2, Screen.height - size,size,size),"");
+		}
+
 
 		if (end) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
@@ -261,6 +296,18 @@ public class Interface : MonoBehaviour {
 	public void Dead(){
 		dead = true;
 		saveRestart();
+	}
+
+	public float determineCool(){
+
+		float cool = state.cooldown / maxCooldown;
+		Debug.Log ("cool check: " + cool);
+
+		if (cool > 1.0f) {	
+			return 1.0f;
+		} else {
+			return cool;
+		}
 	}
 
 	public void decideEnding(){
