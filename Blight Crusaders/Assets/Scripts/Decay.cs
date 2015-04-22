@@ -35,5 +35,6 @@ public class Decay : Enemy {
 
 		GameManager.instance.FreezeOtherCharacters (this.gameObject);
 		GetComponent<CharacterState> ().setInactive ();
+		GetComponent<CharacterState> ().cooldown_start (20);
 	}
 }
