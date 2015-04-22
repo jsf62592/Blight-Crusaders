@@ -18,6 +18,8 @@ public class Decay : Enemy {
 	
 	public override void decision(GameObject target){
 		target_health = target.GetComponent<CharacterState> ().get_health ();
+
+		/*
 		if(target_health > 230){
 			fb.add_to_queue(target);
 		} else if (target_health > 150){
@@ -25,6 +27,11 @@ public class Decay : Enemy {
 		} else {
 			ba.add_to_queue(target);
 		}
+
+		*/
+
+		fw.add_to_queue(target);
+
 
 		GameManager.instance.FreezeOtherCharacters (this.gameObject);
 		GetComponent<CharacterState> ().setInactive ();

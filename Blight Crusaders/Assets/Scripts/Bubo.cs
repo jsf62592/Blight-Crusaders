@@ -27,5 +27,6 @@ public class Bubo : Enemy {
 		}
 		GameManager.instance.FreezeOtherCharacters(this.gameObject);
 		GetComponent<CharacterState>().setInactive();
+		GetComponent<CharacterState> ().cooldown_start (20);
 	}
 }

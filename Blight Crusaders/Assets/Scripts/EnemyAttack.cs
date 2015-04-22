@@ -61,10 +61,10 @@ public class EnemyAttack : MonoBehaviour {
 		
 		state = this.gameObject.GetComponent<CharacterState> ();
 		if (this.gameObject.name == "E1") {
-			state.cooldown_start(5.0f);
+			state.cooldown_start(6.0f);
 		}
 		if (this.gameObject.name == "E2") {
-			state.cooldown_start(7.0f);
+			state.cooldown_start(3.0f);
 		}
 		if (this.gameObject.name == "E3") {
 			state.cooldown_start(12.0f);
@@ -75,6 +75,8 @@ public class EnemyAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ((! state.on_cooldown_huh ()) && state.getActive () && !p1State.isDead() && !state.isDead()) {
+			print ("I'm off cd :D  " + name + " cd: " + state.on_cooldown_huh() + " act: " + state.getActive());
+
 			 this.GetComponent<Enemy>().decision(p1);
 		}
 	}
