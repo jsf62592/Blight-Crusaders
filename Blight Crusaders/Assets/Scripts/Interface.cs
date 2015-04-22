@@ -11,18 +11,19 @@ public class Interface : MonoBehaviour {
 	public Boolean targeting; //are we looking for a target
 	CharacterState state; //the state of the selected player character
 	public Boolean drawButtons = false; //draw the ability input buttons	
-
+	
 	public static Interface instance;
-
+	
 	//declare these somewhere based on ability button prefabs
 	public Texture ability1Texture;
 	public Texture ability2Texture;
 	public Texture ability3Texture;
-
+	
 	public Texture victoryScreen;
 	public Texture defeatScreen;
 	public Texture startScreen;
 	public Texture startButton;
+	public Texture offColor;
 	
 	public int touchX; //current input touch position
 	public int touchY; 
@@ -31,7 +32,7 @@ public class Interface : MonoBehaviour {
 	public Boolean touch; //are we taking touch input instead of mouse
 	public Boolean turn; //is it the player's turn
 	public Vector3 retouch; //touch position fixed for scene positions
-
+	
 	public Boolean end;
 	public Boolean start;
 	public Boolean dead;
@@ -39,7 +40,8 @@ public class Interface : MonoBehaviour {
 	public int size = 150;
 	public int endCount;
 	public int okayEndCount = 100;
-
+	public int maxCooldown = 5;
+	
 	
 	Ability ba;
 	Ability ab;
@@ -60,7 +62,7 @@ public class Interface : MonoBehaviour {
 		ability1Texture = Resources.Load("Saw") as Texture;
 		ability2Texture = Resources.Load("Bottle") as Texture;
 		ability3Texture = Resources.Load("Bible") as Texture;
-
+		
 		ba = selected.GetComponent<Ability_Basic_Attack>();
 		ab = selected.GetComponent<Ability_Alch_Bomb>();
 		heal = selected.GetComponent<Ability_Heal>();
@@ -69,9 +71,11 @@ public class Interface : MonoBehaviour {
 		defeatScreen = Resources.Load("defeatScreen") as Texture;
 		startScreen = Resources.Load("startScreen") as Texture;
 		startButton = Resources.Load("startButton") as Texture;
-
+		offColor = Resources.Load("offColor") as Texture;
+		
+		
 		noTarget = false;
-
+		
 		if(checkRestart() == 0){ start = true; }else{ start = false; }
 	}
 	
@@ -83,8 +87,9 @@ public class Interface : MonoBehaviour {
 			GameManager.instance.FreezeOtherCharacters(selected);
 			state.setInactive();
 		}
+		//if(start){ Time.timeScale = 0; }
 		if (end) { endCount++; }
-
+		
 		//Pop player input UI
 		if (!state.on_cooldown_huh () && state.getActive () && !state.isDead()) {
 			retouch = camera.WorldToScreenPoint (selected.transform.position);
@@ -105,7 +110,7 @@ public class Interface : MonoBehaviour {
 		//on click
 		if ((touch && Input.touchCount > 0) || (!touch && Input.GetMouseButtonDown (0))) {
 			StartCoroutine(decideEnding());
-
+			
 			RaycastHit2D hit;
 			
 			//raycast based on mouse position
@@ -119,17 +124,19 @@ public class Interface : MonoBehaviour {
 			if (hit != null && hit.collider != null && hit.collider.tag == "Enemy" && targeting) {
 				CharacterState enemyState = hit.collider.GetComponent<CharacterState>();
 				if(!enemyState.isDead()){
+					drawButtons = false;
 					target = hit.collider.gameObject;
 					targeted = true;
 					turn = false;
 					state.setInactive();
 				}
 			}
-
+			
 			if(button == 3){
+				drawButtons = false;
 				targeted = true;
-					turn = false;
-					state.setInactive();
+				turn = false;
+				state.setInactive();
 			}
 		}
 		
@@ -160,26 +167,33 @@ public class Interface : MonoBehaviour {
 		
 		if (button != 0) { } //Once an ability is selected, next input should be a target enemy
 		//if (targeted || targeting || !turn) { drawButtons = false; }
-	
+		
 	}
 	
 	
 	public void OnGUI(){
-	
+
 		if (!targeting && !targeted && turn) {
 			drawButtons = true;
 		} else {
 			drawButtons = false;
 		}
-		
+
+		if (drawButtons && !end) {
+			GUI.Box(new Rect(0, Screen.height - size,size,size), offColor);
+			GUI.Box(new Rect(0 + size, Screen.height - size,size,size),offColor);
+			GUI.Box (new Rect(0 + size*2, Screen.height - size,size,size),offColor);
+		}
+
 		
 		//Draw the buttons for abilities id the player is selected
-		if (drawButtons && !end) {
+		if (!end) {
 
-			Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
-			Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
-			Rect button3 = new Rect(retouch.x - size/2 + size/2 + size/4, Screen.height - retouch.y - size/2 + size/4,size,size);
-
+			Rect button1 = new Rect(0, Screen.height - size,size,size);
+			Rect button2 = new Rect(0 + size, Screen.height - size,size,size);
+			Rect button3 = new Rect(0 + size*2, Screen.height - size,size,size);
+			
+			
 			GUI.DrawTexture(button1,  ability1Texture);
 			GUI.DrawTexture(button2,  ability2Texture);
 			GUI.DrawTexture(button3,  ability3Texture);
@@ -207,26 +221,39 @@ public class Interface : MonoBehaviour {
 				}
 			}
 		}
-
+		float cool = determineCool();
+		if (!end) {
+			GUI.Box(new Rect(0, Screen.height - size*cool,size,size), "");
+			GUI.Box(new Rect(0 + size, Screen.height - size*cool,size,size),"");
+			GUI.Box (new Rect(0 + size*2, Screen.height - size*cool,size,size),"");
+		}
+		
+		if (!drawButtons && !end) {
+			GUI.Box(new Rect(0, Screen.height - size,size,size), "");
+			GUI.Box(new Rect(0 + size, Screen.height - size,size,size),"");
+			GUI.Box (new Rect(0 + size*2, Screen.height - size,size,size),"");
+		}
+		
+		
 		if (end) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
 			if(dead){ 
 				GUI.DrawTexture(endScreen,  defeatScreen);
-
+				
 			}else{ GUI.DrawTexture(endScreen,  victoryScreen); }
-
+			
 		}
-
+		
 		if (start) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
 			GUI.DrawTexture(endScreen,  startScreen);
 		}
-
+		
 		if (end && endCount > okayEndCount) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
 			GUI.DrawTexture(endScreen,  startButton);
 		}
-		
+
 	}
 	
 	//Reset after player attack
@@ -246,61 +273,85 @@ public class Interface : MonoBehaviour {
 	public void BasicAttack(){
 		ba.add_to_queue(target);
 	}
-
+	
 	//Fireball ability
 	public void Alch_Bomb(){
 		ab.add_to_queue(target);
 	}
-
+	
 	//Fireball ability
 	public void Heal(){
 		heal.add_to_queue(null);
 	}
-
+	
 	public void GameOver(){
 		end = true;
 	}
-
+	
 	public void Dead(){
 		dead = true;
 		saveRestart();
 	}
-
+	
+	public float determineCool(){
+		
+		float cool = state.cooldown / maxCooldown;
+		Debug.Log ("cool check: " + cool);
+		
+		if (cool > 1.0f) {	
+			return 1.0f;
+		} else {
+			return cool;
+		}
+	}
+	
 	public IEnumerator decideEnding(){
-		if(end && endCount > okayEndCount){ 
-			if(!dead){ saveNoRestart(); }
-			Application.LoadLevel(Application.loadedLevel); }
-		if(start){ 
+		if (end && endCount > okayEndCount) { 
+			if (dead) {
+				saveNoRestart();
+				Application.LoadLevel (Application.loadedLevel); 
+			} else {
+				///////////////
+				/// ///////////
+				/// Here's where the level victory end is decided
+				/// /////////////
+				/// ///////////
+			Application.LoadLevel ("BossScene"); 
+
+			}
+		}
+		if(start){
 			TitleAudio.aud.Transition();
 			FadeScript.instance.BeginFade(1);
 			yield return new WaitForSeconds(.8f);
-			start = false;
 			FadeScript.instance.BeginFade(-1);
 			GameManager.instance.UnFreezeCharacters();
+			start = false;
+			Time.timeScale = 1; 
 		}
 	}
-
+	
 	//save player prefs to restart scene with title screen (defeat) or not
-
+	
 	void saveRestart() {
 		PlayerPrefs.SetInt("restart", 0);
 	}
-
+	
 	void saveNoRestart() {
 		int level = checkRestart();
 		level++;
 		PlayerPrefs.SetInt("restart", level);
 	}
-
+	
 	int checkRestart() {
 		int level = PlayerPrefs.GetInt ("restart", 0);
 		Debug.Log ("level checked: " + level);
 		return level;
 	}
-
+	
 	void OnApplicationQuit() {
 		saveRestart ();
 	}
-
-
+	
+	
 }

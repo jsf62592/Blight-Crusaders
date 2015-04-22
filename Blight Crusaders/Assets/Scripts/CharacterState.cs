@@ -25,7 +25,7 @@ public class CharacterState : MonoBehaviour {
 	//used for keeping time
 	private float time_next_second;
 	//the amount of time left before this character can act.  In seconds.
-	private float cooldown;
+	public float cooldown;
 	//current health.  use get_health() to access and take_damage(...) to modify.
 	public double health_current;
 	//current health as a percentage of the max health

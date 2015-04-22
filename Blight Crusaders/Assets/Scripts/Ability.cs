@@ -52,8 +52,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float melee_movement_rate =.015f;
-	protected float projectile_movement_rate = .025f;
+	protected float melee_movement_rate =.060f;
+	protected float projectile_movement_rate = .100f;
 	
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
