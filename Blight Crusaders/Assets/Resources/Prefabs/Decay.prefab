@@ -13,6 +13,7 @@ GameObject:
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Decay
   m_TagString: Untagged
@@ -71,8 +72,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 0
   distance_initial_offset: 0
-  hurt: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
-  attack: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
+  hurt_animation: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
+  attack_animation: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
+  throw_animation: {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
+  buff_animation: {fileID: 0}
+  health_current: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,6 +86,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2ef8592b1e9194486483932d6abc7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e4147bc72111944f9dbd8c617cdd7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21200000

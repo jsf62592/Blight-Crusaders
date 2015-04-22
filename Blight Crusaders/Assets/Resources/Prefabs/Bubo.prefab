@@ -13,6 +13,7 @@ GameObject:
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Bubo
   m_TagString: Untagged
@@ -82,8 +83,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 0
   distance_initial_offset: 0
-  hurt: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
-  attack: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
+  hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
+  attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
+  throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
+  buff_animation: {fileID: 0}
+  health_current: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e781821fdb23643a3027d0dc3bbfb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -52,8 +52,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float melee_movement_rate = .025f;
-	protected float projectile_movement_rate = 0.05f;
+	protected float melee_movement_rate = .015f;
+	protected float projectile_movement_rate = .025f;
 	
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -71,7 +71,7 @@ public abstract class Ability : MonoBehaviour {
 	protected void setup(int given_max_cooldown, Visual_Types given_visual_type, string given_prefab_loadpath){
 		max_cooldown = given_max_cooldown;
 		visual_type = given_visual_type;
-		
+
 		//look for a CharacterState on what this is a component of
 		state = this.GetComponent<CharacterState> ();
 		//make sure this was setup(...) correctly
@@ -147,8 +147,8 @@ public abstract class Ability : MonoBehaviour {
 			original_enemy_position = given_target.transform.position;
 		}
 		//BLEH
-		if(gameObject.name == "P1" && visual_type == Visual_Types.ranged_projectile){
-			yield return StartCoroutine (state.throwBottle());
+		if(visual_type == Visual_Types.ranged_projectile){
+			yield return StartCoroutine (state.rangedThrow());
 		}
 
 		//play the attack animation
@@ -178,16 +178,17 @@ public abstract class Ability : MonoBehaviour {
 				helper_ranged_ascending(given_target);
 			}
 		}
+		if(visual_type == Visual_Types.melee){
+			yield return StartCoroutine (playAnimation());
+		}
 
 		//attach all the status effects
 		attachEffects (given_target);
 
-		if(visual_type == Visual_Types.melee){
-			yield return StartCoroutine (playAnimation());
-		}
+
 		
 		if((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending)){
-			Destroy(projectile_instance.gameObject);
+			Destroy(projectile_instance.gameObject, .5f);
 		}
 		
 		//move back to the original position if this is a melee ability

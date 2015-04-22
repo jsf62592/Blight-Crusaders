@@ -21,6 +21,8 @@ public class Interface : MonoBehaviour {
 
 	public Texture victoryScreen;
 	public Texture defeatScreen;
+	public Texture startScreen;
+	public Texture startButton;
 	
 	public int touchX; //current input touch position
 	public int touchY; 
@@ -31,6 +33,7 @@ public class Interface : MonoBehaviour {
 	public Vector3 retouch; //touch position fixed for scene positions
 
 	public Boolean end;
+	public Boolean start;
 	public Boolean dead;
 	public Boolean noTarget;
 	public int size = 150;
@@ -64,14 +67,22 @@ public class Interface : MonoBehaviour {
 		
 		victoryScreen = Resources.Load("victoryScreen") as Texture;
 		defeatScreen = Resources.Load("defeatScreen") as Texture;
+		startScreen = Resources.Load("startScreen") as Texture;
+		startButton = Resources.Load("startButton") as Texture;
 
 		noTarget = false;
+
+		if(checkRestart() == 0){ start = true; }else{ start = false; }
 	}
 	
 	//find out what platform is running the code
 	RuntimePlatform platform = Application.platform;
 	
 	void Update(){
+		if(start){ 
+			GameManager.instance.FreezeOtherCharacters(selected);
+			state.setInactive();
+		}
 		if (end) { endCount++; }
 
 		//Pop player input UI
@@ -91,9 +102,10 @@ public class Interface : MonoBehaviour {
 			touch = false;
 		}
 		
-		//if you click an enemy during targeting
+		//on click
 		if ((touch && Input.touchCount > 0) || (!touch && Input.GetMouseButtonDown (0))) {
-			if(end && endCount > okayEndCount){ Application.Quit(); }
+			StartCoroutine(decideEnding());
+
 			RaycastHit2D hit;
 			
 			//raycast based on mouse position
@@ -162,7 +174,7 @@ public class Interface : MonoBehaviour {
 		
 		
 		//Draw the buttons for abilities id the player is selected
-		if (drawButtons) {
+		if (drawButtons && !end) {
 
 			Rect button1 = new Rect(retouch.x - size/2, Screen.height - retouch.y - size/2 - size,size,size);
 			Rect button2 = new Rect(retouch.x - size/2 + size/2, Screen.height - retouch.y - size/2 - size/2,size,size);
@@ -198,9 +210,21 @@ public class Interface : MonoBehaviour {
 
 		if (end) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
-			if(dead){ GUI.DrawTexture(endScreen,  defeatScreen);
+			if(dead){ 
+				GUI.DrawTexture(endScreen,  defeatScreen);
+
 			}else{ GUI.DrawTexture(endScreen,  victoryScreen); }
 
+		}
+
+		if (start) {
+			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
+			GUI.DrawTexture(endScreen,  startScreen);
+		}
+
+		if (end && endCount > okayEndCount) {
+			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
+			GUI.DrawTexture(endScreen,  startButton);
 		}
 		
 	}
@@ -239,6 +263,44 @@ public class Interface : MonoBehaviour {
 
 	public void Dead(){
 		dead = true;
+		saveRestart();
 	}
+
+	public IEnumerator decideEnding(){
+		if(end && endCount > okayEndCount){ 
+			if(!dead){ saveNoRestart(); }
+			Application.LoadLevel(Application.loadedLevel); }
+		if(start){ 
+			TitleAudio.aud.Transition();
+			FadeScript.instance.BeginFade(1);
+			yield return new WaitForSeconds(.8f);
+			start = false;
+			FadeScript.instance.BeginFade(-1);
+			GameManager.instance.UnFreezeCharacters();
+		}
+	}
+
+	//save player prefs to restart scene with title screen (defeat) or not
+
+	void saveRestart() {
+		PlayerPrefs.SetInt("restart", 0);
+	}
+
+	void saveNoRestart() {
+		int level = checkRestart();
+		level++;
+		PlayerPrefs.SetInt("restart", level);
+	}
+
+	int checkRestart() {
+		int level = PlayerPrefs.GetInt ("restart", 0);
+		Debug.Log ("level checked: " + level);
+		return level;
+	}
+
+	void OnApplicationQuit() {
+		saveRestart ();
+	}
+
 
 }
