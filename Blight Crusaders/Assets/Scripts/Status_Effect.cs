@@ -12,6 +12,7 @@ public abstract class Status_Effect : MonoBehaviour {
 	float tick_rate = 0.0f;
 
 
+
 	//does the stuff this should do.
 	//the effect kills itself when it runs its course
 	public void apply_effect(){
@@ -21,12 +22,6 @@ public abstract class Status_Effect : MonoBehaviour {
 			persistant_effect();
 			duration--;
 			tick_rate = 0.0f;
-		}
-
-		//if the immediate_effect() hasn't been applied, apply it
-		if(! applied_immediatehuh){
-			applied_immediatehuh = true;
-			immediate_effect();
 		}
 
 		//if the status effect is over, apply the final_effect() and commit suicide
@@ -46,6 +41,8 @@ public abstract class Status_Effect : MonoBehaviour {
 		if(state == null){
 			throw new UnityException("Status_Effect: " + this.name +" could not find a CharacterState component");
 		}
+		applied_immediatehuh = true;
+		immediate_effect ();
 	}
 
 	//gets done once immediately

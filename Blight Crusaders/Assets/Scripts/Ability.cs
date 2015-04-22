@@ -98,10 +98,10 @@ public abstract class Ability : MonoBehaviour {
 			visual_prefab = (GameObject) Resources.Load(given_prefab_loadpath);
 			//if there wasn't a prefab at the given path, complain
 			if(Resources.Load(given_prefab_loadpath) == null){
-				throw new UnityException("Ability: " + this.name + " is " + visual_type + " but could not load the prefab");
+				throw new UnityException("Ability: " + this.GetType() + " is " + visual_type + " but could not load the prefab");
 			}
 			if((anim_clip == null) && ((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending))){
-				throw new UnityException("Ability: " + this.name + " is " + visual_type + " but does not have an animation clip");
+				throw new UnityException("Ability: " + this.GetType() + " is " + visual_type + " but does not have an animation clip");
 			}
 		}
 		
