@@ -13,6 +13,10 @@ GameObject:
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400004}
+  - 114: {fileID: 11400006}
+  - 114: {fileID: 11400008}
+  - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: Mary
   m_TagString: Untagged
@@ -83,8 +87,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health_max: 0
   distance_initial_offset: 0
-  hurt: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
-  attack: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
+  hurt_animation: {fileID: 0}
+  attack_animation: {fileID: 0}
+  throw_animation: {fileID: 0}
+  buff_animation: {fileID: 0}
+  health_current: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbe1c89631191f41bbcc2d539e8d6a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim_clip: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim_clip: {fileID: 0}
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131a4114426857f4daead22024c62fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -16,6 +16,7 @@ public class BackgroundMusic : MonoBehaviour {
 	}
 	
 	IEnumerator PlayMusic(){
+		yield return new WaitForSeconds (.8f);
 		audio.clip = intro;
 		audio.Play ();
 		yield return new WaitForSeconds (audio.clip.length);

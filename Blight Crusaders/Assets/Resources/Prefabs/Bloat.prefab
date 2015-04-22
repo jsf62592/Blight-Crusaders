@@ -10,16 +10,10 @@ GameObject:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
   - 95: {fileID: 9500000}
-  - 61: {fileID: 6100000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400004}
-  - 114: {fileID: 11400006}
-  - 114: {fileID: 11400008}
-  - 114: {fileID: 11400010}
-  - 114: {fileID: 11400012}
   m_Layer: 0
-  m_Name: Decay
+  m_Name: Bloat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,22 +26,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.89427185, y: 2.67274666, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 2.10437465, y: 1.37395024, z: -1}
+  m_LocalScale: {x: 2.91137791, y: 2.23031902, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!61 &6100000
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Size: {x: 1, y: 1}
-  m_Center: {x: 0, y: 0}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -57,7 +40,7 @@ Animator:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a66b0253f5814bb46807bae46f93a2db, type: 2}
+  m_Controller: {fileID: 9100000, guid: b168dbf6efd4bc0459a754bd15143905, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -74,11 +57,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 0
+  health_max: 100
   distance_initial_offset: 0
-  hurt_animation: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
-  attack_animation: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
-  throw_animation: {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
+  hurt_animation: {fileID: 0}
+  attack_animation: {fileID: 0}
+  throw_animation: {fileID: 0}
   buff_animation: {fileID: 0}
   health_current: 0
 --- !u!114 &11400002
@@ -90,64 +73,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe2ef8592b1e9194486483932d6abc7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4147bc72111944f9dbd8c617cdd7f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0aef95ca49edb541a65d2404fc97139, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97770e010c9186498784103694a899d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
---- !u!114 &11400012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4147bc72111944f9dbd8c617cdd7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21200000
@@ -170,7 +95,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dcfc3f283a18f924296961446f34192a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9e8cce1bb5a5aba408c5aea777d00b6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

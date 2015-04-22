@@ -52,7 +52,7 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float melee_movement_rate = .015f;
+	protected float melee_movement_rate =.015f;
 	protected float projectile_movement_rate = .025f;
 	
 	//this is the CharacterState component of what this is attached to
@@ -65,13 +65,16 @@ public abstract class Ability : MonoBehaviour {
 	protected Vector3 ranged_offset = new Vector3(1,.5f,0);
 	
 	public AnimationClip anim_clip;
-	
+
+	void Start(){
+	}
+
 	//call this in Start() and set the max_cooldown with it
 	//complains if this ability is on something that doesn't have a CharacterState
 	protected void setup(int given_max_cooldown, Visual_Types given_visual_type, string given_prefab_loadpath){
 		max_cooldown = given_max_cooldown;
 		visual_type = given_visual_type;
-
+		
 		//look for a CharacterState on what this is a component of
 		state = this.GetComponent<CharacterState> ();
 		//make sure this was setup(...) correctly
@@ -161,8 +164,8 @@ public abstract class Ability : MonoBehaviour {
 			while (movement_progress <= 1){
 				if(visual_type == Visual_Types.melee){
 					state.moveMelee();
-					helper_melee(movement_progress, given_target);
 					movement_progress += melee_movement_rate;
+					helper_melee(movement_progress, given_target);
 				} else {
 					helper_ranged_projectile(movement_progress, given_target);
 					movement_progress += projectile_movement_rate;
