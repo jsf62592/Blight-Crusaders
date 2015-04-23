@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &387734819
 GameObject:
@@ -215,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 500
-  distance_initial_offset: 0
+  distance_initial_offset: 2
   hurt_animation: {fileID: 0}
   attack_animation: {fileID: 0}
   throw_animation: {fileID: 0}
@@ -331,6 +330,10 @@ Prefab:
       propertyPath: m_Name
       value: P1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: distance_initial_offset
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 502278896}
@@ -345,11 +348,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10.0100002
+      value: 11.5098648
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .74000001
+      value: 1.09867489
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: m_LocalPosition.z
@@ -386,7 +389,7 @@ Prefab:
     - target: {fileID: 21200000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9e8cce1bb5a5aba408c5aea777d00b6c,
+      objectReference: {fileID: 21300000, guid: c877fb9bcad01ba43abe374c9f6ee029,
         type: 3}
     - target: {fileID: 11400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: health_max
@@ -427,7 +430,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 451c19c910619f24b8febd85db3374d3, type: 2}
+  - {fileID: 2100000, guid: 678e765a72b125a45945d29e11fca193, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -462,8 +465,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1015044446}
   m_LocalRotation: {x: -3.09086232e-08, y: .707106829, z: -.707106829, w: -3.09086232e-08}
-  m_LocalPosition: {x: -.159940004, y: 1.02320004, z: 0}
-  m_LocalScale: {x: 2.94872117, y: 1.00673985, z: 1.16781819}
+  m_LocalPosition: {x: -.159940049, y: 1.02320004, z: .100000001}
+  m_LocalScale: {x: 3.5753243, y: 1.00673985, z: 1.16781819}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -589,7 +592,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9e8cce1bb5a5aba408c5aea777d00b6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c877fb9bcad01ba43abe374c9f6ee029, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2046545884
 Transform:
@@ -598,7 +601,7 @@ Transform:
   m_PrefabInternal: {fileID: 708411273}
   m_GameObject: {fileID: 2046545881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.0100002, y: .74000001, z: 0}
+  m_LocalPosition: {x: 11.5098648, y: 1.09867489, z: 0}
   m_LocalScale: {x: 2.14541793, y: 2.45000005, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -615,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_max: 100
-  distance_initial_offset: 0
+  distance_initial_offset: -5
   hurt_animation: {fileID: 0}
   attack_animation: {fileID: 0}
   throw_animation: {fileID: 0}
