@@ -137,6 +137,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 450975806}
   - 82: {fileID: 450975805}
+  - 114: {fileID: 450975807}
   m_Layer: 0
   m_Name: BackgroundAudio
   m_TagString: Untagged
@@ -154,7 +155,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 177df50cc34f77442b50f14c337b1979, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .437999994
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -214,6 +215,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &450975807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 450975804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ceb509f861d08a4db249898b87bbfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stinger: {fileID: 8300000, guid: 0c20ece61191fd846bc2ddce00641f8f, type: 3}
+  sting: 0
 --- !u!1 &502278896
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 8300000, guid: de3635c3164d4694b9456cd5896aa380, type: 3}
 --- !u!114 &502278899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 0}
 --- !u!114 &502278900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
-  aud_clip: {fileID: 0}
+  aud_clip: {fileID: 8300000, guid: c523235141adb8d459ef1130c4b1f2ea, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &502278901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +342,7 @@ MonoBehaviour:
   throw_animation: {fileID: 7400000, guid: f1d535f2235d76643be9ff7ec6bd2add, type: 2}
   buff_animation: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
   hurtAudio: {fileID: 0}
+  attackAudio: {fileID: 0}
   cooldown: 0
   health_current: 50
 --- !u!61 &502278903
@@ -523,6 +541,14 @@ Prefab:
       propertyPath: health_current
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: aud_clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c523235141adb8d459ef1130c4b1f2ea, type: 3}
+    - target: {fileID: 11400008, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: impact_clip
+      value: 
+      objectReference: {fileID: 8300000, guid: de3635c3164d4694b9456cd5896aa380, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 502278896}
@@ -582,7 +608,7 @@ Prefab:
         type: 3}
     - target: {fileID: 11400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: health_max
-      value: 500
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
       propertyPath: distance_initial_offset
@@ -612,6 +638,14 @@ Prefab:
       propertyPath: buff_animation
       value: 
       objectReference: {fileID: 7400000, guid: 1d39404623f69b445a4a460c122be4be, type: 2}
+    - target: {fileID: 11400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
+      propertyPath: hurtAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 28c549ae9a217394792beca4088dc1bd, type: 3}
+    - target: {fileID: 11400000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
+      propertyPath: attackAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 89078ba1d33cdbc4bbeb56b6ed51bcbb, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c42fec0ebe5b78e43b2e278c5d3e4c33, type: 2}
   m_RootGameObject: {fileID: 2046545881}
@@ -780,9 +814,9 @@ GameObject:
   - 114: {fileID: 2046545891}
   - 114: {fileID: 2046545890}
   - 114: {fileID: 2046545886}
-  - 114: {fileID: 2046545885}
   - 61: {fileID: 2046545892}
   - 82: {fileID: 2046545893}
+  - 114: {fileID: 2046545885}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -849,11 +883,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2046545881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97770e010c9186498784103694a899d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6770b8b960b10c848abc7fc6d81bfb47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 0}
 --- !u!114 &2046545886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,6 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 0}
 --- !u!114 &2046545887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,13 +927,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 500
+  health_max: 750
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: ae475ca9b809017448c4e5f32fcb5519, type: 2}
   attack_animation: {fileID: 7400000, guid: aa47edd4df28f0041b50357031f5735b, type: 2}
   throw_animation: {fileID: 7400000, guid: dc41b47fe11d27945ab93cba11f7d12b, type: 2}
   buff_animation: {fileID: 7400000, guid: 1d39404623f69b445a4a460c122be4be, type: 2}
-  hurtAudio: {fileID: 0}
+  hurtAudio: {fileID: 8300000, guid: 28c549ae9a217394792beca4088dc1bd, type: 3}
+  attackAudio: {fileID: 8300000, guid: 89078ba1d33cdbc4bbeb56b6ed51bcbb, type: 3}
   cooldown: 0
   health_current: 0
 --- !u!114 &2046545889
@@ -924,6 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 7400000, guid: aa47edd4df28f0041b50357031f5735b, type: 2}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 8300000, guid: f6266a041c52b154c85b2cd2b27b0161, type: 3}
 --- !u!114 &2046545891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,6 +975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 7400000, guid: 1d39404623f69b445a4a460c122be4be, type: 2}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 0}
 --- !u!61 &2046545892
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -962,7 +1001,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Priority: 128
+  Priority: 255
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

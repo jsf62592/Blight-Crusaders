@@ -66,7 +66,7 @@ public abstract class Ability : MonoBehaviour {
 	
 	public AnimationClip anim_clip;
 	public AudioClip aud_clip;
-
+	public AudioClip impact_clip;
 	void Start(){
 	}
 
@@ -236,6 +236,11 @@ public abstract class Ability : MonoBehaviour {
 			projectile = projectile_instance.GetComponent<Animator>();
 			audio.Stop();
 			projectile.SetInteger("Direction",1);
+			if(impact_clip != null){
+				Debug.Log("HEAYSDFASDF'F");
+				audio.clip = impact_clip;
+				audio.Play();
+			}
 			Destroy(projectile_instance.gameObject, .4f);
 		}
 	}
@@ -251,6 +256,8 @@ public abstract class Ability : MonoBehaviour {
 	
 	//plays the attack animation
 	protected IEnumerator playAnimation(){
+		StartCoroutine (state.playAttack ());
+		audio.time = .25f;
 		if (visual_type == Visual_Types.melee) {
 			audio.clip = aud_clip;
 			audio.Play ();

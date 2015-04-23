@@ -20,6 +20,7 @@ public class CharacterState : MonoBehaviour {
 	public AnimationClip throw_animation;
 	public AnimationClip buff_animation;
 	public AudioClip hurtAudio;
+	public AudioClip attackAudio;
 
 	//the total length of the screen.  It gets this from outside this scrip.
 	private float screen_length;
@@ -55,7 +56,7 @@ public class CharacterState : MonoBehaviour {
 		this.health_percent = (float)this.health_current / (float)this.health_max;
 
 		if (this.gameObject.name == "P1") {
-			this.cooldown_start(6);
+			this.cooldown_start(5);
 		}
 
 		print ("!!!ALERT!!!:  CharacterState.cs USING DUMMY.  THIS IS IN CAPS SO IT IS IMPORTANT.");
@@ -152,6 +153,14 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator playAttack(){
+		audio.time = .5f;
+		audio.clip = attackAudio;
+		audio.Play ();
+		yield return new WaitForSeconds (3f);
+		audio.Stop ();
+	}
+
 	public IEnumerator attackMelee(){
 		this.animator.SetInteger ("Direction", 1);
 		yield return  new WaitForSeconds (attack_animation.length);
@@ -189,9 +198,8 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	public IEnumerator hurtSound(){
-		audio.clip = hurtAudio;
 		audio.Play ();
-		yield return new WaitForSeconds (.75f);
+		yield return new WaitForSeconds (.5f);
 		audio.Stop ();
 	}
 
@@ -266,9 +274,11 @@ public class CharacterState : MonoBehaviour {
 		if(given_damage < 0){
 			throw new UnityException("CharacterState.cs:  take_damage() given negative given_damage: " + this.name);
 		}
-		StartCoroutine (getHurt ());
-		StartCoroutine (hurtSound ());
 		if(!isDead()){
+			audio.time = .5f;
+			audio.clip = hurtAudio;
+			StartCoroutine (getHurt ());
+			StartCoroutine (hurtSound ());
 			//modify the current health
 			health_current = health_current - given_damage;
 			//if no health is left, call death()

@@ -91,6 +91,9 @@ MonoBehaviour:
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
   buff_animation: {fileID: 0}
+  hurtAudio: {fileID: 0}
+  attackAudio: {fileID: 8300000, guid: 9444f092e65ddb442bb1c2f982109fdc, type: 3}
+  cooldown: 0
   health_current: 0
 --- !u!114 &11400004
 MonoBehaviour:
@@ -115,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
+  aud_clip: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
+  aud_clip: {fileID: 0}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
+  aud_clip: {fileID: 0}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1

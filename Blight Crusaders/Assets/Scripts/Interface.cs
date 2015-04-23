@@ -306,7 +306,11 @@ public class Interface : MonoBehaviour {
 	
 	public void GameOver(){
 		end = true;
-		BackgroundMusic.instance.basicStinger ();
+		if(Application.loadedLevelName == "BossScene"){
+			BackgroundBossMusic.instance.basicStinger();
+		} else {
+			BackgroundMusic.instance.basicStinger ();
+		}
 	}
 	
 	public void Dead(){
@@ -330,6 +334,7 @@ public class Interface : MonoBehaviour {
 			if (dead) {
 				saveNoRestart();
 				Application.LoadLevel (Application.loadedLevel); 
+				BackgroundMusic.instance.StartBackground();
 			} else {
 				FadeScript.instance.BeginBlackFade(1);
 				yield return new WaitForSeconds(.8f);

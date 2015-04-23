@@ -15,7 +15,7 @@ public class EnemyBloat : Enemy {
 
 	// Use this for initialization
 	void Start () {
-		fb = GetComponent<Ability_Frostbolt> ();
+		fb = GetComponent<Ability_BossBolt> ();
 		mt = GetComponent<Ability_Meteor> ();
 		hl = GetComponent<Ability_EnemyHeal> ();
 		lc = GetComponent<Ability_Leech> ();
@@ -25,11 +25,11 @@ public class EnemyBloat : Enemy {
 	
 	public override void decision(GameObject target){
 		target_health = target.GetComponent<CharacterState> ().get_health ();
-		if (state.get_health () < 100) {
+		if (state.get_health () < 150) {
 			lc.add_to_queue(target);
-		} else if (state.get_health () < 50) {
+		} else if (state.get_health () < 75) {
 			hl.add_to_queue(null);
-		} else if(target_health > 230){
+		} else if(target_health > 320){
 			fb.add_to_queue(target);
 		} else {
 			mt.add_to_queue(target);

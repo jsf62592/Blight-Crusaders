@@ -22,7 +22,7 @@ public class Ability_Leech: Ability {
 		}else{
 			given_target.AddComponent<SE_Strike2>();	//50
 		}
-		this.gameObject.AddComponent<SE_EnemyHeal>();
+		this.gameObject.AddComponent<SE_EnemyLesserHeal>();
 	}
 	
 }

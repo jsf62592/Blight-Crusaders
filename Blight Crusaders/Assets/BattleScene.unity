@@ -173,7 +173,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: health_max
-      value: 300
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
       propertyPath: distance_initial_offset
@@ -227,7 +227,12 @@ Prefab:
       propertyPath: aud_clip
       value: 
       objectReference: {fileID: 8300000, guid: f4b803d732ef8474f8b70b29c81d9f1f, type: 3}
-    m_RemovedComponents: []
+    - target: {fileID: 11400008, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
+      propertyPath: impact_clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a83ca85bbf4bf1a47b0ffb8a7e741299, type: 3}
+    m_RemovedComponents:
+    - {fileID: 11400010, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a2185edd16095704ba24bdeca4b2fdae, type: 2}
   m_RootGameObject: {fileID: 1947263870}
   m_IsPrefabParent: 0
@@ -331,7 +336,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 130
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -348,7 +353,7 @@ Prefab:
     - target: {fileID: 11400008, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: aud_clip
       value: 
-      objectReference: {fileID: 8300000, guid: eb03ab37bddd32249a6d4c6236161d74, type: 3}
+      objectReference: {fileID: 8300000, guid: d1798a2710b734a45886543ab6ad6d39, type: 3}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: hurtAudio
       value: 
@@ -500,7 +505,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: m_TagString
@@ -512,7 +517,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: health_max
-      value: 90
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
       propertyPath: distance_initial_offset
@@ -534,6 +539,10 @@ Prefab:
       propertyPath: hurtAudio
       value: 
       objectReference: {fileID: 8300000, guid: 39c15b51433468f4a86b6e2210114da8, type: 3}
+    - target: {fileID: 11400002, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
+      propertyPath: health_current
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400008, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
     - {fileID: 11400010, guid: 2af5781fb88a7f44798630e2a6cd6d7e, type: 2}
@@ -939,13 +948,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 130
+  health_max: 140
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
   buff_animation: {fileID: 0}
   hurtAudio: {fileID: 8300000, guid: 39c15b51433468f4a86b6e2210114da8, type: 3}
+  attackAudio: {fileID: 8300000, guid: 9444f092e65ddb442bb1c2f982109fdc, type: 3}
   cooldown: 0
   health_current: 0
 --- !u!61 &1496181438
@@ -1048,6 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: c523235141adb8d459ef1130c4b1f2ea, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &1496181450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,7 +1072,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
-  aud_clip: {fileID: 8300000, guid: eb03ab37bddd32249a6d4c6236161d74, type: 3}
+  aud_clip: {fileID: 8300000, guid: d1798a2710b734a45886543ab6ad6d39, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &1496181451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,6 +1088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 0}
 --- !u!82 &1496181452
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1187,7 +1200,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: health_max
-      value: 90
+      value: 230
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 473925a553cacee40bbd6840a2dec93b, type: 2}
       propertyPath: distance_initial_offset
@@ -1328,15 +1341,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 90
+  health_max: 130
   distance_initial_offset: 1
   hurt_animation: {fileID: 7400000, guid: b9dc5f18fa925c74b875d84fa8d45831, type: 2}
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
   buff_animation: {fileID: 0}
   hurtAudio: {fileID: 8300000, guid: 39c15b51433468f4a86b6e2210114da8, type: 3}
+  attackAudio: {fileID: 8300000, guid: 9444f092e65ddb442bb1c2f982109fdc, type: 3}
   cooldown: 0
-  health_current: 0
+  health_current: 120
 --- !u!61 &1595471959
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1362,6 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: c523235141adb8d459ef1130c4b1f2ea, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &1595471962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,7 +1389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
-  aud_clip: {fileID: 8300000, guid: eb03ab37bddd32249a6d4c6236161d74, type: 3}
+  aud_clip: {fileID: 8300000, guid: d1798a2710b734a45886543ab6ad6d39, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &1595471963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: dee87e38963f62642a94087d87f94c6a, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!82 &1595471970
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1511,7 +1528,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 420d63dd4d53a54428ba7ca76a65f7e6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: .479999989
+  m_Volume: .178000003
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1587,11 +1604,6 @@ GameObject:
   - 114: {fileID: 1947263885}
   - 114: {fileID: 1947263884}
   - 114: {fileID: 1947263883}
-  - 114: {fileID: 1947263882}
-  - 114: {fileID: 1947263878}
-  - 114: {fileID: 1947263879}
-  - 114: {fileID: 1947263877}
-  - 114: {fileID: 1947263880}
   - 114: {fileID: 1947263881}
   - 82: {fileID: 1947263886}
   m_Layer: 0
@@ -1677,13 +1689,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 300
+  health_max: 500
   distance_initial_offset: -3
   hurt_animation: {fileID: 7400000, guid: 5921a9e3daf0cd344b00fad22d285e48, type: 2}
   attack_animation: {fileID: 7400000, guid: 136066da83c49794a99dad8ba9ae048e, type: 2}
   throw_animation: {fileID: 7400000, guid: f1d535f2235d76643be9ff7ec6bd2add, type: 2}
   buff_animation: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
   hurtAudio: {fileID: 0}
+  attackAudio: {fileID: 0}
   cooldown: 0
   health_current: 0
 --- !u!61 &1947263876
@@ -1698,75 +1711,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 3, y: 4}
   m_Center: {x: -.200000003, y: 0}
---- !u!114 &1947263877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947263870}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ee379dd1ecd0c44ac23a62f61ec0f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
-  aud_clip: {fileID: 0}
---- !u!114 &1947263878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947263870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb0865b37c140b439ef6e240eac1bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
-  aud_clip: {fileID: 8300000, guid: eb03ab37bddd32249a6d4c6236161d74, type: 3}
---- !u!114 &1947263879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947263870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c2b0e06f97fc342bc6574ada67662b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 0}
-  aud_clip: {fileID: 0}
---- !u!114 &1947263880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947263870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fbe1c89631191f41bbcc2d539e8d6a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim_clip: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
-  aud_clip: {fileID: 0}
 --- !u!114 &1947263881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1947263870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 131a4114426857f4daead22024c62fca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1947263882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400010, guid: a2185edd16095704ba24bdeca4b2fdae,
-    type: 2}
-  m_PrefabInternal: {fileID: 254162968}
   m_GameObject: {fileID: 1947263870}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1787,6 +1736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 0}
+  impact_clip: {fileID: 8300000, guid: a83ca85bbf4bf1a47b0ffb8a7e741299, type: 3}
 --- !u!114 &1947263884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1801,6 +1751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
   aud_clip: {fileID: 8300000, guid: f4b803d732ef8474f8b70b29c81d9f1f, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &1947263885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,6 +1766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: a6b606f8281a6ba4090e2c9165395bb8, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!82 &1947263886
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2037,13 +1989,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4349f96019633441910e51ef853bedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_max: 90
+  health_max: 230
   distance_initial_offset: 3
   hurt_animation: {fileID: 7400000, guid: d45a642c09f48d644be14d84c769251f, type: 2}
   attack_animation: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
   throw_animation: {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
   buff_animation: {fileID: 0}
   hurtAudio: {fileID: 8300000, guid: 143a60158c1fe164e98e747099dc68bf, type: 3}
+  attackAudio: {fileID: 0}
   cooldown: 0
   health_current: 0
 --- !u!61 &2086782848
@@ -2095,6 +2048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: dee87e38963f62642a94087d87f94c6a, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &2086782856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2109,6 +2063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
   aud_clip: {fileID: 8300000, guid: a3473c8b08cc9c24894bae2f4b05b8b4, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!114 &2086782857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,6 +2078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim_clip: {fileID: 0}
   aud_clip: {fileID: 8300000, guid: eb03ab37bddd32249a6d4c6236161d74, type: 3}
+  impact_clip: {fileID: 0}
 --- !u!82 &2086782858
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2133,7 +2089,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .739000022
   m_Pitch: 1
   Loop: 0
   Mute: 0

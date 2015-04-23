@@ -9,6 +9,6 @@ public class SE_Meteor : Status_Effect {
 	}
 	
 	protected override void persistant_effect(){
-		state.take_damage (75);
+		state.take_damage (100);
 	}
 }

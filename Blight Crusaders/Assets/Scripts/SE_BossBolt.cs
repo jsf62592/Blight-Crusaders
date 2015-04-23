@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SE_Alch_Bomb : Status_Effect {
+public class SE_BossBolt : Status_Effect {
+
+	// Use this for initialization
+	void Start () {
+		setup (3);
+	}
 	
-	void Start(){
-		setup (6);
-	}
-
 	protected override void immediate_effect(){
-		state.take_damage (70);
+		state.take_damage (50);
 	}
-
+	
 	protected override void persistant_effect(){
 		state.take_damage (10);
 	}
