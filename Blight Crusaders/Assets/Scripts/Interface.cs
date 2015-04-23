@@ -37,10 +37,11 @@ public class Interface : MonoBehaviour {
 	public Boolean start;
 	public Boolean dead;
 	public Boolean noTarget;
-	public int size = 150;
+	public int size = 100;
 	public int endCount;
 	public int okayEndCount = 100;
 	public int maxCooldown = 5;
+	bool once;
 	
 	
 	Ability ba;
@@ -50,6 +51,7 @@ public class Interface : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		once = false;
 		instance = this;
 		selected = GameObject.Find("P1");
 		state = selected.GetComponent<CharacterState> ();
@@ -77,6 +79,9 @@ public class Interface : MonoBehaviour {
 		noTarget = false;
 		
 		if(checkRestart() == 0){ start = true; }else{ start = false; }
+		if(Application.loadedLevelName == "BossScene"){
+			start = false;
+		}
 	}
 	
 	//find out what platform is running the code
@@ -237,13 +242,14 @@ public class Interface : MonoBehaviour {
 		
 		if (end) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
-			if(dead){ 
-				GUI.DrawTexture(endScreen,  defeatScreen);
-				
-			}else{ GUI.DrawTexture(endScreen,  victoryScreen); }
+			if(dead && !once){ 
+				StartCoroutine(loseFade());
+			}else if(!once){
+				StartCoroutine(winFade());
+			}
 			
 		}
-		
+
 		if (start) {
 			Rect endScreen = new Rect(0, 0,Screen.width,Screen.height);
 			GUI.DrawTexture(endScreen,  startScreen);
@@ -254,6 +260,20 @@ public class Interface : MonoBehaviour {
 			GUI.DrawTexture(endScreen,  startButton);
 		}
 
+	}
+
+	IEnumerator winFade(){
+		once = true;
+		FadeScript.instance.BeginWinFade(1);
+		yield return new WaitForSeconds(.8f);
+		FadeScript.instance.BeginWinFade(-1);
+	}
+
+	IEnumerator loseFade(){
+		once = true;	
+		FadeScript.instance.BeginLoseFade(1);
+		yield return new WaitForSeconds(.8f);
+		FadeScript.instance.BeginLoseFade(-1);
 	}
 	
 	//Reset after player attack
@@ -286,6 +306,7 @@ public class Interface : MonoBehaviour {
 	
 	public void GameOver(){
 		end = true;
+		BackgroundMusic.instance.basicStinger ();
 	}
 	
 	public void Dead(){
@@ -296,7 +317,6 @@ public class Interface : MonoBehaviour {
 	public float determineCool(){
 		
 		float cool = state.cooldown / maxCooldown;
-		Debug.Log ("cool check: " + cool);
 		
 		if (cool > 1.0f) {	
 			return 1.0f;
@@ -311,20 +331,18 @@ public class Interface : MonoBehaviour {
 				saveNoRestart();
 				Application.LoadLevel (Application.loadedLevel); 
 			} else {
-				///////////////
-				/// ///////////
-				/// Here's where the level victory end is decided
-				/// /////////////
-				/// ///////////
-			Application.LoadLevel ("BossScene"); 
-
+				FadeScript.instance.BeginBlackFade(1);
+				yield return new WaitForSeconds(.8f);
+				Application.LoadLevel ("BossScene"); 
+				GameManager.instance.UnFreezeCharacters();
+				start = false;
 			}
 		}
 		if(start){
 			TitleAudio.aud.Transition();
-			FadeScript.instance.BeginFade(1);
+			FadeScript.instance.BeginBlackFade(1);
 			yield return new WaitForSeconds(.8f);
-			FadeScript.instance.BeginFade(-1);
+			FadeScript.instance.BeginBlackFade(-1);
 			GameManager.instance.UnFreezeCharacters();
 			start = false;
 			Time.timeScale = 1; 

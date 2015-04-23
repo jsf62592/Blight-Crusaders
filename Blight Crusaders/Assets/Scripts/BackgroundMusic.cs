@@ -5,10 +5,13 @@ public class BackgroundMusic : MonoBehaviour {
 
 	public AudioClip intro;
 	public AudioClip loop;
+	public AudioClip stinger;
+	bool sting;
 	public static BackgroundMusic instance;
 	// Use this for initialization
 	void Start () {
 		instance = this;
+		sting = false;
 	}
 
 	public void StartBackground(){
@@ -22,7 +25,15 @@ public class BackgroundMusic : MonoBehaviour {
 		yield return new WaitForSeconds (audio.clip.length);
 		audio.Stop ();
 		audio.clip = loop;
-		Debug.Log (audio.clip.name);
 		audio.Play ();
+	}
+
+	public void basicStinger(){
+		if(!sting){
+			audio.Stop ();
+			audio.clip = stinger;
+			audio.Play ();
+			sting = true;
+		}
 	}
 }

@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 387734821}
   - 114: {fileID: 387734820}
+  - 114: {fileID: 387734822}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -113,6 +114,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &387734822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 387734819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e23c7a8719c6c43b21d3a41a122c5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackTexture: {fileID: 2800000, guid: b9b306255ff51c84fb5956af999b9d83, type: 3}
+  winTexture: {fileID: 2800000, guid: 74d6c8847fe2dc24293cbd98d9728a05, type: 3}
+  loseTexture: {fileID: 2800000, guid: 1949f9de2da33804da5e484a4ff5654d, type: 3}
 --- !u!1 &502278896
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +234,7 @@ MonoBehaviour:
   attack_animation: {fileID: 0}
   throw_animation: {fileID: 0}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!61 &502278903
 BoxCollider2D:
@@ -623,6 +639,7 @@ MonoBehaviour:
   attack_animation: {fileID: 0}
   throw_animation: {fileID: 0}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!114 &2046545886
 MonoBehaviour:
@@ -665,6 +682,7 @@ MonoBehaviour:
   attack_animation: {fileID: 0}
   throw_animation: {fileID: 0}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!114 &2046545889
 MonoBehaviour:
@@ -689,6 +707,7 @@ GameObject:
   - 92: {fileID: 2112528438}
   - 124: {fileID: 2112528437}
   - 81: {fileID: 2112528436}
+  - 114: {fileID: 2112528441}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -761,3 +780,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &2112528441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2112528435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c135e6d00b28648b0f30684a79f178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: {fileID: 0}
+  target: {fileID: 0}
+  targeted: 0
+  targeting: 0
+  drawButtons: 0
+  ability1Texture: {fileID: 0}
+  ability2Texture: {fileID: 0}
+  ability3Texture: {fileID: 0}
+  victoryScreen: {fileID: 0}
+  defeatScreen: {fileID: 0}
+  startScreen: {fileID: 0}
+  startButton: {fileID: 0}
+  offColor: {fileID: 0}
+  touchX: 0
+  touchY: 0
+  button: 0
+  touch: 0
+  turn: 0
+  retouch: {x: 0, y: 0, z: 0}
+  end: 0
+  start: 0
+  dead: 0
+  noTarget: 0
+  size: 150
+  endCount: 0
+  okayEndCount: 100
+  maxCooldown: 5

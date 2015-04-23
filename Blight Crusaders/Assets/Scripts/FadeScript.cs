@@ -6,7 +6,10 @@ public class FadeScript : MonoBehaviour {
 
 	// FadeInOut
 	public static FadeScript instance;
-	public Texture2D fadeTexture;
+	Texture2D fadeTexture;
+	public Texture2D blackTexture;
+	public Texture2D winTexture;
+	public Texture2D loseTexture;
 	float fadeSpeed = .8f;
 	float location = 10;
 
@@ -29,7 +32,26 @@ public class FadeScript : MonoBehaviour {
 	}
 
 
-	public void BeginFade(int direction){
+	public void BeginBlackFade(int direction){
+		fadeDir = direction;
+		fadeTexture = blackTexture;
+	}
+
+	public void BeginWinFade(int direction){
+		fadeDir = direction;
+		fadeTexture = winTexture;
+	}
+
+	void OnLevelWasLoaded(){
+		BeginBlackFade (-1);
+	}
+
+	public void BeginLoseFade(int direction){
+		fadeDir = direction;
+		fadeTexture = loseTexture;
+	}
+
+	public void setFade(int direction){
 		fadeDir = direction;
 	}
 	

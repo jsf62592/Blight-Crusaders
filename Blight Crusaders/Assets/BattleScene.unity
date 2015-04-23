@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &159546726
 GameObject:
@@ -370,7 +369,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 87553e1367b35904c95adb68e4033b0f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .469999999
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -562,7 +561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e23c7a8719c6c43b21d3a41a122c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTexture: {fileID: 2800000, guid: b9b306255ff51c84fb5956af999b9d83, type: 3}
+  blackTexture: {fileID: 2800000, guid: 61613a103bc3e40498aa100dc64e1789, type: 3}
+  winTexture: {fileID: 2800000, guid: 74d6c8847fe2dc24293cbd98d9728a05, type: 3}
+  loseTexture: {fileID: 2800000, guid: 1949f9de2da33804da5e484a4ff5654d, type: 3}
 --- !u!1 &882778859
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +792,7 @@ MonoBehaviour:
   defeatScreen: {fileID: 0}
   startScreen: {fileID: 0}
   startButton: {fileID: 0}
+  offColor: {fileID: 0}
   touchX: 0
   touchY: 0
   button: 0
@@ -804,6 +806,7 @@ MonoBehaviour:
   size: 150
   endCount: 0
   okayEndCount: 100
+  maxCooldown: 5
 --- !u!1 &1036573879
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +917,7 @@ MonoBehaviour:
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!61 &1496181438
 BoxCollider2D:
@@ -1282,6 +1286,7 @@ MonoBehaviour:
   attack_animation: {fileID: 7400000, guid: 7131d8a0f1866ea4aae89f30a72f4dde, type: 2}
   throw_animation: {fileID: 7400000, guid: 61dfb4d36e2602d45baacbb7d518d23b, type: 2}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!61 &1595471959
 BoxCollider2D:
@@ -1446,6 +1451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intro: {fileID: 8300000, guid: 645c8ba106bb735479038fe618bef8a9, type: 3}
   loop: {fileID: 8300000, guid: 420d63dd4d53a54428ba7ca76a65f7e6, type: 3}
+  stinger: {fileID: 8300000, guid: b639dab7f9e014b40954e4d5eff1362d, type: 3}
 --- !u!82 &1671205095
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1456,7 +1462,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 420d63dd4d53a54428ba7ca76a65f7e6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: .479999989
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1627,6 +1633,7 @@ MonoBehaviour:
   attack_animation: {fileID: 7400000, guid: f40702b44aace8741b75d74d2746deaf, type: 2}
   throw_animation: {fileID: 7400000, guid: f1d535f2235d76643be9ff7ec6bd2add, type: 2}
   buff_animation: {fileID: 7400000, guid: cc4acffcba84d494fa3d65d590efd66d, type: 2}
+  cooldown: 0
   health_current: 0
 --- !u!61 &1947263876
 BoxCollider2D:
@@ -1923,6 +1930,7 @@ MonoBehaviour:
   attack_animation: {fileID: 7400000, guid: cee127d1b97f07848b8b2987823a9f65, type: 2}
   throw_animation: {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
   buff_animation: {fileID: 0}
+  cooldown: 0
   health_current: 0
 --- !u!61 &2086782848
 BoxCollider2D:

@@ -320,7 +320,7 @@ public class CharacterState : MonoBehaviour {
 		else{
 			new_x_position = distance;
 		}
-		print ("CharacterState | " + this.name + "moved from x-coord: " + transform.position.x + " to new x-coord: " + new_x_position);
+		//print ("CharacterState | " + this.name + "moved from x-coord: " + transform.position.x + " to new x-coord: " + new_x_position);
 		transform.position = new Vector3 (new_x_position, transform.position.y, transform.position.z);
 	}
 
