@@ -20,10 +20,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void PopulateCharacters(List<GameObject> characters){
-		characters.Add(GameObject.Find ("P1"));
-		characters.Add(GameObject.Find ("E1"));
-		characters.Add(GameObject.Find ("E2"));
-		characters.Add(GameObject.Find ("E3"));
+		if(Application.loadedLevelName == "BossScene"){
+			characters.Add(GameObject.Find("P1"));
+			characters.Add(GameObject.Find("Boss"));
+		} else {
+			characters.Add(GameObject.Find ("P1"));
+			characters.Add(GameObject.Find ("E1"));
+			characters.Add(GameObject.Find ("E2"));
+			characters.Add(GameObject.Find ("E3"));
+		}
+
 	}
 
 	public void PopCharacter(GameObject character){
@@ -37,6 +43,13 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Application.loadedLevelName == "BossScene")
+		{
+			if(enemyDeath >= 1){
+				Interface.instance.GameOver();
+				changeBackground.instance.BloatLose();
+			}
+		}
 		if(enemyDeath >= 3){
 			Interface.instance.GameOver();
 		}

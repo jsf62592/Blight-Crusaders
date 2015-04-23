@@ -306,7 +306,7 @@ public class Interface : MonoBehaviour {
 	
 	public void GameOver(){
 		end = true;
-		BackgroundMusic.instance.basicStinger ();
+//		BackgroundMusic.instance.basicStinger ();
 	}
 	
 	public void Dead(){

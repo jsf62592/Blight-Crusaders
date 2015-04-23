@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Ability_Plague_Bolt.cs" />
      <Compile Include="Assets\Scripts\Ability_Strike.cs" />
      <Compile Include="Assets\Scripts\Ability_debug.cs" />
+     <Compile Include="Assets\Scripts\BackgroundBossMusic.cs" />
      <Compile Include="Assets\Scripts\BackgroundMusic.cs" />
      <Compile Include="Assets\Scripts\Bloat.cs" />
      <Compile Include="Assets\Scripts\Bubo.cs" />
@@ -89,6 +90,7 @@
      <Compile Include="Assets\Scripts\SE_hellomynameisdebug.cs" />
      <Compile Include="Assets\Scripts\Status_Effect.cs" />
      <Compile Include="Assets\Scripts\TitleAudio.cs" />
+     <Compile Include="Assets\changeBackground.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

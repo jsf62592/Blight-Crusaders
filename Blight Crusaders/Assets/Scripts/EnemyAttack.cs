@@ -69,6 +69,9 @@ public class EnemyAttack : MonoBehaviour {
 		if (this.gameObject.name == "E3") {
 			state.cooldown_start(12.0f);
 		}
+		if(this.gameObject.name == "Boss"){
+			state.cooldown_start(10.0f);
+		}
 	}
 	
 	

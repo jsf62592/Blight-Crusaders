@@ -334,8 +334,16 @@ public class CharacterState : MonoBehaviour {
 		} else {
 			this.animator.SetInteger("Direction", 3);
 			GameManager.instance.EnemyDeath();
+			if(Application.loadedLevelName == "BossScene"){
+				StartCoroutine("BossDeath");
+			}
 			dead = true;
 		}
+	}
+
+	IEnumerator BossDeath(){
+		yield return new WaitForSeconds (.35f);
+		this.gameObject.renderer.enabled = false;
 	}
 
 	//this applies status effects on this gameobject.  should only be used in update().
