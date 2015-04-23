@@ -9,6 +9,6 @@ public class SE_Heal : Status_Effect {
 	}
 	
 	protected override void immediate_effect(){
-		state.heal(10);
+		state.heal(60);
 	}
 }

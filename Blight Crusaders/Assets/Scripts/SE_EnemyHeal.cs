@@ -9,7 +9,6 @@ public class SE_EnemyHeal : Status_Effect {
 	}
 	
 	protected override void immediate_effect(){
-		//state.take_damage (50);
-		state.heal (50);
+		state.heal (70);
 	}
 }

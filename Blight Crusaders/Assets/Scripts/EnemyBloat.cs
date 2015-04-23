@@ -26,11 +26,13 @@ public class EnemyBloat : Enemy {
 	public override void decision(GameObject target){
 		target_health = target.GetComponent<CharacterState> ().get_health ();
 		if (state.get_health () < 100) {
-			//lc.add_to_queue(target);
+			lc.add_to_queue(target);
+		} else if (state.get_health () < 50) {
+			hl.add_to_queue(null);
 		} else if(target_health > 230){
 			fb.add_to_queue(target);
-		}// else if(target_health > 150){
-			//mt.add_to_queue(target);
-		//}
+		} else {
+			mt.add_to_queue(target);
+		}
 	}
 }

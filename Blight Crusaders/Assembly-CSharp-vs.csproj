@@ -84,13 +84,15 @@
      <Compile Include="Assets\Scripts\SE_Enemy_Fireball.cs" />
      <Compile Include="Assets\Scripts\SE_Fireball.cs" />
      <Compile Include="Assets\Scripts\SE_Heal.cs" />
+     <Compile Include="Assets\Scripts\SE_Meteor.cs" />
      <Compile Include="Assets\Scripts\SE_Plague_Bolt.cs" />
      <Compile Include="Assets\Scripts\SE_Strike.cs" />
      <Compile Include="Assets\Scripts\SE_Strike2.cs" />
      <Compile Include="Assets\Scripts\SE_hellomynameisdebug.cs" />
+     <Compile Include="Assets\Scripts\SoundTest.cs" />
      <Compile Include="Assets\Scripts\Status_Effect.cs" />
      <Compile Include="Assets\Scripts\TitleAudio.cs" />
-     <Compile Include="Assets\changeBackground.cs" />
+     <Compile Include="Assets\Scripts\changeBackground.cs" />
      <None Include="Assets\plugins\android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

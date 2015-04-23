@@ -12,7 +12,7 @@ public class Ability_EnemyHeal : Ability {
 	// Use this for initialization
 	void Start () {
 		//Needs to launch the ability to the location
-		setup (5, Visual_Types.self, "Prefabs/frenzy");
+		setup (5, Visual_Types.self, "Prefabs/heal");
 	}
 	
 	protected override void attachEffects(GameObject given_target){

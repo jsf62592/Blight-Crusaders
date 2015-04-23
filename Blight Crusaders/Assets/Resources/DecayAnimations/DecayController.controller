@@ -317,7 +317,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: DecayRanged
-  m_Speed: 1
+  m_Speed: .75
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: 1886c9551ec337747bbc1434f948322a, type: 2}
@@ -405,10 +405,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110232083}
-      second:
-      - {fileID: 110172140}
-    data:
       first: {fileID: 110200000}
       second:
       - {fileID: 110185744}
@@ -431,6 +427,10 @@ StateMachine:
       second:
       - {fileID: 110169285}
       - {fileID: 110132123}
+    data:
+      first: {fileID: 110232083}
+      second:
+      - {fileID: 110172140}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

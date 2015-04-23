@@ -8,6 +8,6 @@ public class SE_Strike : Status_Effect {
 	}
 	
 	protected override void immediate_effect(){
-		state.take_damage(10);
+		state.take_damage(30);
 	}
 }

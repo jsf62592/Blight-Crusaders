@@ -52,8 +52,8 @@ public abstract class Ability : MonoBehaviour {
 	protected float movement_progress;
 	//how fast the character moves towards the target when this ability is "cast"
 	//note:  movement speed is also affected by the distance between this character and the target
-	protected float melee_movement_rate =.020f;
-	protected float projectile_movement_rate = .035f;
+	protected float melee_movement_rate =.014f;
+	protected float projectile_movement_rate = .025f;
 	
 	//this is the CharacterState component of what this is attached to
 	protected CharacterState state;
@@ -65,6 +65,7 @@ public abstract class Ability : MonoBehaviour {
 	protected Vector3 ranged_offset = new Vector3(1,.5f,0);
 	
 	public AnimationClip anim_clip;
+	public AudioClip aud_clip;
 
 	void Start(){
 	}
@@ -151,6 +152,8 @@ public abstract class Ability : MonoBehaviour {
 		}
 		//BLEH
 		if(visual_type == Visual_Types.ranged_projectile){
+			audio.clip = aud_clip;
+			audio.Play();
 			yield return StartCoroutine (state.rangedThrow());
 		}
 
@@ -231,6 +234,7 @@ public abstract class Ability : MonoBehaviour {
 		
 		if (given_lerp_proportion >= (1 - projectile_movement_rate)){
 			projectile = projectile_instance.GetComponent<Animator>();
+			audio.Stop();
 			projectile.SetInteger("Direction",1);
 			Destroy(projectile_instance.gameObject, .4f);
 		}
@@ -248,10 +252,23 @@ public abstract class Ability : MonoBehaviour {
 	//plays the attack animation
 	protected IEnumerator playAnimation(){
 		if (visual_type == Visual_Types.melee) {
+			audio.clip = aud_clip;
+			audio.Play ();
 			yield return StartCoroutine (state.attackMelee ());
+			audio.Stop ();
 		}
-		if((visual_type == Visual_Types.self) || (visual_type == Visual_Types.ranged_ascending)){
+		if(visual_type == Visual_Types.self){
+			audio.clip = aud_clip;
+			audio.Play ();
 			yield return new WaitForSeconds (anim_clip.length);
+			audio.Stop ();
 		}
+		if (visual_type == Visual_Types.ranged_ascending) {
+			audio.clip = aud_clip;
+			audio.Play ();
+			yield return StartCoroutine(state.rangedAscending());
+			audio.Stop ();
+		}
+
 	}
 }

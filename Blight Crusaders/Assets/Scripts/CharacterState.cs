@@ -19,6 +19,7 @@ public class CharacterState : MonoBehaviour {
 	public AnimationClip attack_animation;
 	public AnimationClip throw_animation;
 	public AnimationClip buff_animation;
+	public AudioClip hurtAudio;
 
 	//the total length of the screen.  It gets this from outside this scrip.
 	private float screen_length;
@@ -38,7 +39,7 @@ public class CharacterState : MonoBehaviour {
 	SpriteRenderer sp;
 	bool dead;
 	bool attacking;
-
+	 
 	// Use this for initialization
 	void Start () {
 		dead = false;
@@ -157,6 +158,12 @@ public class CharacterState : MonoBehaviour {
 		this.animator.SetInteger ("Direction", 0);
 	}
 
+	public IEnumerator rangedAscending(){
+		this.animator.SetInteger ("Direction", 7);
+		yield return  new WaitForSeconds (attack_animation.length);
+		this.animator.SetInteger ("Direction", 0);
+	}
+
 	public void moveMelee(){
 		this.animator.SetInteger("Direction", 4);
 	}
@@ -181,7 +188,19 @@ public class CharacterState : MonoBehaviour {
 		this.animator.SetInteger("Direction", 4);
 	}
 
+	public IEnumerator hurtSound(){
+		audio.clip = hurtAudio;
+		audio.Play ();
+		yield return new WaitForSeconds (.75f);
+		audio.Stop ();
+	}
+
 	protected IEnumerator getHurt(){
+		yield return StartCoroutine ("hurtStuff");
+
+	}
+
+	protected IEnumerator hurtStuff(){
 		this.animator.SetInteger ("Direction", 2);
 		yield return  new WaitForSeconds (hurt_animation.length);
 		this.animator.SetInteger ("Direction", 0);
@@ -248,6 +267,7 @@ public class CharacterState : MonoBehaviour {
 			throw new UnityException("CharacterState.cs:  take_damage() given negative given_damage: " + this.name);
 		}
 		StartCoroutine (getHurt ());
+		StartCoroutine (hurtSound ());
 		if(!isDead()){
 			//modify the current health
 			health_current = health_current - given_damage;
@@ -326,11 +346,21 @@ public class CharacterState : MonoBehaviour {
 
 	private void death(){
 		if (this.gameObject.name == "P1") {
-			this.animator.SetInteger("Direction", 3);
-			GameManager.instance.FreezeOtherCharacters(this.gameObject);
-			Interface.instance.Dead();
-			Interface.instance.GameOver();
-			dead = true;
+			if(Application.loadedLevelName == "BossScene"){
+				this.animator.SetInteger("Direction", 8);
+				GameManager.instance.FreezeOtherCharacters(this.gameObject);
+				changeBackground.instance.MaryLose();
+				StartCoroutine ("MaryDeath");
+				Interface.instance.Dead();
+				Interface.instance.GameOver();
+			} else{
+				this.animator.SetInteger("Direction", 3);
+				GameManager.instance.FreezeOtherCharacters(this.gameObject);
+				Interface.instance.Dead();
+				Interface.instance.GameOver();
+				dead = true;
+			}
+
 		} else {
 			this.animator.SetInteger("Direction", 3);
 			GameManager.instance.EnemyDeath();
@@ -342,6 +372,11 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	IEnumerator BossDeath(){
+		yield return new WaitForSeconds (.35f);
+		this.gameObject.renderer.enabled = false;
+	}
+
+	IEnumerator MaryDeath(){
 		yield return new WaitForSeconds (.35f);
 		this.gameObject.renderer.enabled = false;
 	}

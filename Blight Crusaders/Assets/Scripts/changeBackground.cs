@@ -18,7 +18,6 @@ public class changeBackground : MonoBehaviour {
 	}
 
 	public void BloatLose(){
-		Debug.Log ("HEY");
 		renderer.material.mainTexture = BloatDies;
 	}
 }

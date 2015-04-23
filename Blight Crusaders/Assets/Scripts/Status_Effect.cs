@@ -17,7 +17,7 @@ public abstract class Status_Effect : MonoBehaviour {
 	public void apply_effect(){
 
 		//if the immediate effect has been applied and the duration isn't 0, apply the persistant_effect()
-		if((applied_immediatehuh) && (duration > 0) && (tick_rate >= 1.0f)){
+		if((applied_immediatehuh) && (duration > 0) && (tick_rate >= 0.75f)){
 			persistant_effect();
 			duration--;
 			tick_rate = 0.0f;
